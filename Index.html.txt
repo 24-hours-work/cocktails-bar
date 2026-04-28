@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SIN & SPIRITS | Лаконичная и глубокая миксология</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f0603;
+            color: #f0e2d4;
+            line-height: 1.45;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 30%, #271008 0%, #030101 100%);
+            z-index: -2;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(180, 65, 35, 0.03) 0px, rgba(180, 65, 35, 0.03) 1px, transparent 1px, transparent 12px);
+            pointer-events: none;
+            z-index: -1;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #bc4f2a;
+            padding-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f7d99e, #e28248, #b53b12);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+        }
+        .hero p { font-size: 1.1rem; color: #f0c294; max-width: 700px; margin: 0.5rem auto 0; font-style: italic; }
+        .badge-bar {
+            display: inline-block;
+            background: #4f2516aa;
+            border-radius: 80px;
+            padding: 0.3rem 1.5rem;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+        }
+        .page-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0 2rem;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: #2e170eaa;
+            backdrop-filter: blur(6px);
+            border: 1px solid #dc6536;
+            border-radius: 60px;
+            padding: 0.6rem 2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #ffdeb6;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .nav-btn.active {
+            background: linear-gradient(95deg, #bd522d, #8d3516);
+            border-color: #ffaa77;
+            color: white;
+            box-shadow: 0 0 12px #e67541;
+        }
+        .nav-btn:hover:not(.active) { background: #4f2a1aaa; transform: translateY(-2px); }
+        .drinks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        .drink-card {
+            border-radius: 1.8rem;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(14, 7, 5, 0.92), rgba(2, 1, 1, 0.96));
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border-left: 5px solid var(--accent, #d85f30);
+        }
+        .drink-card:hover { transform: translateY(-6px); border-left-width: 6px; }
+        .title-mural {
+            padding: 1.5rem 1rem 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+            border-bottom: 1px solid var(--accent, #c95124);
+        }
+        .title-mural h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff1df, var(--accent, #ff9162));
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .main-spirit {
+            display: inline-block;
+            background: var(--accent, #d85f30);
+            color: #1a0a05;
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            margin-top: 0.6rem;
+            text-transform: uppercase;
+        }
+        .drink-content { padding: 1.3rem; }
+        .ingredients { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+        .ingredient-badge { background: #21100b; padding: 0.2rem 0.9rem; border-radius: 30px; font-size: 0.75rem; border-left: 2px solid var(--accent, #dd5f2c); color: #fcdbb8; }
+        .legend-block {
+            background: #140906bb;
+            border-left: 3px solid var(--accent, #e55a2a);
+            padding: 0.7rem;
+            border-radius: 0.9rem;
+            margin: 0.8rem 0;
+            font-size: 0.82rem;
+        }
+        .sensation, .mixology, .food-pairing { background: #10070577; border-radius: 0.8rem; padding: 0.5rem 0.9rem; margin: 0.5rem 0; font-size: 0.8rem; border-left: 1px solid var(--accent, #ac4f2a);}
+        .music-playlist { background: #0c0604aa; border-radius: 1.2rem; padding: 0.7rem; margin: 0.7rem 0; border-top: 1px solid var(--accent, #bc542e); }
+        .playlist-title { font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; color: #ffbe82; margin-bottom: 0.4rem; }
+        .track-list { list-style: none; }
+        .track-list li { font-size: 0.7rem; margin-bottom: 0.25rem; color: #ecdbba; }
+        .track-list i { width: 24px; color: var(--accent, #e06736); }
+        .addons-section { background: #130906aa; border-radius: 1rem; padding: 0.7rem; margin-top: 0.6rem; border: 0.5px solid var(--accent, #bb532e); }
+        .addons-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .addon-item { background: #26140e; border-radius: 40px; padding: 0.2rem 0.7rem; font-size: 0.7rem; color: #ffdebc; }
+        .recipe-btn {
+            border: none;
+            border-radius: 2rem;
+            padding: 0.7rem;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 0.8rem;
+            cursor: pointer;
+            color: #ffefdf;
+            transition: 0.2s;
+            background: linear-gradient(95deg, #a24322, #7a2f12);
+        }
+        .recipe-btn:hover { filter: brightness(1.05); box-shadow: 0 0 12px var(--accent, #e77342); }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000000dd;
+            backdrop-filter: blur(8px);
+            z-index: 1100;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #20100be6;
+            border-radius: 2rem;
+            max-width: 550px;
+            width: 90%;
+            padding: 1.8rem;
+            border-left: 8px solid var(--modal-accent, #e06836);
+        }
+        .close-modal { float: right; font-size: 2rem; cursor: pointer; color: #f6aa72; }
+        .footer { text-align: center; margin-top: 2rem; padding: 1rem; color: #a57a60; font-size: 0.7rem; }
+        .counter-note { text-align: center; font-size: 0.9rem; border-top: 1px solid #75482e; padding-top: 1rem; margin-top: 1rem; width: 100%; font-weight: 600;}
+        @media (max-width: 760px) { 
+            .title-mural h2 { font-size: 1.8rem; } 
+            .nav-btn { padding: 0.4rem 1rem; font-size: 0.8rem;}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🍸 SIN & SPIRITS 👻</h1>
+        <p>Лаконичная миксология • Глубокая миксология • Живые ощущения</p>
+        <div class="badge-bar">Кнопка «Полный ритуал» раскроет секрет приготовления</div>
+    </div>
+
+    <div class="page-nav">
+        <div class="nav-btn" data-page="simple">Лаконичные коктейли (до 4 ингредиентов)</div>
+        <div class="nav-btn" data-page="complex">Многосоставные рецепты (5+ ингредиентов)</div>
+    </div>
+
+    <div id="drinksContainer" class="drinks-grid"></div>
+    <div class="counter-note" id="cocktailCounter"></div>
+    <div class="footer">⚡ Ритуал приготовления — по клику. Температура, техника, тайминг.</div>
+</div>
+
+<div id="modalRecipe" class="modal"><div class="modal-content" id="modalContent"><span class="close-modal" id="closeModal">&times;</span><h3 id="modalName" style="font-family:'Playfair Display';">Ритуал</h3><div id="modalBody" style="margin-top:1rem; line-height:1.5;"></div></div></div>
+
+<script>
+    // =======================  ВСЕ КОКТЕЙЛИ с полными названиями треков (автор — название) =======================
+    const allCocktails = [
+        { name:"NEGRONI", mainSpirit:"Джин", theme:"#cc5533", ingCount:3, story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], sensation:"Горькое томление, как первый укус тёмного шоколада. Травяной поцелуй, который остаётся с тобой.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], ritual:"РИТУАЛ NEGRONI: Используйте большой куб льда. В стакан Old Fashioned влейте все три ингредиента равными частями. Размешивайте барной ложкой 25-30 секунд. Температура подачи: -5°C. Выжмите цедру апельсина над бокалом и протрите край. Никогда не взбалтывайте." },
+        { name:"MOSCOW MULE", mainSpirit:"Водка", theme:"#c4a245", ingCount:3, story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво. Медная кружка стала символом.", ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], sensation:"Хрустящий имбирный электрический удар, который пробегает по языку и заставляет улыбаться.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки, солёные крендельки", tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], addons:["Клубника с базиликом","Халапеньо"], ritual:"РИТУАЛ MOSCOW MULE: Используйте медную кружку. Наполните её колотым льдом. Влейте водку и сок лайма, затем аккуратно долейте имбирное пиво. Не перемешивайте. Украсьте мятой и лаймом." },
+        { name:"OLD FASHIONED", mainSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, story:"Самый старый коктейль в мире, символ мужской силы. Рождён в Луисвилле в начале XIX века.", ing:["Бурбон 60 мл","Кубик сахара","Ангостура 2 дэш"], sensation:"Тёплые ноты карамели и дуба. Медленное, глубокое наслаждение, как вечер у камина.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], addons:["Вишня в бренди","Ореховый ликёр"], ritual:"РИТУАЛ OLD FASHIONED: В рокс положите сахар, капните Ангостуру и воду. Подавите мадлером. Добавьте большой куб льда, залейте бурбон. Мешайте 35 секунд. Температура: -3°C. Сбрызните цедрой апельсина." },
+        { name:"PIÑA COLADA", mainSpirit:"Ром", theme:"#e5c687", ingCount:3, story:"Создан в Пуэрто-Рико в 1954 году барменом Рамоном Марреро как гимн карибской свободе.", ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"], sensation:"Кокосовые облака и ананасовая нежность. Ты словно лежишь в гамаке под пальмой.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], addons:["Маракуйя","Кокосовая стружка"], ritual:"РИТУАЛ PIÑA COLADA: В блендер поместите все ингредиенты и 180 г льда. Взбивайте 20 секунд до консистенции фроузен. Температура: -4°C. Украсьте ананасом." },
+        { name:"WHISKEY SOUR", mainSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, story:"Моряки в 1860-х добавляли цитрус, чтобы смягчить резкий виски. Легенда Дикого Запада.", ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"], sensation:"Шёлковая пенная шапка, под которой скрывается яркая кислинка и глубина бурбона. Идеальный баланс.", mix:"Красное вино", pairing:"Бекон, карпаччо", tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], addons:["Красное вино","Солёная карамель"], ritual:"РИТУАЛ WHISKEY SOUR: Сухой шейк белка с сиропом и лимоном 15 секунд. Добавьте лёд и бурбон, шейк 10 секунд. Процедите. Температура: -1°C. Капните Ангостуру на пену." },
+        { name:"JÄGER BOMB", mainSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, story:"Немецкий травяной ликёр, созданный для охотников. В 90-х появилась бомба с энергетиком.", ing:["Jägermeister 50 мл","Энергетик 150 мл"], sensation:"Травяной взрыв, за которым следует эйфория и желание танцевать.", mix:"Апельсиновый сок", pairing:"Острые наггетсы, солёный крендель", tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], addons:["Лайм","Мята"], ritual:"РИТУАЛ JÄGER BOMB: Охладите Jägermeister до -18°C. В стакан налейте энергетик, опустите стопку с ликёром и выпейте залпом." },
+        { name:"ESPRESSO MARTINI", mainSpirit:"Водка", theme:"#4a2a1f", ingCount:3, story:"Коктейль, который будит и пьянит. Создан в Лондоне 1980-х по просьбе супермодели.", ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"], sensation:"Плотная кофейная пенка, бодрость и нежность одновременно. Соблазн, который не даёт уснуть.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], addons:["Белый шоколад","Чили с корицей"], ritual:"РИТУАЛ ESPRESSO MARTINI: Используйте свежий эспрессо. Шейк со льдом 12 секунд. Процедите в охлаждённый бокал. Украсьте тремя зёрнами кофе." },
+        { name:"MOJITO ROYALE", mainSpirit:"Ром", theme:"#b8aa7a", ingCount:4, story:"Гаванская магия встречается с венецианским игристым. Взрыв пузырьков и мяты.", ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"], sensation:"Взрыв свежей мяты, который сменяется игристыми пузырьками шампанского. Лёгкость и праздник.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], addons:["Виноград","Грушевый нектар"], ritual:"РИТУАЛ MOJITO ROYALE: Подавите мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем аккуратно долейте просекко. Температура: +3°C." },
+        { name:"GIN BASIL SMASH", mainSpirit:"Джин", theme:"#6f8f4a", ingCount:4, story:"Берлинский травяной хит 2008 года. Базилик, джин и лайм создали зелёный шум.", ing:["Джин 60 мл","Базилик 10 л","Лимонный сок 30 мл","Сироп 20 мл"], sensation:"Перечный хруст свежего базилика и хвойная свежесть джина. Очень зелёный и дерзкий.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], addons:["Огурец","Клубника"], ritual:"РИТУАЛ GIN BASIL SMASH: Разомните базилик с соком и сиропом. Добавьте джин и лёд, шейк 12 секунд. Процедите дважды. Температура: -3°C." },
+        { name:"MARGARITA", mainSpirit:"Текила", theme:"#a8b85c", ingCount:3, story:"Создан в 1938 году в Мексике в честь танцовщицы Маргариты. Соль, огонь агавы и страсть.", ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"], sensation:"Солёный край бокала, огонь агавы и взрыв лайма. Страсть и свежесть в одном глотке.", mix:"Маракуйя", pairing:"Тако, гуакамоле", tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], addons:["Халапеньо","Кумкват"], ritual:"РИТУАЛ MARGARITA: Край бокала окуните в соль. В шейкере со льдом смешайте текилу, трипл сек и сок лайма. Шейк 10 секунд. Температура: -2°C." },
+        { name:"LEMON DROP", mainSpirit:"Водка", theme:"#eac85c", ingCount:4, story:"Рождён в баре Сан-Франциско в 1970-х. Сладкий лимонный соблазн для дерзких.", ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"], sensation:"Кисло-сладкий лимонный взрыв, от которого перехватывает дыхание. Как первый поцелуй.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Имбирный сироп","Лаванда"], ritual:"РИТУАЛ LEMON DROP: Бокал смажьте лимоном и окуните в сахар. Шейк со льдом, процедите. Температура: -5°C. Пьётся залпом." },
+        { name:"LONG ISLAND", mainSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, story:"Изобретён в 1970-х в Лонг-Айленде. Обманчиво мягкий, но мощный.", ing:["Водка 20","Джин 20","Ром 20","Текила 20","Трипл сек 20","Кола","Лимон"], sensation:"Обманчивая мягкость колы скрывает алкогольный шторм. Пьётся легко, но последствия помнят долго.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], addons:["Клюква","Имбирь"], ritual:"РИТУАЛ LONG ISLAND: В хайбол со льдом влейте все пять алкоголей, добавьте лимонный сок и колу. Не перемешивайте. Пейте через трубочку." },
+        { name:"FRENCH 75", mainSpirit:"Джин", theme:"#d4a55a", ingCount:4, story:"Назван в честь французской пушки калибра 75 мм. Мощный удар в элегантной обёртке.", ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"], sensation:"Нежный джин и лимон, усиленные мощным залпом шампанского. Элегантный нокаут.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], addons:["Бузина","Розмарин"], ritual:"РИТУАЛ FRENCH 75: Шейкните джин, лимон и сироп. Перелейте в бокал, аккуратно долейте шампанское. Не перемешивайте. Температура: +3°C." },
+        { name:"COSMOPOLITAN", mainSpirit:"Цитрусовая водка", theme:"#d67a7a", ingCount:4, story:"Взлетел в 1990-х благодаря сериалу «Секс в большом городе». Кисло-сладкий женский бунт.", ing:["Водка 40 мл","Клюква 30 мл","Лайм 15 мл","Куантро 15 мл"], sensation:"Терпкая клюква и апельсин. Изысканный, стильный, чуть дерзкий.", mix:"Малина", pairing:"Чизкейк, сорбет", tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Роза","Белый шоколад"], ritual:"РИТУАЛ COSMOPOLITAN: Шейк со льдом 10 секунд. Процедите в охлаждённый бокал. Украсьте цедрой." },
+        { name:"BELLINI", mainSpirit:"Просекко", theme:"#eba35f", ingCount:2, story:"Рождён в баре Harry’s в Венеции в 1948. Вдохновлён розовым закатом как картина Беллини.", ing:["Персиковое пюре 50 мл","Просекко 100 мл"], sensation:"Нежный, как утренний туман над каналом. Сладкий персик и щекочущие пузырьки.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], addons:["Клубника","Базилик"], ritual:"РИТУАЛ BELLINI: Персиковое пюре налейте на дно бокала, аккуратно долейте просекко. Не перемешивайте." },
+        { name:"IRISH COFFEE", mainSpirit:"Ирландский виски", theme:"#6f4629", ingCount:3, story:"Спасённые пассажиры лайнера в 1940-х в Ирландии получили виски с кофе.", ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"], sensation:"Горячий кофе, согревающий виски и нежные сливки. Объятие в холодный вечер.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], addons:["Корица","Мускат"], ritual:"РИТУАЛ IRISH COFFEE: В горячий кофе добавьте виски и сахар. Сливки выложите ложкой поверх. Температура: 70°C." },
+        { name:"MOJITO CLASICO", mainSpirit:"Ром", theme:"#8cb87a", ingCount:5, story:"Легенда Гаваны, любимый напиток Хемингуэя. Символ ленивого лета.", ing:["Ром 50 мл","Мята","Лайм","Содовая","Сахар"], sensation:"Мятный ветер с Кубы. Освежает, пьянит, дарит свободу.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], addons:["Маракуйя","Имбирь"], ritual:"РИТУАЛ MOJITO CLASICO: Подавите мяту, лайм и сахар. Лёд, ром, содовая. Перемешайте снизу вверх." },
+        { name:"TEQUILA SUNRISE", mainSpirit:"Текила", theme:"#f09e5c", ingCount:3, story:"Рождён на закате 1970-х в Калифорнии. Рассвет в бокале.", ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"], sensation:"Сладкий апельсин и текила, переходящие в красивый закат из гренадина. Глоток солнца.", mix:"Манго", pairing:"Свинина аднадо", tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], addons:["Халапеньо","Ананас"], ritual:"РИТУАЛ TEQUILA SUNRISE: Лёд, текила, сок. Аккуратно влейте гренадин. Не перемешивайте." },
+        { name:"APEROL SPRITZ", mainSpirit:"Апероль", theme:"#dd8855", ingCount:4, story:"Венецианский ритуал, покоривший мир. Лёгкость, горечь и поцелуй Италии.", ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"], sensation:"Лёгкая горчинка, апельсиновая свежесть и игристое веселье. Идеальный аперитив.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], addons:["Розмарин","Ежевика"], ritual:"РИТУАЛ APEROL SPRITZ: Бокал, лёд, Апероль, просекко, содовая. Украсьте апельсином." },
+        { name:"BLOODY MARY", mainSpirit:"Водка", theme:"#cc4433", ingCount:4, story:"Рождён в парижском баре Harry's, назван в честь королевы Марии Тюдор.", ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"], sensation:"Пряная, солёная, пикантная. Кровь томата и жгучее послевкусие.", mix:"Хрен", pairing:"Бекон, солёные огурцы", tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], addons:["Хрен","Чили"], ritual:"РИТУАЛ BLOODY MARY: Аккуратно взбейте в шейкере с 6 кубиками льда. Подавайте с сельдереем." },
+        { name:"MAI TAI", mainSpirit:"Ром", theme:"#d9a35e", ingCount:5, story:"Создан в 1944 году Виктором Бержероном. Mai Tai означает «всё хорошо».", ing:["Ром 50 мл","Амаретто 15 мл","Ап.ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"], sensation:"Ореховое богатство, фруктовый сад и мощный ром. Полинезийский рай в бокале.", mix:"Маракуйя", pairing:"Курица по-полинезийски", tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], addons:["Маракуйя","Гренадин"], ritual:"РИТУАЛ MAI TAI: Шейк со льдом, перелейте в бокал тики, добавьте лёд. Украсьте мятой." },
+        { name:"DAIQUIRI", mainSpirit:"Ром", theme:"#c9b14f", ingCount:3, story:"Кубинский коктейль, любимый напиток Хемингуэя. Ром, лайм и сахар.", ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"], sensation:"Кисло-сладкая честность рома и лайма. Ничего лишнего, только чистая страсть.", mix:"Клубника", pairing:"Морепродукты", tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], addons:["Ваниль","Манго"], ritual:"РИТУАЛ DAIQUIRI: Шейк со льдом 10 секунд. Процедите в бокал купе. Температура: -3°C. Только шейк, не блендер." },
+        { name:"JÄGER SOUR", mainSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, story:"Кислый лимон балансирует травяную горечь Jägermeister.", ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"], sensation:"Неожиданно мягкий и бархатистый, с травяным сердцем и цитрусовой свежестью.", mix:"Имбирный эль", pairing:"Утиная грудка", tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], addons:["Имбирь","Розмарин"], ritual:"РИТУАЛ JÄGER SOUR: Шейк со льдом 10 секунд. Процедите в рокс. Температура: 0°C." },
+        { name:"JÄGER GINGER", mainSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, story:"Пряный имбирь и 56 трав — штормовая свежесть.", ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"], sensation:"Пряный имбирь танцует с травами, оставляя долгое согревающее послевкусие.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], addons:["Халапеньо","Корица"], ritual:"РИТУАЛ JÄGER GINGER: Хайбол со льдом, Jäger, сок лайма, имбирное пиво. Украсьте лаймом." },
+        { name:"JÄGER ESPRESSO", mainSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, story:"Союз кофе и 56 трав — ночной страж Баварии.", ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"], sensation:"Эспрессо и 56 трав. Кофеин и алкоголь сливаются в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], addons:["Солёная карамель","Амаретто"], ritual:"РИТУАЛ JÄGER ESPRESSO: Шейк со льдом, процедите. Украсьте тремя зёрнами кофе." },
+        { name:"SIDECAR", mainSpirit:"Коньяк", theme:"#bd784a", ingCount:3, story:"Изобретён в Париже после Первой мировой войны. Назван в честь мотоциклетной коляски.", ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"], sensation:"Согревающий, элегантный, с богатым ароматом коньяка и лимонной цедрой. Коктейль для размышлений.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], addons:["Медовый сироп","Апельсиновая цедра"], ritual:"РИТУАЛ SIDECAR: Сделайте сахарный ободок. В шейкере со льдом взбейте коньяк, трипл сек и лимонный сок. Процедите. Температура: -1°C." },
+        { name:"STINGER JÄGER", mainSpirit:"Jägermeister", theme:"#70964a", ingCount:2, story:"Мятный шлейф встречается с травами Jägermeister — коктейль, напоминающий зимний лес.", ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"], sensation:"Мятно-травяной мороз, который окутывает и освежает. Как глоток северного ветра.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], addons:["Шоколад","Свежая мята","Ваниль"], ritual:"РИТУАЛ STINGER JÄGER: В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 12 секунд. Процедите. Температура: 0°C." },
+        { name:"CAIPIRINHA", mainSpirit:"Кашаса", theme:"#8aa855", ingCount:4, story:"Национальный бразильский коктейль, рождённый в штате Сан-Паулу. Символ радости и солнца.", ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 ч.л","Лёд"], sensation:"Лайм, сахар и кашаса. Простой, гениальный, дурманящий. Как карнавал в бокале.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], addons:["Мята","Имбирь","Кокосовый сироп"], ritual:"РИТУАЛ CAIPIRINHA: Лайм нарежьте дольками, положите в стакан с сахаром, подавите мадлером. Заполните стакан льдом, залейте кашасой. Энергично перемешайте. Температура: -2°C." },
+        { name:"CLOVER CLUB", mainSpirit:"Джин", theme:"#d9876c", ingCount:5, story:"Филадельфия, 1880-е. Изысканный клубничный коктейль для настоящих леди и джентльменов.", ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина"], sensation:"Малиновый шёлк, нежный джин и лимон. Женственный, изысканный, как викторианский роман.", mix:"Розовая вода", pairing:"Ягодный тарт, козий сыр", tracks:["Ella Fitzgerald — Summertime","Billie Holiday — Lover Man","Nina Simone — I Put a Spell on You"], addons:["Свежая малина","Гренадин","Ваниль"], ritual:"РИТУАЛ CLOVER CLUB: В шейкере разомните малину, добавьте джин, лимон, сироп и белок. Сухой шейк 15 секунд, затем со льдом. Двойной стрейнер. Подавайте в бокале купе." }
+    ];
+
+    const simpleList = allCocktails.filter(c => c.ingCount <= 4);
+    const complexList = allCocktails.filter(c => c.ingCount >= 5);
+    let currentMode = 'simple';
+
+    function render() {
+        const container = document.getElementById('drinksContainer');
+        const data = currentMode === 'simple' ? simpleList : complexList;
+        const counterSpan = document.getElementById('cocktailCounter');
+        const pageName = currentMode === 'simple' ? "Лаконичные коктейли (до 4 ингредиентов)" : "Многосоставные рецепты (5+ ингредиентов)";
+        counterSpan.innerHTML = `${pageName} — всего рецептов: ${data.length}`;
+        
+        let html = '';
+        data.forEach(c => {
+            const ingHtml = c.ing.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
+            const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
+            const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
+            const accent = c.theme || '#d85f30';
+            html += `<div class="drink-card" style="--accent: ${accent};">
+                <div class="title-mural" style="border-bottom-color: ${accent};">
+                    <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
+                    <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.mainSpirit)}</div>
+                </div>
+                <div class="drink-content">
+                    <div class="ingredients">${ingHtml}</div>
+                    <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
+                    <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
+                    <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
+                    <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
+                    <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
+                    <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
+                    <button class="recipe-btn" data-ritual="${escapeHtml(c.ritual)}" data-name="${escapeHtml(c.name)}" data-accent="${accent}" style="background: linear-gradient(95deg, ${accent}bb, ${accent}55);"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        attachModalEvents();
+    }
+    
+    function attachModalEvents() {
+        const modal = document.getElementById('modalRecipe');
+        const close = document.getElementById('closeModal');
+        const modalName = document.getElementById('modalName');
+        const modalBody = document.getElementById('modalBody');
+        const modalContent = document.getElementById('modalContent');
+        document.querySelectorAll('.recipe-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modalName.innerText = btn.getAttribute('data-name');
+                modalBody.innerHTML = `<strong>РИТУАЛ ПРИГОТОВЛЕНИЯ:</strong><br>${btn.getAttribute('data-ritual')}`;
+                modalContent.style.borderLeftColor = btn.getAttribute('data-accent') || '#e06836';
+                modal.style.display = 'flex';
+            });
+        });
+        close.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+    }
+    
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentMode = btn.getAttribute('data-page');
+            render();
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+    
+    render();
+    document.querySelector('.nav-btn[data-page="simple"]').classList.add('active');
+</script>
+</body>
+</html>
