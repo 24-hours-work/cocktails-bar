@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>SIN & SPIRITS | Лаконичная и глубокая миксология</title>
+    <!-- Фавикон в виде бокала с призраком -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23e28248' stroke='%23ffbb77' stroke-width='1.5' d='M35,20 L65,20 L70,38 L30,38 Z M50,38 L50,60 M40,60 L60,60 L65,78 L35,78 Z M45,78 L45,90 L55,90 L55,78' /%3E%3Ccircle fill='%23fff2d0' cx='50' cy='50' r='12' /%3E%3Cpath fill='%23442418' d='M47,47 L53,47 L53,53 L47,53 Z' /%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -211,7 +213,7 @@
 <div id="modalRecipe" class="modal"><div class="modal-content" id="modalContent"><span class="close-modal" id="closeModal">&times;</span><h3 id="modalName" style="font-family:'Playfair Display';">Ритуал</h3><div id="modalBody" style="margin-top:1rem; line-height:1.5;"></div></div></div>
 
 <script>
-    // =======================  ВСЕ КОКТЕЙЛИ с полными названиями треков (автор — название) =======================
+    // =======================  ВСЕ КОКТЕЙЛИ с полными названиями треков =======================
     const allCocktails = [
         { name:"NEGRONI", mainSpirit:"Джин", theme:"#cc5533", ingCount:3, story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], sensation:"Горькое томление, как первый укус тёмного шоколада. Травяной поцелуй, который остаётся с тобой.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], ritual:"РИТУАЛ NEGRONI: Используйте большой куб льда. В стакан Old Fashioned влейте все три ингредиента равными частями. Размешивайте барной ложкой 25-30 секунд. Температура подачи: -5°C. Выжмите цедру апельсина над бокалом и протрите край. Никогда не взбалтывайте." },
         { name:"MOSCOW MULE", mainSpirit:"Водка", theme:"#c4a245", ingCount:3, story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво. Медная кружка стала символом.", ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], sensation:"Хрустящий имбирный электрический удар, который пробегает по языку и заставляет улыбаться.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки, солёные крендельки", tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], addons:["Клубника с базиликом","Халапеньо"], ritual:"РИТУАЛ MOSCOW MULE: Используйте медную кружку. Наполните её колотым льдом. Влейте водку и сок лайма, затем аккуратно долейте имбирное пиво. Не перемешивайте. Украсьте мятой и лаймом." },
