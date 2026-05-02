@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>SIN & SPIRITS | Лаконичная и глубокая миксология</title>
-    <!-- Фавикон -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23e28248' stroke='%23ffbb77' stroke-width='1.5' d='M35,20 L65,20 L70,38 L30,38 Z M50,38 L50,60 M40,60 L60,60 L65,78 L35,78 Z M45,78 L45,90 L55,90 L55,78' /%3E%3Ccircle fill='%23fff2d0' cx='50' cy='50' r='12' /%3E%3Cpath fill='%23442418' d='M47,47 L53,47 L53,53 L47,53 Z' /%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -63,7 +62,6 @@
             margin-top: 0.8rem;
             font-size: 0.85rem;
         }
-        /* Стили для фильтров и поиска */
         .filters-section {
             background: #1f0e08aa;
             border-radius: 2rem;
@@ -92,9 +90,7 @@
             font-size: 1rem;
             font-family: 'Inter', sans-serif;
         }
-        .search-input::placeholder {
-            color: #a57a60;
-        }
+        .search-input::placeholder { color: #a57a60; }
         .suggestions {
             position: absolute;
             top: 100%;
@@ -113,12 +109,8 @@
             cursor: pointer;
             border-bottom: 1px solid #bc4f2a40;
         }
-        .suggestion-item:hover {
-            background: #e2824833;
-        }
-        .filter-group {
-            margin-bottom: 1rem;
-        }
+        .suggestion-item:hover { background: #e2824833; }
+        .filter-group { margin-bottom: 1rem; }
         .filter-title {
             font-size: 0.85rem;
             text-transform: uppercase;
@@ -181,7 +173,6 @@
             box-shadow: 0 0 12px #e67541;
         }
         .nav-btn:hover:not(.active) { background: #4f2a1aaa; transform: translateY(-2px); }
-        /* Стили для блока с магазинами */
         .shop-block {
             background: #2a160ee6;
             border-left: 5px solid #e28248;
@@ -190,18 +181,30 @@
             margin: 1rem 0 1rem 0;
             font-size: 0.95rem;
         }
-        .shop-block p { margin: 0.3rem 0; }
-        .shop-block a {
-            color: #e28248;
-            text-decoration: none;
-            font-weight: 600;
+        .shop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
         }
-        .shop-block a:hover { text-decoration: underline; }
-        .drinks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
-            margin-top: 1rem;
+        .shop-item {
+            background: #1f0e08aa;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            border-left: 3px solid #e28248;
+        }
+        .shop-name { font-weight: bold; color: #ffbe82; }
+        .shop-address, .shop-hours { font-size: 0.85rem; margin-top: 0.2rem; }
+        .shop-route {
+            display: inline-block;
+            margin-top: 0.5rem;
+            background: #e28248;
+            color: #1a0a05;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-decoration: none;
         }
         .drink-card {
             border-radius: 1.8rem;
@@ -268,9 +271,7 @@
             transition: 0.2s;
             color: #ffbe82;
         }
-        .favorite-btn.active {
-            color: #ff3366;
-        }
+        .favorite-btn.active { color: #ff3366; }
         .drink-content { padding: 1.3rem; }
         .ingredients { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
         .ingredient-badge { background: #21100b; padding: 0.2rem 0.9rem; border-radius: 30px; font-size: 0.75rem; border-left: 2px solid var(--accent, #dd5f2c); color: #fcdbb8; }
@@ -291,19 +292,24 @@
         .addons-section { background: #130906aa; border-radius: 1rem; padding: 0.7rem; margin-top: 0.6rem; border: 0.5px solid var(--accent, #bb532e); }
         .addons-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .addon-item { background: #26140e; border-radius: 40px; padding: 0.2rem 0.7rem; font-size: 0.7rem; color: #ffdebc; }
-        .recipe-btn {
+        .button-group {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        .recipe-btn, .checklist-btn {
             border: none;
             border-radius: 2rem;
             padding: 0.7rem;
             font-weight: 700;
-            width: 100%;
-            margin-top: 0.8rem;
+            flex: 1;
             cursor: pointer;
             color: #ffefdf;
             transition: 0.2s;
-            background: linear-gradient(95deg, #a24322, #7a2f12);
         }
-        .recipe-btn:hover { filter: brightness(1.05); box-shadow: 0 0 12px var(--accent, #e77342); }
+        .recipe-btn { background: linear-gradient(95deg, #a24322, #7a2f12); }
+        .checklist-btn { background: #2a160eaa; border: 1px solid #e28248; }
+        .recipe-btn:hover, .checklist-btn:hover { filter: brightness(1.05); box-shadow: 0 0 12px var(--accent, #e77342); }
         .modal {
             display: none;
             position: fixed;
@@ -339,29 +345,38 @@
             margin-bottom: 0.5rem;
             flex-wrap: wrap;
         }
-        .footer-links a {
-            color: #e28248;
-            text-decoration: none;
-        }
+        .footer-links a { color: #e28248; text-decoration: none; }
         .counter-note { text-align: center; font-size: 0.9rem; border-top: 1px solid #75482e; padding-top: 1rem; margin-top: 1rem; width: 100%; font-weight: 600;}
+        /* Исправленные стили для кнопок модального окна и иконок */
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        .modal-btn {
+            background: linear-gradient(95deg, #bd522d, #8d3516);
+            border: 1px solid #ffaa77;
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .modal-btn.danger {
+            background: none;
+            border: 1px solid #ff6666;
+            color: #ff6666;
+        }
+        .modal-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
+        /* Иконки без фона */
+        .fas, .far { background: transparent; }
         @media (max-width: 760px) { 
             .title-mural h2 { font-size: 1.8rem; } 
             .nav-btn { padding: 0.4rem 1rem; font-size: 0.8rem;}
         }
     </style>
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109000696', 'ym');
-    
-        ym(109000696, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/109000696" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <div class="container">
@@ -371,7 +386,6 @@
         <div class="badge-bar">Кнопка «Полный ритуал» раскроет секрет приготовления</div>
     </div>
 
-    <!-- Блок с поиском и фильтрами -->
     <div class="filters-section">
         <div class="search-group">
             <div class="search-title">🔍 Поиск коктейля</div>
@@ -407,15 +421,12 @@
             <button class="filter-btn reset-filters" id="resetFilters">Сбросить все фильтры</button>
             <button class="filter-btn" id="randomCocktailBtn">🍀 Случайный коктейль</button>
             <button class="filter-btn" id="showFavoritesBtn">❤️ Избранное (<span id="favoritesCount">0</span>)</button>
+            <button class="filter-btn" id="showChecklistBtn">🛒 Список покупок (<span id="checklistCount">0</span>)</button>
         </div>
     </div>
 
     <div class="shop-block">
-        <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">🍸 <strong>Где купить всё для коктейля в Троицке</strong></p>
-        <p>📍 <strong>«Красное & Белое»</strong> — алкоголь, ликёры, соки, тоник.<br>🕒 9:00–22:05 | Центральная ул., 2</p>
-        <p>🛒 <strong>«Ярче!»</strong> — свежие лайм, мята, апельсины, лёд, кокосовое молоко.<br>🕒 8:00–22:00 | Центральная ул., 2 (вход рядом с КБ)</p>
-        <p style="font-size: 0.85rem; margin-top: 0.5rem;">💡 Совет: сначала зайдите в «Красное & Белое» за алкоголем, потом на 2 метра в «Ярче!» за свежими продуктами.</p>
-        <p style="margin-top: 0.5rem;"><a href="https://yandex.ru/maps/?text=Троицк+Центральная+2" target="_blank" id="routeToShopBtn" style="display: inline-flex; align-items: center; gap: 5px; background: #e28248; color: #1a0a05; padding: 0.3rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: bold; text-decoration: none;">📱 Проложить маршрут до КБ</a></p>
+        <div class="shop-list" id="shopList"></div>
     </div>
 
     <div class="page-nav">
@@ -438,38 +449,207 @@
 
 <div id="modalRecipe" class="modal"><div class="modal-content" id="modalContent"><span class="close-modal" id="closeModal">&times;</span><h3 id="modalName" style="font-family:'Playfair Display';">Ритуал</h3><div id="modalBody" style="margin-top:1rem; line-height:1.5;"></div></div></div>
 
+<div id="modalChecklist" class="modal checklist-modal"><div class="modal-content" id="modalChecklistContent"><span class="close-modal" id="closeChecklistModal">&times;</span><h3>🛒 Список покупок</h3><div id="checklistBody" class="ingredient-list"></div><div class="modal-buttons"><button id="clearChecklistBtn" class="modal-btn danger">Очистить список</button><button id="closeChecklistBtn" class="modal-btn">Закрыть</button></div></div></div>
+
 <script>
-    // =======================  ВСЕ КОКТЕЙЛИ (ПОЛНЫЙ СПИСОК) =======================
+    // -----  ВСЕ КОКТЕЙЛИ (МИЛЛИЛИТРЫ В РЕЦЕПТАХ) -----
     const allCocktails = [
-        { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], sensation:"Горькое томление, как первый укус тёмного шоколада.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], ritual:"Наполните стакан большим кубиком льда. Влейте равные части джина, Кампари и красного вермута. Размешайте ложкой 20-30 секунд. Выжмите над бокалом апельсиновую корку." },
-        { name:"MOSCOW MULE", nameRu:"Московский мул", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво.", ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], sensation:"Хрустящий имбирный удар, который пробегает по языку.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки", tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], addons:["Клубника с базиликом","Халапеньо"], ritual:"В медную кружку насыпьте колотый лёд. Влейте водку и сок лайма, долейте имбирное пиво. Украсьте мятой и долькой лайма." },
-        { name:"OLD FASHIONED", nameRu:"Олд фешен", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", story:"Самый старый коктейль в мире, символ мужской силы.", ing:["Бурбон 60 мл","Кубик сахара","Ангостура 2 дэш"], sensation:"Тёплые ноты карамели и дуба.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], addons:["Вишня в бренди","Ореховый ликёр"], ritual:"Положите в стакан кубик сахара, капните Ангостуру и немного воды. Разомните. Добавьте большой куб льда, залейте бурбон. Мешайте 30 секунд." },
-        { name:"PIÑA COLADA", nameRu:"Пина колада", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", story:"Создан в Пуэрто-Рико как гимн карибской свободе.", ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"], sensation:"Кокосовые облака и ананасовая нежность.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], addons:["Маракуйя","Кокосовая стружка"], ritual:"В блендер положите ром, кокосовое молоко, ананасовый сок и стакан льда. Взбивайте 20 секунд. Украсьте ананасом." },
-        { name:"WHISKEY SOUR", nameRu:"Виски сауэр", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", story:"Моряки добавляли цитрус, чтобы смягчить резкий виски.", ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"], sensation:"Шёлковая пенная шапка и яркая кислинка.", mix:"Красное вино", pairing:"Бекон, карпаччо", tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], addons:["Красное вино","Солёная карамель"], ritual:"В шейкере смешайте бурбон, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Процедите." },
-        { name:"JÄGER BOMB", nameRu:"Егерь бомба", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", story:"Немецкий травяной ликёр для охотников.", ing:["Jägermeister 50 мл","Энергетик 150 мл"], sensation:"Травяной взрыв, а затем эйфория.", mix:"Апельсиновый сок", pairing:"Острые наггетсы", tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], addons:["Лайм","Мята"], ritual:"Охладите Jägermeister в морозилке. Налейте в стакан энергетик. Сбросьте стопку с Jäger в стакан и выпейте залпом." },
-        { name:"ESPRESSO MARTINI", nameRu:"Эспрессо мартини", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", story:"Коктейль, который будит и пьянит.", ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"], sensation:"Плотная кофейная пенка, бодрость и нежность.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], addons:["Белый шоколад","Чили с корицей"], ritual:"В шейкер со льдом налейте водку, свежий эспрессо и кофейный ликёр. Встряхивайте 10-12 секунд. Процедите. Украсьте тремя зёрнами кофе." },
-        { name:"MOJITO ROYALE", nameRu:"Мохито рояль", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", story:"Гаванская магия встречается с венецианским игристым.", ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"], sensation:"Взрыв свежей мяты сменяется пузырьками.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], addons:["Виноград","Грушевый нектар"], ritual:"Разомните мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем долейте просекко." },
-        { name:"GIN BASIL SMASH", nameRu:"Джин базилик смаш", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", story:"Берлинский травяной хит 2008 года.", ing:["Джин 60 мл","Базилик 10 л","Лимонный сок 30 мл","Сироп 20 мл"], sensation:"Перечный хруст базилика и хвойная свежесть джина.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], addons:["Огурец","Клубника"], ritual:"Разомните базилик с лимонным соком и сиропом. Добавьте джин и лёд. Встряхивайте 12 секунд." },
-        { name:"MARGARITA", nameRu:"Маргарита", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", story:"Создан в Мексике в честь танцовщицы Маргариты.", ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"], sensation:"Солёный край, огонь агавы и взрыв лайма.", mix:"Маракуйя", pairing:"Тако, гуакамоле", tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], addons:["Халапеньо","Кумкват"], ritual:"Край бокала окуните в соль. В шейкере со льдом смешайте текилу, апельсиновый ликёр и сок лайма. Встряхивайте 10 секунд." },
-        { name:"LEMON DROP", nameRu:"Лемон дроп", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", story:"Сладкий лимонный соблазн для дерзких.", ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"], sensation:"Кисло-сладкий взрыв, от которого перехватывает дыхание.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Имбирный сироп","Лаванда"], ritual:"Бокал смажьте лимоном и окуните в сахар. В шейкере со льдом смешайте водку, апельсиновый ликёр и лимонный сок. Процедите. Пейте залпом." },
-        { name:"FRENCH 75", nameRu:"Френч 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", story:"Назван в честь французской пушки калибра 75 мм.", ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"], sensation:"Нежный джин и лимон, усиленные шампанским.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], addons:["Бузина","Розмарин"], ritual:"В шейкере со льдом смешайте джин, лимонный сок и сироп. Перелейте в бокал. Сверху долейте шампанское." },
-        { name:"COSMOPOLITAN", nameRu:"Космополитен", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", story:"Взлетел в 1990-х благодаря сериалу «Секс в большом городе».", ing:["Водка 40 мл","Клюква 30 мл","Лайм 15 мл","Куантро 15 мл"], sensation:"Терпкая клюква и апельсин.", mix:"Малина", pairing:"Чизкейк, сорбет", tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Роза","Белый шоколад"], ritual:"В шейкере со льдом смешайте водку, клюквенный сок, сок лайма и апельсиновый ликёр. Встряхивайте 10 секунд. Процедите. Украсьте цедрой." },
-        { name:"BELLINI", nameRu:"Беллини", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", story:"Рождён в баре Harry’s в Венеции в 1948.", ing:["Персиковое пюре 50 мл","Просекко 100 мл"], sensation:"Нежный, как утренний туман над каналом.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], addons:["Клубника","Базилик"], ritual:"Налейте на дно бокала персиковое пюре. Аккуратно долейте просекко." },
-        { name:"IRISH COFFEE", nameRu:"Айриш кофе", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", story:"Спасённые пассажиры лайнера получили виски с кофе.", ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"], sensation:"Горячий кофе, согревающий виски и нежные сливки.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], addons:["Корица","Мускат"], ritual:"В горячий кофе добавьте виски и сахар по вкусу. Сверху выложите ложкой взбитые сливки." },
-        { name:"TEQUILA SUNRISE", nameRu:"Текила санрайз", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", story:"Рассвет в бокале, рождённый в Калифорнии.", ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"], sensation:"Сладкий апельсин и красивый закат из гренадина.", mix:"Манго", pairing:"Свинина аднадо", tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], addons:["Халапеньо","Ананас"], ritual:"В стакан со льдом налейте текилу и апельсиновый сок. Аккуратно по стенке влейте красный сироп — он опустится на дно. Не перемешивайте." },
-        { name:"APEROL SPRITZ", nameRu:"Апероль шприц", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", story:"Венецианский ритуал, покоривший мир.", ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"], sensation:"Лёгкая горчинка и игристое веселье.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], addons:["Розмарин","Ежевика"], ritual:"Наполните большой бокал льдом. Влейте Апероль, просекко и содовую. Украсьте долькой апельсина." },
-        { name:"BLOODY MARY", nameRu:"Кровавая мэри", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", story:"Назван в честь королевы Марии Тюдор.", ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"], sensation:"Пряная, солёная, пикантная.", mix:"Хрен", pairing:"Бекон, солёные огурцы", tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], addons:["Хрен","Чили"], ritual:"В шейкере с несколькими кубиками льда аккуратно смешайте водку, томатный сок, по капле вустерского соуса и табаско. Перелейте в стакан. Украсьте сельдереем." },
-        { name:"DAIQUIRI", nameRu:"Дайкири", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", story:"Кубинский коктейль, любимый напиток Хемингуэя.", ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"], sensation:"Кисло-сладкая честность рома и лайма.", mix:"Клубника", pairing:"Морепродукты", tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], addons:["Ваниль","Манго"], ritual:"В шейкере со льдом смешайте ром, сок лайма и сахарный сироп. Встряхивайте 8-10 секунд. Процедите." },
-        { name:"JÄGER SOUR", nameRu:"Егерь сауэр", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", story:"Лимон балансирует травяную горечь Jägermeister.", ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"], sensation:"Мягкий и бархатистый, с травяным сердцем.", mix:"Имбирный эль", pairing:"Утиная грудка", tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], addons:["Имбирь","Розмарин"], ritual:"В шейкере со льдом смешайте Jägermeister, лимонный сок и сироп. Встряхивайте 10 секунд. Процедите." },
-        { name:"JÄGER GINGER", nameRu:"Егерь джинджер", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", story:"Пряный имбирь и 56 трав.", ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"], sensation:"Пряный имбирь танцует с травами.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], addons:["Халапеньо","Корица"], ritual:"В стакан со льдом налейте Jägermeister и сок лайма. Долейте имбирное пиво. Украсьте долькой лайма." },
-        { name:"JÄGER ESPRESSO", nameRu:"Егерь эспрессо", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", story:"Союз кофе и 56 трав — ночной страж Баварии.", ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"], sensation:"Эспрессо и 56 трав в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], addons:["Солёная карамель","Амаретто"], ritual:"В шейкере со льдом смешайте Jägermeister, свежий эспрессо и сироп. Процедите. Украсьте зёрнами кофе." },
-        { name:"SIDECAR", nameRu:"Сайдкар", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", story:"Изобретён в Париже после войны. Назван в честь мотоциклетной коляски.", ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"], sensation:"Согревающий, элегантный, с ароматом коньяка.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], addons:["Медовый сироп","Апельсиновая цедра"], ritual:"Сделайте сахарный ободок на бокале (смажьте лимоном и окуните в сахар). В шейкере со льдом смешайте коньяк, апельсиновый ликёр и лимонный сок. Процедите." },
-        { name:"STINGER JÄGER", nameRu:"Стингер егерь", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", story:"Мятный шлейф встречается с травами Jägermeister.", ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"], sensation:"Мятно-травяной мороз, который окутывает.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], addons:["Шоколад","Свежая мята","Ваниль"], ritual:"В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 10 секунд. Процедите." },
-        { name:"CAIPIRINHA", nameRu:"Кайпиринья", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", story:"Национальный бразильский коктейль, символ радости.", ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 ч.л","Лёд"], sensation:"Лайм, сахар и кашаса. Простой, гениальный.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], addons:["Мята","Имбирь","Кокосовый сироп"], ritual:"Нарежьте лайм дольками, положите в стакан с сахаром и разомните. Заполните стакан льдом, залейте кашасой. Энергично перемешайте." },
-        { name:"LONG ISLAND", nameRu:"Лонг айленд", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", story:"Изобретён в 1970-х в Лонг-Айленде.", ing:["Водка 20 мл","Джин 20 мл","Ром 20 мл","Текила 20 мл","Трипл сек 20 мл","Кола 50 мл","Лимон 30 мл"], sensation:"Обманчивая мягкость колы скрывает шторм.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], addons:["Клюква","Имбирь"], ritual:"В высокий стакан со льдом влейте по 20 мл водки, джина, рома, текилы и ликёра. Добавьте сок лимона и долейте колой." },
-        { name:"MOJITO CLASICO", nameRu:"Мохито классический", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", story:"Легенда Гаваны, любимый напиток Хемингуэя.", ing:["Ром 50 мл","Мята 10 листьев","Лайм 1/2 шт","Содовая 50 мл","Сахар 2 ч.л"], sensation:"Мятный ветер с Кубы. Освежает и пьянит.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], addons:["Маракуйя","Имбирь"], ritual:"Разомните мяту, лайм и сахар. Наполните стакан льдом, влейте ром и содовую. Аккуратно перемешайте снизу вверх." },
-        { name:"MAI TAI", nameRu:"Май тай", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", story:"Создан в 1944 году. Mai Tai означает «всё хорошо».", ing:["Ром 50 мл","Амаретто 15 мл","Апельсиновый ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"], sensation:"Ореховое богатство и мощный ром.", mix:"Маракуйя", pairing:"Курица по-полинезийски", tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], addons:["Маракуйя","Гренадин"], ritual:"В шейкере со льдом смешайте ром, амаретто, апельсиновый ликёр, сок лайма и сироп. Перелейте в стакан, добавьте ещё льда. Украсьте мятой." },
-        { name:"CLOVER CLUB", nameRu:"Кловер клаб", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", story:"Филадельфия, 1880-е. Изысканный клубничный коктейль.", ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"], sensation:"Малиновый шёлк, нежный джин и лимон.", mix:"Розовая вода", pairing:"Ягодный тарт, козий сыр", tracks:["Ella Fitzgerald — Summertime","Billie Holiday — Lover Man","Nina Simone — I Put a Spell on You"], addons:["Свежая малина","Гренадин","Ваниль"], ritual:"В шейкере разомните малину. Добавьте джин, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Дважды процедите." }
+        { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", 
+          story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", 
+          ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], 
+          sensation:"Горькое томление, как первый укус тёмного шоколада.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", 
+          tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], 
+          addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], 
+          ritual:"Наполните стакан большим кубиком льда. Влейте равные части джина, Кампари и красного вермута. Размешайте ложкой 20-30 секунд. Выжмите над бокалом апельсиновую корку." },
+        { name:"MOSCOW MULE", nameRu:"Московский мул", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", 
+          story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво.", 
+          ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], 
+          sensation:"Хрустящий имбирный удар, который пробегает по языку.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки", 
+          tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], 
+          addons:["Клубника с базиликом","Халапеньо"], 
+          ritual:"В медную кружку насыпьте колотый лёд. Влейте водку и сок лайма, долейте имбирное пиво. Украсьте мятой и долькой лайма." },
+        { name:"OLD FASHIONED", nameRu:"Олд фешен", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", 
+          story:"Самый старый коктейль в мире, символ мужской силы.", 
+          ing:["Бурбон 60 мл","Кубик сахара","Ангостура 2 дэш"], 
+          sensation:"Тёплые ноты карамели и дуба.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", 
+          tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], 
+          addons:["Вишня в бренди","Ореховый ликёр"], 
+          ritual:"Положите в стакан кубик сахара, капните Ангостуру и немного воды. Разомните. Добавьте большой куб льда, залейте бурбон. Мешайте 30 секунд." },
+        { name:"PIÑA COLADA", nameRu:"Пина колада", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", 
+          story:"Создан в Пуэрто-Рико как гимн карибской свободе.", 
+          ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"], 
+          sensation:"Кокосовые облака и ананасовая нежность.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", 
+          tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], 
+          addons:["Маракуйя","Кокосовая стружка"], 
+          ritual:"В блендер положите ром, кокосовое молоко, ананасовый сок и стакан льда. Взбивайте 20 секунд. Украсьте ананасом." },
+        { name:"WHISKEY SOUR", nameRu:"Виски сауэр", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", 
+          story:"Моряки добавляли цитрус, чтобы смягчить резкий виски.", 
+          ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"], 
+          sensation:"Шёлковая пенная шапка и яркая кислинка.", mix:"Красное вино", pairing:"Бекон, карпаччо", 
+          tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], 
+          addons:["Красное вино","Солёная карамель"], 
+          ritual:"В шейкере смешайте бурбон, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Процедите." },
+        { name:"JÄGER BOMB", nameRu:"Егерь бомба", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", 
+          story:"Немецкий травяной ликёр для охотников.", ing:["Jägermeister 50 мл","Энергетик 150 мл"], 
+          sensation:"Травяной взрыв, а затем эйфория.", mix:"Апельсиновый сок", pairing:"Острые наггетсы", 
+          tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], 
+          addons:["Лайм","Мята"], 
+          ritual:"Охладите Jägermeister в морозилке. Налейте в стакан энергетик. Сбросьте стопку с Jäger в стакан и выпейте залпом." },
+        { name:"ESPRESSO MARTINI", nameRu:"Эспрессо мартини", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", 
+          story:"Коктейль, который будит и пьянит.", ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"], 
+          sensation:"Плотная кофейная пенка, бодрость и нежность.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", 
+          tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], 
+          addons:["Белый шоколад","Чили с корицей"], 
+          ritual:"В шейкер со льдом налейте водку, свежий эспрессо и кофейный ликёр. Встряхивайте 10-12 секунд. Процедите. Украсьте тремя зёрнами кофе." },
+        { name:"MOJITO ROYALE", nameRu:"Мохито рояль", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", 
+          story:"Гаванская магия встречается с венецианским игристым.", 
+          ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"], 
+          sensation:"Взрыв свежей мяты сменяется пузырьками.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", 
+          tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], 
+          addons:["Виноград","Грушевый нектар"], 
+          ritual:"Разомните мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем долейте просекко." },
+        { name:"GIN BASIL SMASH", nameRu:"Джин базилик смаш", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", 
+          story:"Берлинский травяной хит 2008 года.", 
+          ing:["Джин 60 мл","Базилик 10 л","Лимонный сок 30 мл","Сироп 20 мл"], 
+          sensation:"Перечный хруст базилика и хвойная свежесть джина.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", 
+          tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], 
+          addons:["Огурец","Клубника"], 
+          ritual:"Разомните базилик с лимонным соком и сиропом. Добавьте джин и лёд. Встряхивайте 12 секунд." },
+        { name:"MARGARITA", nameRu:"Маргарита", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", 
+          story:"Создан в Мексике в честь танцовщицы Маргариты.", 
+          ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"], 
+          sensation:"Солёный край, огонь агавы и взрыв лайма.", mix:"Маракуйя", pairing:"Тако, гуакамоле", 
+          tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], 
+          addons:["Халапеньо","Кумкват"], 
+          ritual:"Край бокала окуните в соль. В шейкере со льдом смешайте текилу, апельсиновый ликёр и сок лайма. Встряхивайте 10 секунд." },
+        { name:"LEMON DROP", nameRu:"Лемон дроп", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", 
+          story:"Сладкий лимонный соблазн для дерзких.", 
+          ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"], 
+          sensation:"Кисло-сладкий взрыв, от которого перехватывает дыхание.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", 
+          tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], 
+          addons:["Имбирный сироп","Лаванда"], 
+          ritual:"Бокал смажьте лимоном и окуните в сахар. В шейкере со льдом смешайте водку, апельсиновый ликёр и лимонный сок. Процедите. Пейте залпом." },
+        { name:"FRENCH 75", nameRu:"Френч 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", 
+          story:"Назван в честь французской пушки калибра 75 мм.", 
+          ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"], 
+          sensation:"Нежный джин и лимон, усиленные шампанским.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", 
+          tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], 
+          addons:["Бузина","Розмарин"], 
+          ritual:"В шейкере со льдом смешайте джин, лимонный сок и сироп. Перелейте в бокал. Сверху долейте шампанское." },
+        { name:"COSMOPOLITAN", nameRu:"Космополитен", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", 
+          story:"Взлетел в 1990-х благодаря сериалу «Секс в большом городе».", 
+          ing:["Водка 40 мл","Клюква 30 мл","Лайм 15 мл","Куантро 15 мл"], 
+          sensation:"Терпкая клюква и апельсин.", mix:"Малина", pairing:"Чизкейк, сорбет", 
+          tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], 
+          addons:["Роза","Белый шоколад"], 
+          ritual:"В шейкере со льдом смешайте водку, клюквенный сок, сок лайма и апельсиновый ликёр. Встряхивайте 10 секунд. Процедите. Украсьте цедрой." },
+        { name:"BELLINI", nameRu:"Беллини", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", 
+          story:"Рождён в баре Harry’s в Венеции в 1948.", ing:["Персиковое пюре 50 мл","Просекко 100 мл"], 
+          sensation:"Нежный, как утренний туман над каналом.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", 
+          tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], 
+          addons:["Клубника","Базилик"], 
+          ritual:"Налейте на дно бокала персиковое пюре. Аккуратно долейте просекко." },
+        { name:"IRISH COFFEE", nameRu:"Айриш кофе", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", 
+          story:"Спасённые пассажиры лайнера получили виски с кофе.", ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"], 
+          sensation:"Горячий кофе, согревающий виски и нежные сливки.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", 
+          tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], 
+          addons:["Корица","Мускат"], 
+          ritual:"В горячий кофе добавьте виски и сахар по вкусу. Сверху выложите ложкой взбитые сливки." },
+        { name:"TEQUILA SUNRISE", nameRu:"Текила санрайз", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", 
+          story:"Рассвет в бокале, рождённый в Калифорнии.", ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"], 
+          sensation:"Сладкий апельсин и красивый закат из гренадина.", mix:"Манго", pairing:"Свинина аднадо", 
+          tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], 
+          addons:["Халапеньо","Ананас"], 
+          ritual:"В стакан со льдом налейте текилу и апельсиновый сок. Аккуратно по стенке влейте красный сироп — он опустится на дно. Не перемешивайте." },
+        { name:"APEROL SPRITZ", nameRu:"Апероль шприц", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", 
+          story:"Венецианский ритуал, покоривший мир.", ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"], 
+          sensation:"Лёгкая горчинка и игристое веселье.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", 
+          tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], 
+          addons:["Розмарин","Ежевика"], 
+          ritual:"Наполните большой бокал льдом. Влейте Апероль, просекко и содовую. Украсьте долькой апельсина." },
+        { name:"BLOODY MARY", nameRu:"Кровавая мэри", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", 
+          story:"Назван в честь королевы Марии Тюдор.", ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"], 
+          sensation:"Пряная, солёная, пикантная.", mix:"Хрен", pairing:"Бекон, солёные огурцы", 
+          tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], 
+          addons:["Хрен","Чили"], 
+          ritual:"В шейкере с несколькими кубиками льда аккуратно смешайте водку, томатный сок, по капле вустерского соуса и табаско. Перелейте в стакан. Украсьте сельдереем." },
+        { name:"DAIQUIRI", nameRu:"Дайкири", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", 
+          story:"Кубинский коктейль, любимый напиток Хемингуэя.", ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"], 
+          sensation:"Кисло-сладкая честность рома и лайма.", mix:"Клубника", pairing:"Морепродукты", 
+          tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], 
+          addons:["Ваниль","Манго"], 
+          ritual:"В шейкере со льдом смешайте ром, сок лайма и сахарный сироп. Встряхивайте 8-10 секунд. Процедите." },
+        { name:"JÄGER SOUR", nameRu:"Егерь сауэр", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", 
+          story:"Лимон балансирует травяную горечь Jägermeister.", ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"], 
+          sensation:"Мягкий и бархатистый, с травяным сердцем.", mix:"Имбирный эль", pairing:"Утиная грудка", 
+          tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], 
+          addons:["Имбирь","Розмарин"], 
+          ritual:"В шейкере со льдом смешайте Jägermeister, лимонный сок и сироп. Встряхивайте 10 секунд. Процедите." },
+        { name:"JÄGER GINGER", nameRu:"Егерь джинджер", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", 
+          story:"Пряный имбирь и 56 трав.", ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"], 
+          sensation:"Пряный имбирь танцует с травами.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", 
+          tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], 
+          addons:["Халапеньо","Корица"], 
+          ritual:"В стакан со льдом налейте Jägermeister и сок лайма. Долейте имбирное пиво. Украсьте долькой лайма." },
+        { name:"JÄGER ESPRESSO", nameRu:"Егерь эспрессо", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", 
+          story:"Союз кофе и 56 трав — ночной страж Баварии.", ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"], 
+          sensation:"Эспрессо и 56 трав в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", 
+          tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], 
+          addons:["Солёная карамель","Амаретто"], 
+          ritual:"В шейкере со льдом смешайте Jägermeister, свежий эспрессо и сироп. Процедите. Украсьте зёрнами кофе." },
+        { name:"SIDECAR", nameRu:"Сайдкар", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", 
+          story:"Изобретён в Париже после войны. Назван в честь мотоциклетной коляски.", 
+          ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"], 
+          sensation:"Согревающий, элегантный, с ароматом коньяка.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", 
+          tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], 
+          addons:["Медовый сироп","Апельсиновая цедра"], 
+          ritual:"Сделайте сахарный ободок на бокале (смажьте лимоном и окуните в сахар). В шейкере со льдом смешайте коньяк, апельсиновый ликёр и лимонный сок. Процедите." },
+        { name:"STINGER JÄGER", nameRu:"Стингер егерь", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", 
+          story:"Мятный шлейф встречается с травами Jägermeister.", ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"], 
+          sensation:"Мятно-травяной мороз, который окутывает.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", 
+          tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], 
+          addons:["Шоколад","Свежая мята","Ваниль"], 
+          ritual:"В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 10 секунд. Процедите." },
+        { name:"CAIPIRINHA", nameRu:"Кайпиринья", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", 
+          story:"Национальный бразильский коктейль, символ радости.", ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 ч.л","Лёд"], 
+          sensation:"Лайм, сахар и кашаса. Простой, гениальный.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", 
+          tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], 
+          addons:["Мята","Имбирь","Кокосовый сироп"], 
+          ritual:"Нарежьте лайм дольками, положите в стакан с сахаром и разомните. Заполните стакан льдом, залейте кашасой. Энергично перемешайте." },
+        { name:"LONG ISLAND", nameRu:"Лонг айленд", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", 
+          story:"Изобретён в 1970-х в Лонг-Айленде.", 
+          ing:["Водка 20 мл","Джин 20 мл","Ром 20 мл","Текила 20 мл","Трипл сек 20 мл","Кола 50 мл","Лимон 30 мл"], 
+          sensation:"Обманчивая мягкость колы скрывает шторм.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", 
+          tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], 
+          addons:["Клюква","Имбирь"], 
+          ritual:"В высокий стакан со льдом влейте по 20 мл водки, джина, рома, текилы и ликёра. Добавьте сок лимона и долейте колой." },
+        { name:"MOJITO CLASICO", nameRu:"Мохито классический", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", 
+          story:"Легенда Гаваны, любимый напиток Хемингуэя.", 
+          ing:["Ром 50 мл","Мята","Лайм","Содовая","Сахар"], 
+          sensation:"Мятный ветер с Кубы. Освежает и пьянит.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", 
+          tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], 
+          addons:["Маракуйя","Имбирь"], 
+          ritual:"Разомните мяту, лайм и сахар. Наполните стакан льдом, влейте ром и содовую. Аккуратно перемешайте снизу вверх." },
+        { name:"MAI TAI", nameRu:"Май тай", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", 
+          story:"Создан в 1944 году. Mai Tai означает «всё хорошо».", 
+          ing:["Ром 50 мл","Амаретто 15 мл","Апельсиновый ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"], 
+          sensation:"Ореховое богатство и мощный ром.", mix:"Маракуйя", pairing:"Курица по-полинезийски", 
+          tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], 
+          addons:["Маракуйя","Гренадин"], 
+          ritual:"В шейкере со льдом смешайте ром, амаретто, апельсиновый ликёр, сок лайма и сироп. Перелейте в стакан, добавьте ещё льда. Украсьте мятой." },
+        { name:"CLOVER CLUB", nameRu:"Кловер клаб", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", 
+          story:"Филадельфия, 1880-е. Изысканный клубничный коктейль.", 
+          ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"], 
+          sensation:"Малиновый шёлк, нежный джин и лимон.", mix:"Розовая вода", pairing:"Ягодный тарт, козий сыр", 
+          tracks:["Ella Fitzgerald — Summertime","Billie Holiday — Lover Man","Nina Simone — I Put a Spell on You"], 
+          addons:["Свежая малина","Гренадин","Ваниль"], 
+          ritual:"В шейкере разомните малину. Добавьте джин, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Дважды процедите." }
+    ];
+
+    // --- Данные о магазинах ---
+    const shopLocations = [
+        { name: "«Красное & Белое»", address: "Троицк, Центральная ул., 2", hours: "9:00–22:05" },
+        { name: "«Красное & Белое»", address: "п. Шишкин Лес, 21, корп. 1, 108833", hours: "9:00–22:05" }
     ];
 
     // --- Состояние ---
@@ -478,172 +658,70 @@
     let currentPage = 'all';
     let currentSearch = '';
     let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
-    let cocktailsData = [...allCocktails];
+    let shoppingList = JSON.parse(localStorage.getItem('shoppingList')) || [];
 
-    // --- Работа с избранным ---
-    function toggleFavorite(cocktailName) {
-        if (favorites[cocktailName]) {
-            delete favorites[cocktailName];
-        } else {
-            favorites[cocktailName] = true;
-        }
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        updateFavoritesCount();
-        render(); // обновляем отображение
-    }
-
-    function isFavorite(cocktailName) {
-        return !!favorites[cocktailName];
-    }
-
-    function updateFavoritesCount() {
+    function updateFavoritesCount() { 
         const count = Object.keys(favorites).length;
-        const favoritesCountSpan = document.getElementById('favoritesCount');
-        if (favoritesCountSpan) favoritesCountSpan.innerText = count;
+        const span = document.getElementById('favoritesCount');
+        if (span) span.innerText = count;
+    }
+    function updateChecklistCount() { 
+        const countSpan = document.getElementById('checklistCount');
+        if (countSpan) countSpan.innerText = shoppingList.length;
+    }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+    // Функция упрощения ингредиента для списка покупок (БЕЗ МЛ)
+    function simplifyIngredient(ing) {
+        let simplified = ing.replace(/^\d+\s*мл\s*/i, '').trim();
+        simplified = simplified.replace(/кубик\s*сахара/i, 'Сахар');
+        simplified = simplified.replace(/сахарный\s*сироп/i, 'Сахар');
+        simplified = simplified.replace(/\s*\d+\s*дэш/i, '');
+        if (simplified.toLowerCase().includes('яичный белок')) return 'Яйцо';
+        if (simplified.toLowerCase().includes('свежая малина')) return 'Малина';
+        return simplified;
     }
 
-    function showOnlyFavorites() {
-        currentSearch = '';
-        const searchInputEl = document.getElementById('searchInput');
-        if (searchInputEl) searchInputEl.value = '';
-        // Временно подменяем данные для рендеринга
-        const favoriteNames = Object.keys(favorites);
-        const filteredFavorites = allCocktails.filter(c => favoriteNames.includes(c.name));
-        renderWithData(filteredFavorites, 'Избранное');
+    function addToChecklist(originalIngredients) {
+        const simplified = originalIngredients.map(i => simplifyIngredient(i));
+        simplified.forEach(ing => {
+            if (ing && !shoppingList.includes(ing)) shoppingList.push(ing);
+        });
+        localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+        updateChecklistCount();
     }
 
-    function renderWithData(data, customTitle) {
-        const container = document.getElementById('drinksContainer');
-        const counterSpan = document.getElementById('cocktailCounter');
-        counterSpan.innerHTML = `${customTitle} — всего рецептов: ${data.length}`;
+    function renderShopList() {
+        const container = document.getElementById('shopList');
+        if (!container) return;
         let html = '';
-        data.forEach(c => {
-            const ingHtml = c.ing.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
-            const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
-            const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
-            const accent = c.theme || '#d85f30';
-            let timeIcon = '';
-            if (c.prepTime === 'fast') timeIcon = '⚡ < 2 мин';
-            else if (c.prepTime === 'medium') timeIcon = '🕒 2–4 мин';
-            else timeIcon = '🔥 5+ мин';
-            
-            const favActive = isFavorite(c.name) ? 'active' : '';
-            
-            html += `<div class="drink-card" style="--accent: ${accent};">
-                <div class="title-mural" style="border-bottom-color: ${accent};">
-                    <div class="time-badge">${timeIcon}</div>
-                    <div class="favorite-btn ${favActive}" data-name="${escapeHtml(c.name)}">${isFavorite(c.name) ? '❤️' : '☆'}</div>
-                    <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
-                    <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.baseSpirit)}</div>
-                </div>
-                <div class="drink-content">
-                    <div class="ingredients">${ingHtml}</div>
-                    <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
-                    <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
-                    <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
-                    <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
-                    <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
-                    <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
-                    <button class="recipe-btn" data-ritual="${escapeHtml(c.ritual)}" data-name="${escapeHtml(c.name)}" data-accent="${accent}" style="background: linear-gradient(95deg, ${accent}bb, ${accent}55);"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
-                </div>
-            </div>`;
+        shopLocations.forEach(shop => {
+            html += `<div class="shop-item">
+                        <div class="shop-name">${escapeHtml(shop.name)}</div>
+                        <div class="shop-address">📍 ${escapeHtml(shop.address)}</div>
+                        <div class="shop-hours">🕒 ${escapeHtml(shop.hours)}</div>
+                        <a href="https://yandex.ru/maps/?text=${encodeURIComponent(shop.address)}" target="_blank" class="shop-route">Построить маршрут</a>
+                    </div>`;
         });
         container.innerHTML = html;
-        attachModalEvents();
-        
-        // Добавляем обработчики для кнопок избранного
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const name = btn.getAttribute('data-name');
-                toggleFavorite(name);
-            });
-        });
     }
 
-    // --- Фильтрация и рендер ---
     function matchesSearch(cocktail, searchText) {
         if (!searchText) return true;
         const searchLower = searchText.toLowerCase();
-        return cocktail.name.toLowerCase().includes(searchLower) || 
-               (cocktail.nameRu && cocktail.nameRu.toLowerCase().includes(searchLower));
+        return cocktail.name.toLowerCase().includes(searchLower) || (cocktail.nameRu && cocktail.nameRu.toLowerCase().includes(searchLower));
     }
 
     function getFilteredCocktails() {
-        let filtered = [...cocktailsData];
-        if (currentSpirit !== 'all') {
-            filtered = filtered.filter(c => c.baseSpirit === currentSpirit);
-        }
-        if (currentTime !== 'all') {
-            filtered = filtered.filter(c => c.prepTime === currentTime);
-        }
-        if (currentPage === 'simple') {
-            filtered = filtered.filter(c => c.ingCount <= 4);
-        } else if (currentPage === 'complex') {
-            filtered = filtered.filter(c => c.ingCount >= 5);
-        }
-        if (currentSearch.trim() !== '') {
-            filtered = filtered.filter(c => matchesSearch(c, currentSearch));
-        }
+        let filtered = [...allCocktails];
+        if (currentSpirit !== 'all') filtered = filtered.filter(c => c.baseSpirit === currentSpirit);
+        if (currentTime !== 'all') filtered = filtered.filter(c => c.prepTime === currentTime);
+        if (currentPage === 'simple') filtered = filtered.filter(c => c.ingCount <= 4);
+        else if (currentPage === 'complex') filtered = filtered.filter(c => c.ingCount >= 5);
+        if (currentSearch !== '') filtered = filtered.filter(c => matchesSearch(c, currentSearch));
         return filtered;
     }
 
-    function render() {
-        const filteredData = getFilteredCocktails();
-        const container = document.getElementById('drinksContainer');
-        const counterSpan = document.getElementById('cocktailCounter');
-        
-        let pageName = '';
-        if (currentPage === 'simple') pageName = 'Лаконичные коктейли (до 4 ингредиентов)';
-        else if (currentPage === 'complex') pageName = 'Многосоставные рецепты (5+ ингредиентов)';
-        else pageName = 'Все коктейли';
-        
-        counterSpan.innerHTML = `${pageName} — всего рецептов: ${filteredData.length}`;
-        
-        let html = '';
-        filteredData.forEach(c => {
-            const ingHtml = c.ing.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
-            const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
-            const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
-            const accent = c.theme || '#d85f30';
-            let timeIcon = '';
-            if (c.prepTime === 'fast') timeIcon = '⚡ < 2 мин';
-            else if (c.prepTime === 'medium') timeIcon = '🕒 2–4 мин';
-            else timeIcon = '🔥 5+ мин';
-            
-            const favActive = isFavorite(c.name) ? 'active' : '';
-            
-            html += `<div class="drink-card" style="--accent: ${accent};">
-                <div class="title-mural" style="border-bottom-color: ${accent};">
-                    <div class="time-badge">${timeIcon}</div>
-                    <div class="favorite-btn ${favActive}" data-name="${escapeHtml(c.name)}">${isFavorite(c.name) ? '❤️' : '☆'}</div>
-                    <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
-                    <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.baseSpirit)}</div>
-                </div>
-                <div class="drink-content">
-                    <div class="ingredients">${ingHtml}</div>
-                    <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
-                    <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
-                    <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
-                    <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
-                    <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
-                    <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
-                    <button class="recipe-btn" data-ritual="${escapeHtml(c.ritual)}" data-name="${escapeHtml(c.name)}" data-accent="${accent}" style="background: linear-gradient(95deg, ${accent}bb, ${accent}55);"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
-                </div>
-            </div>`;
-        });
-        container.innerHTML = html;
-        attachModalEvents();
-        
-        document.querySelectorAll('.favorite-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const name = btn.getAttribute('data-name');
-                toggleFavorite(name);
-            });
-        });
-    }
-    
     function attachModalEvents() {
         const modal = document.getElementById('modalRecipe');
         const close = document.getElementById('closeModal');
@@ -661,36 +739,119 @@
         close.onclick = () => modal.style.display = 'none';
         window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
     }
-    
-    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-    
-    // --- Умный поиск с подсказками ---
+
+    function render() {
+        const container = document.getElementById('drinksContainer');
+        const data = getFilteredCocktails();
+        const counterSpan = document.getElementById('cocktailCounter');
+        let pageName = '';
+        if (currentPage === 'simple') pageName = 'Лаконичные коктейли (до 4 ингредиентов)';
+        else if (currentPage === 'complex') pageName = 'Многосоставные рецепты (5+ ингредиентов)';
+        else pageName = 'Все коктейли';
+        counterSpan.innerHTML = `${pageName} — всего рецептов: ${data.length}`;
+        
+        let html = '';
+        data.forEach(c => {
+            const ingHtml = c.ing.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
+            const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
+            const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
+            const accent = c.theme || '#d85f30';
+            let timeIcon = c.prepTime === 'fast' ? '⚡ < 2 мин' : (c.prepTime === 'medium' ? '🕒 2–4 мин' : '🔥 5+ мин');
+            const favActive = favorites[c.name] ? 'active' : '';
+            
+            html += `<div class="drink-card" style="--accent: ${accent};">
+                        <div class="title-mural" style="border-bottom-color: ${accent};">
+                            <div class="time-badge">${timeIcon}</div>
+                            <div class="favorite-btn ${favActive}" data-name="${escapeHtml(c.name)}">${favorites[c.name] ? '❤️' : '☆'}</div>
+                            <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
+                            <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.baseSpirit)}</div>
+                        </div>
+                        <div class="drink-content">
+                            <div class="ingredients">${ingHtml}</div>
+                            <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
+                            <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
+                            <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
+                            <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
+                            <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
+                            <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
+                            <div class="button-group">
+                                <button class="recipe-btn" data-ritual="${escapeHtml(c.ritual)}" data-name="${escapeHtml(c.name)}" data-accent="${accent}" style="background: linear-gradient(95deg, ${accent}bb, ${accent}55);"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
+                                <button class="checklist-btn" data-ingredients='${JSON.stringify(c.ing)}'><i class="fas fa-list"></i> 📋 Добавить</button>
+                            </div>
+                        </div>
+                    </div>`;
+        });
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const name = btn.getAttribute('data-name');
+                if (favorites[name]) delete favorites[name];
+                else favorites[name] = true;
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                updateFavoritesCount();
+                render();
+            });
+        });
+        document.querySelectorAll('.checklist-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const ingredients = JSON.parse(btn.getAttribute('data-ingredients'));
+                addToChecklist(ingredients);
+            });
+        });
+        attachModalEvents();
+    }
+
+    function renderChecklist() {
+        const container = document.getElementById('checklistBody');
+        if (!container) return;
+        if (shoppingList.length === 0) {
+            container.innerHTML = '<p style="text-align: center; padding: 1rem;">Список пуст. Добавьте ингредиенты из карточек коктейлей.</p>';
+            return;
+        }
+        let html = '';
+        shoppingList.forEach((item, index) => {
+            html += `<div class="ingredient-item" data-index="${index}">
+                        <input type="checkbox" id="item-${index}">
+                        <label for="item-${index}">${escapeHtml(item)}</label>
+                        <button class="delete-ingredient" data-index="${index}">🗑️</button>
+                    </div>`;
+        });
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.ingredient-item input').forEach(cb => {
+            cb.addEventListener('change', (e) => {
+                const itemDiv = e.target.closest('.ingredient-item');
+                if (e.target.checked) itemDiv.classList.add('checked');
+                else itemDiv.classList.remove('checked');
+            });
+        });
+        document.querySelectorAll('.delete-ingredient').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.getAttribute('data-index'));
+                shoppingList.splice(index, 1);
+                localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+                renderChecklist();
+                updateChecklistCount();
+            });
+        });
+    }
+
+    // --- Обработчики ---
     const searchInput = document.getElementById('searchInput');
     const suggestionsContainer = document.getElementById('suggestions');
-    
     function updateSuggestions() {
         const query = searchInput.value.toLowerCase().trim();
-        if (!query) {
-            suggestionsContainer.innerHTML = '';
-            suggestionsContainer.style.display = 'none';
-            return;
-        }
-        const matches = allCocktails.filter(c => 
-            c.name.toLowerCase().includes(query) || 
-            (c.nameRu && c.nameRu.toLowerCase().includes(query))
-        );
-        if (matches.length === 0) {
-            suggestionsContainer.innerHTML = '';
-            suggestionsContainer.style.display = 'none';
-            return;
-        }
+        if (!query) { suggestionsContainer.style.display = 'none'; return; }
+        const matches = allCocktails.filter(c => c.name.toLowerCase().includes(query) || (c.nameRu && c.nameRu.toLowerCase().includes(query)));
+        if (matches.length === 0) { suggestionsContainer.style.display = 'none'; return; }
         let html = '';
         matches.slice(0, 8).forEach(c => {
             html += `<div class="suggestion-item" data-name="${escapeHtml(c.name)}">${escapeHtml(c.name)}${c.nameRu ? ' (' + escapeHtml(c.nameRu) + ')' : ''}</div>`;
         });
         suggestionsContainer.innerHTML = html;
         suggestionsContainer.style.display = 'block';
-        
         document.querySelectorAll('.suggestion-item').forEach(item => {
             item.addEventListener('click', () => {
                 searchInput.value = item.getAttribute('data-name');
@@ -701,141 +862,151 @@
             });
         });
     }
-    
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            currentSearch = e.target.value;
-            updateSuggestions();
-            render();
-        });
-        searchInput.addEventListener('blur', () => {
-            setTimeout(() => {
-                suggestionsContainer.style.display = 'none';
-            }, 200);
-        });
-        searchInput.addEventListener('focus', () => {
-            updateSuggestions();
-        });
+        searchInput.addEventListener('input', (e) => { currentSearch = e.target.value; updateSuggestions(); render(); });
+        searchInput.addEventListener('blur', () => { setTimeout(() => { suggestionsContainer.style.display = 'none'; }, 200); });
+        searchInput.addEventListener('focus', updateSuggestions);
     }
-    
-    // --- Обработчики фильтров ---
-    document.querySelectorAll('#spiritFilters .filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentSpirit = btn.getAttribute('data-spirit');
-            render();
-        });
-    });
-    
-    document.querySelectorAll('#timeFilters .filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentTime = btn.getAttribute('data-time');
-            render();
-        });
-    });
-    
-    document.getElementById('resetFilters').addEventListener('click', () => {
-        currentSpirit = 'all';
-        currentTime = 'all';
-        currentSearch = '';
-        if (searchInput) searchInput.value = '';
-        suggestionsContainer.innerHTML = '';
-        suggestionsContainer.style.display = 'none';
-        document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('#spiritFilters .filter-btn[data-spirit="all"]').classList.add('active');
-        document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('#timeFilters .filter-btn[data-time="all"]').classList.add('active');
+
+    window.onload = () => {
+        renderShopList();
         render();
-    });
-    
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            currentPage = btn.getAttribute('data-page');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            render();
-        });
-    });
-    
-    // --- Случайный коктейль (ОБНОВЛЕНО) ---
-    document.getElementById('randomCocktailBtn').addEventListener('click', () => {
-        // Сбросить все фильтры
-        currentSpirit = 'all';
-        currentTime = 'all';
-        currentPage = 'all';
-        currentSearch = '';
-        if (searchInput) searchInput.value = '';
-        suggestionsContainer.innerHTML = '';
-        suggestionsContainer.style.display = 'none';
-        
-        // Активировать кнопки фильтров "Все"
-        document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('#spiritFilters .filter-btn[data-spirit="all"]').classList.add('active');
-        document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('#timeFilters .filter-btn[data-time="all"]').classList.add('active');
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        updateFavoritesCount();
+        updateChecklistCount();
         document.querySelector('.nav-btn[data-page="all"]').classList.add('active');
         
-        // Выбрать случайный коктейль
-        const randomIndex = Math.floor(Math.random() * allCocktails.length);
-        const randomCocktail = allCocktails[randomIndex];
-        
-        // Ввести его название в поиск
-        currentSearch = randomCocktail.name;
-        if (searchInput) searchInput.value = randomCocktail.name;
-        
-        // Обновить отображение (останется только этот коктейль)
-        render();
-        
-        // Прокрутить к его карточке
-        setTimeout(() => {
-            const cards = document.querySelectorAll('.drink-card');
-            for (let card of cards) {
-                const titleElem = card.querySelector('.title-mural h2');
-                if (titleElem && titleElem.innerText === randomCocktail.name) {
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    break;
-                }
-            }
-        }, 100);
-    });
-    
-    // --- Показать избранное ---
-    document.getElementById('showFavoritesBtn').addEventListener('click', () => {
-        const favoriteNames = Object.keys(favorites);
-        const favoriteCocktails = allCocktails.filter(c => favoriteNames.includes(c.name));
-        renderWithData(favoriteCocktails, 'Избранное');
-    });
-    
-    // --- Обработчик маршрута ---
-    const routeBtn = document.getElementById('routeToShopBtn');
-    if (routeBtn) {
-        routeBtn.addEventListener('click', function() {
-            if (typeof ym !== 'undefined') {
-                ym(109000696, 'reachGoal', 'reach_kb_route');
-            }
+        document.getElementById('resetFilters')?.addEventListener('click', () => {
+            currentSpirit = 'all'; currentTime = 'all'; currentSearch = '';
+            if (searchInput) searchInput.value = '';
+            suggestionsContainer.innerHTML = '';
+            suggestionsContainer.style.display = 'none';
+            document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('#spiritFilters .filter-btn[data-spirit="all"]').classList.add('active');
+            document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('#timeFilters .filter-btn[data-time="all"]').classList.add('active');
+            render();
         });
-    }
-    
-    // --- Инициализация ---
-    updateFavoritesCount();
-    render();
-    document.querySelector('.nav-btn[data-page="all"]').classList.add('active');
-    
-    // --- QR-код отслеживание ---
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const utmSource = urlParams.get('utm_source');
-        const utmMedium = urlParams.get('utm_medium');
-        if (utmSource === 'qrcode' || utmMedium === 'qr') {
-            if (typeof ym !== 'undefined') {
-                ym(109000696, 'reachGoal', 'qr_code_troitsk');
+        
+        document.getElementById('randomCocktailBtn')?.addEventListener('click', () => {
+            const filtered = getFilteredCocktails();
+            if (filtered.length === 0) return;
+            const random = filtered[Math.floor(Math.random() * filtered.length)];
+            currentSearch = random.name;
+            if (searchInput) searchInput.value = random.name;
+            render();
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.drink-card');
+                for (let card of cards) {
+                    const titleElem = card.querySelector('.title-mural h2');
+                    if (titleElem && titleElem.innerText === random.name) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        break;
+                    }
+                }
+            }, 100);
+        });
+        
+        document.getElementById('showFavoritesBtn')?.addEventListener('click', () => {
+            const favoriteNames = Object.keys(favorites);
+            if (favoriteNames.length === 0) {
+                document.getElementById('drinksContainer').innerHTML = '<div style="text-align:center; padding:2rem;">У вас нет избранных коктейлей</div>';
+                return;
             }
-        }
-    })();
+            const favoriteCocktails = allCocktails.filter(c => favoriteNames.includes(c.name));
+            const container = document.getElementById('drinksContainer');
+            const counterSpan = document.getElementById('cocktailCounter');
+            counterSpan.innerHTML = `Избранное — всего рецептов: ${favoriteCocktails.length}`;
+            let html = '';
+            favoriteCocktails.forEach(c => {
+                const ingHtml = c.ing.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
+                const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
+                const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
+                const accent = c.theme || '#d85f30';
+                let timeIcon = c.prepTime === 'fast' ? '⚡ < 2 мин' : (c.prepTime === 'medium' ? '🕒 2–4 мин' : '🔥 5+ мин');
+                html += `<div class="drink-card" style="--accent: ${accent};">
+                            <div class="title-mural" style="border-bottom-color: ${accent};">
+                                <div class="time-badge">${timeIcon}</div>
+                                <div class="favorite-btn active" data-name="${escapeHtml(c.name)}">❤️</div>
+                                <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
+                                <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.baseSpirit)}</div>
+                            </div>
+                            <div class="drink-content">
+                                <div class="ingredients">${ingHtml}</div>
+                                <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
+                                <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
+                                <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
+                                <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
+                                <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
+                                <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="${escapeHtml(c.ritual)}" data-name="${escapeHtml(c.name)}" data-accent="${accent}" style="background: linear-gradient(95deg, ${accent}bb, ${accent}55);"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
+                                    <button class="checklist-btn" data-ingredients='${JSON.stringify(c.ing)}'><i class="fas fa-list"></i> 📋 Добавить</button>
+                                </div>
+                            </div>
+                        </div>`;
+            });
+            container.innerHTML = html;
+            attachModalEvents();
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const name = btn.getAttribute('data-name');
+                    if (favorites[name]) delete favorites[name];
+                    else favorites[name] = true;
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    updateFavoritesCount();
+                    render();
+                });
+            });
+            document.querySelectorAll('.checklist-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const ingredients = JSON.parse(btn.getAttribute('data-ingredients'));
+                    addToChecklist(ingredients);
+                });
+            });
+        });
+        
+        document.getElementById('showChecklistBtn')?.addEventListener('click', () => {
+            renderChecklist();
+            document.getElementById('modalChecklist').style.display = 'flex';
+        });
+        document.getElementById('closeChecklistModal')?.addEventListener('click', () => document.getElementById('modalChecklist').style.display = 'none');
+        document.getElementById('closeChecklistBtn')?.addEventListener('click', () => document.getElementById('modalChecklist').style.display = 'none');
+        document.getElementById('clearChecklistBtn')?.addEventListener('click', () => {
+            // Убрано всплывающее окно
+            shoppingList = [];
+            localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+            renderChecklist();
+            updateChecklistCount();
+        });
+        
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentPage = btn.getAttribute('data-page');
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                render();
+            });
+        });
+        
+        document.querySelectorAll('#spiritFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentSpirit = btn.getAttribute('data-spirit');
+                render();
+            });
+        });
+        
+        document.querySelectorAll('#timeFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTime = btn.getAttribute('data-time');
+                render();
+            });
+        });
+    };
 </script>
 </body>
 </html>
