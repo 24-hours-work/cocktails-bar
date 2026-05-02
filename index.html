@@ -63,13 +63,36 @@
             margin-top: 0.8rem;
             font-size: 0.85rem;
         }
-        /* Стили для фильтров */
+        /* Стили для фильтров и поиска */
         .filters-section {
             background: #1f0e08aa;
             border-radius: 2rem;
             padding: 1rem;
             margin: 1rem 0 1.5rem;
             backdrop-filter: blur(4px);
+        }
+        .search-group {
+            margin-bottom: 1rem;
+        }
+        .search-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffbe82;
+            margin-bottom: 0.5rem;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 60px;
+            border: 1px solid #bc4f2a;
+            background: #2e170ecc;
+            color: #ffdeb6;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+        .search-input::placeholder {
+            color: #a57a60;
         }
         .filter-group {
             margin-bottom: 1rem;
@@ -288,8 +311,12 @@
         <div class="badge-bar">Кнопка «Полный ритуал» раскроет секрет приготовления</div>
     </div>
 
-    <!-- Блок с фильтрами -->
+    <!-- Блок с поиском и фильтрами -->
     <div class="filters-section">
+        <div class="search-group">
+            <div class="search-title">🔍 Поиск коктейля</div>
+            <input type="text" id="searchInput" class="search-input" placeholder="Например: Маргарита, Мохито, Негрони, Виски Сауэр...">
+        </div>
         <div class="filter-group">
             <div class="filter-title">🍸 По основному алкоголю</div>
             <div class="filter-buttons" id="spiritFilters">
@@ -342,45 +369,46 @@
 <div id="modalRecipe" class="modal"><div class="modal-content" id="modalContent"><span class="close-modal" id="closeModal">&times;</span><h3 id="modalName" style="font-family:'Playfair Display';">Ритуал</h3><div id="modalBody" style="margin-top:1rem; line-height:1.5;"></div></div></div>
 
 <script>
-    // =======================  ВСЕ КОКТЕЙЛИ С НОВЫМИ ПОЛЯМИ =======================
+    // =======================  ВСЕ КОКТЕЙЛИ =======================
     const allCocktails = [
         // --- ЛАКОНИЧНЫЕ (<=4 ингредиентов) ---
-        { name:"NEGRONI", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], sensation:"Горькое томление, как первый укус тёмного шоколада.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], ritual:"Наполните стакан большим кубиком льда. Влейте равные части джина, Кампари и красного вермута. Размешайте ложкой 20-30 секунд. Выжмите над бокалом апельсиновую корку." },
-        { name:"MOSCOW MULE", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво.", ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], sensation:"Хрустящий имбирный удар, который пробегает по языку.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки", tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], addons:["Клубника с базиликом","Халапеньо"], ritual:"В медную кружку насыпьте колотый лёд. Влейте водку и сок лайма, долейте имбирное пиво. Украсьте мятой и долькой лайма." },
-        { name:"OLD FASHIONED", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", story:"Самый старый коктейль в мире, символ мужской силы.", ing:["Бурбон 60 мл","Кубик сахара","Ангостура 2 дэш"], sensation:"Тёплые ноты карамели и дуба.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], addons:["Вишня в бренди","Ореховый ликёр"], ritual:"Положите в стакан кубик сахара, капните Ангостуру и немного воды. Разомните. Добавьте большой куб льда, залейте бурбон. Мешайте 30 секунд." },
-        { name:"PIÑA COLADA", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", story:"Создан в Пуэрто-Рико как гимн карибской свободе.", ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"], sensation:"Кокосовые облака и ананасовая нежность.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], addons:["Маракуйя","Кокосовая стружка"], ritual:"В блендер положите ром, кокосовое молоко, ананасовый сок и стакан льда. Взбивайте 20 секунд. Украсьте ананасом." },
-        { name:"WHISKEY SOUR", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", story:"Моряки добавляли цитрус, чтобы смягчить резкий виски.", ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"], sensation:"Шёлковая пенная шапка и яркая кислинка.", mix:"Красное вино", pairing:"Бекон, карпаччо", tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], addons:["Красное вино","Солёная карамель"], ritual:"В шейкере смешайте бурбон, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Процедите." },
-        { name:"JÄGER BOMB", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", story:"Немецкий травяной ликёр для охотников.", ing:["Jägermeister 50 мл","Энергетик 150 мл"], sensation:"Травяной взрыв, а затем эйфория.", mix:"Апельсиновый сок", pairing:"Острые наггетсы", tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], addons:["Лайм","Мята"], ritual:"Охладите Jägermeister в морозилке. Налейте в стакан энергетик. Сбросьте стопку с Jäger в стакан и выпейте залпом." },
-        { name:"ESPRESSO MARTINI", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", story:"Коктейль, который будит и пьянит.", ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"], sensation:"Плотная кофейная пенка, бодрость и нежность.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], addons:["Белый шоколад","Чили с корицей"], ritual:"В шейкер со льдом налейте водку, свежий эспрессо и кофейный ликёр. Встряхивайте 10-12 секунд. Процедите. Украсьте тремя зёрнами кофе." },
-        { name:"MOJITO ROYALE", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", story:"Гаванская магия встречается с венецианским игристым.", ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"], sensation:"Взрыв свежей мяты сменяется пузырьками.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], addons:["Виноград","Грушевый нектар"], ritual:"Разомните мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем долейте просекко." },
-        { name:"GIN BASIL SMASH", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", story:"Берлинский травяной хит 2008 года.", ing:["Джин 60 мл","Базилик 10 л","Лимонный сок 30 мл","Сироп 20 мл"], sensation:"Перечный хруст базилика и хвойная свежесть джина.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], addons:["Огурец","Клубника"], ritual:"Разомните базилик с лимонным соком и сиропом. Добавьте джин и лёд. Встряхивайте 12 секунд." },
-        { name:"MARGARITA", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", story:"Создан в Мексике в честь танцовщицы Маргариты.", ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"], sensation:"Солёный край, огонь агавы и взрыв лайма.", mix:"Маракуйя", pairing:"Тако, гуакамоле", tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], addons:["Халапеньо","Кумкват"], ritual:"Край бокала окуните в соль. В шейкере со льдом смешайте текилу, апельсиновый ликёр и сок лайма. Встряхивайте 10 секунд." },
-        { name:"LEMON DROP", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", story:"Сладкий лимонный соблазн для дерзких.", ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"], sensation:"Кисло-сладкий взрыв, от которого перехватывает дыхание.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Имбирный сироп","Лаванда"], ritual:"Бокал смажьте лимоном и окуните в сахар. В шейкере со льдом смешайте водку, апельсиновый ликёр и лимонный сок. Процедите. Пейте залпом." },
-        { name:"FRENCH 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", story:"Назван в честь французской пушки калибра 75 мм.", ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"], sensation:"Нежный джин и лимон, усиленные шампанским.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], addons:["Бузина","Розмарин"], ritual:"В шейкере со льдом смешайте джин, лимонный сок и сироп. Перелейте в бокал. Сверху долейте шампанское." },
-        { name:"COSMOPOLITAN", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", story:"Взлетел в 1990-х благодаря сериалу «Секс в большом городе».", ing:["Водка 40 мл","Клюква 30 мл","Лайм 15 мл","Куантро 15 мл"], sensation:"Терпкая клюква и апельсин.", mix:"Малина", pairing:"Чизкейк, сорбет", tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Роза","Белый шоколад"], ritual:"В шейкере со льдом смешайте водку, клюквенный сок, сок лайма и апельсиновый ликёр. Встряхивайте 10 секунд. Процедите. Украсьте цедрой." },
-        { name:"BELLINI", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", story:"Рождён в баре Harry’s в Венеции в 1948.", ing:["Персиковое пюре 50 мл","Просекко 100 мл"], sensation:"Нежный, как утренний туман над каналом.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], addons:["Клубника","Базилик"], ritual:"Налейте на дно бокала персиковое пюре. Аккуратно долейте просекко." },
-        { name:"IRISH COFFEE", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", story:"Спасённые пассажиры лайнера получили виски с кофе.", ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"], sensation:"Горячий кофе, согревающий виски и нежные сливки.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], addons:["Корица","Мускат"], ritual:"В горячий кофе добавьте виски и сахар по вкусу. Сверху выложите ложкой взбитые сливки." },
-        { name:"TEQUILA SUNRISE", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", story:"Рассвет в бокале, рождённый в Калифорнии.", ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"], sensation:"Сладкий апельсин и красивый закат из гренадина.", mix:"Манго", pairing:"Свинина аднадо", tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], addons:["Халапеньо","Ананас"], ritual:"В стакан со льдом налейте текилу и апельсиновый сок. Аккуратно по стенке влейте красный сироп — он опустится на дно. Не перемешивайте." },
-        { name:"APEROL SPRITZ", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", story:"Венецианский ритуал, покоривший мир.", ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"], sensation:"Лёгкая горчинка и игристое веселье.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], addons:["Розмарин","Ежевика"], ritual:"Наполните большой бокал льдом. Влейте Апероль, просекко и содовую. Украсьте долькой апельсина." },
-        { name:"BLOODY MARY", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", story:"Назван в честь королевы Марии Тюдор.", ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"], sensation:"Пряная, солёная, пикантная.", mix:"Хрен", pairing:"Бекон, солёные огурцы", tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], addons:["Хрен","Чили"], ritual:"В шейкере с несколькими кубиками льда аккуратно смешайте водку, томатный сок, по капле вустерского соуса и табаско. Перелейте в стакан. Украсьте сельдереем." },
-        { name:"DAIQUIRI", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", story:"Кубинский коктейль, любимый напиток Хемингуэя.", ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"], sensation:"Кисло-сладкая честность рома и лайма.", mix:"Клубника", pairing:"Морепродукты", tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], addons:["Ваниль","Манго"], ritual:"В шейкере со льдом смешайте ром, сок лайма и сахарный сироп. Встряхивайте 8-10 секунд. Процедите." },
-        { name:"JÄGER SOUR", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", story:"Лимон балансирует травяную горечь Jägermeister.", ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"], sensation:"Мягкий и бархатистый, с травяным сердцем.", mix:"Имбирный эль", pairing:"Утиная грудка", tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], addons:["Имбирь","Розмарин"], ritual:"В шейкере со льдом смешайте Jägermeister, лимонный сок и сироп. Встряхивайте 10 секунд. Процедите." },
-        { name:"JÄGER GINGER", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", story:"Пряный имбирь и 56 трав.", ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"], sensation:"Пряный имбирь танцует с травами.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], addons:["Халапеньо","Корица"], ritual:"В стакан со льдом налейте Jägermeister и сок лайма. Долейте имбирное пиво. Украсьте долькой лайма." },
-        { name:"JÄGER ESPRESSO", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", story:"Союз кофе и 56 трав — ночной страж Баварии.", ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"], sensation:"Эспрессо и 56 трав в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], addons:["Солёная карамель","Амаретто"], ritual:"В шейкере со льдом смешайте Jägermeister, свежий эспрессо и сироп. Процедите. Украсьте зёрнами кофе." },
-        { name:"SIDECAR", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", story:"Изобретён в Париже после войны. Назван в честь мотоциклетной коляски.", ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"], sensation:"Согревающий, элегантный, с ароматом коньяка.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], addons:["Медовый сироп","Апельсиновая цедра"], ritual:"Сделайте сахарный ободок на бокале (смажьте лимоном и окуните в сахар). В шейкере со льдом смешайте коньяк, апельсиновый ликёр и лимонный сок. Процедите." },
-        { name:"STINGER JÄGER", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", story:"Мятный шлейф встречается с травами Jägermeister.", ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"], sensation:"Мятно-травяной мороз, который окутывает.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], addons:["Шоколад","Свежая мята","Ваниль"], ritual:"В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 10 секунд. Процедите." },
-        { name:"CAIPIRINHA", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", story:"Национальный бразильский коктейль, символ радости.", ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 ч.л","Лёд"], sensation:"Лайм, сахар и кашаса. Простой, гениальный.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], addons:["Мята","Имбирь","Кокосовый сироп"], ritual:"Нарежьте лайм дольками, положите в стакан с сахаром и разомните. Заполните стакан льдом, залейте кашасой. Энергично перемешайте." },
+        { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", story:"Граф Камилло Негрони в 1919 году попросил заменить содовую на джин. Так родился горький шедевр.", ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"], sensation:"Горькое томление, как первый укус тёмного шоколада.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], addons:["Апельсиновый биттер","Какао-ликер","Розмарин"], ritual:"Наполните стакан большим кубиком льда. Влейте равные части джина, Кампари и красного вермута. Размешайте ложкой 20-30 секунд. Выжмите над бокалом апельсиновую корку." },
+        { name:"MOSCOW MULE", nameRu:"Московский мул", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", story:"Рождён в Голливуде в 1940-х, чтобы спасти имбирное пиво.", ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"], sensation:"Хрустящий имбирный удар, который пробегает по языку.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки", tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], addons:["Клубника с базиликом","Халапеньо"], ritual:"В медную кружку насыпьте колотый лёд. Влейте водку и сок лайма, долейте имбирное пиво. Украсьте мятой и долькой лайма." },
+        { name:"OLD FASHIONED", nameRu:"Олд фешен", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", story:"Самый старый коктейль в мире, символ мужской силы.", ing:["Бурбон 60 мл","Кубик сахара","Ангостура 2 дэш"], sensation:"Тёплые ноты карамели и дуба.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], addons:["Вишня в бренди","Ореховый ликёр"], ritual:"Положите в стакан кубик сахара, капните Ангостуру и немного воды. Разомните. Добавьте большой куб льда, залейте бурбон. Мешайте 30 секунд." },
+        { name:"PIÑA COLADA", nameRu:"Пина колада", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", story:"Создан в Пуэрто-Рико как гимн карибской свободе.", ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"], sensation:"Кокосовые облака и ананасовая нежность.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], addons:["Маракуйя","Кокосовая стружка"], ritual:"В блендер положите ром, кокосовое молоко, ананасовый сок и стакан льда. Взбивайте 20 секунд. Украсьте ананасом." },
+        { name:"WHISKEY SOUR", nameRu:"Виски сауэр", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", story:"Моряки добавляли цитрус, чтобы смягчить резкий виски.", ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"], sensation:"Шёлковая пенная шапка и яркая кислинка.", mix:"Красное вино", pairing:"Бекон, карпаччо", tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], addons:["Красное вино","Солёная карамель"], ritual:"В шейкере смешайте бурбон, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Процедите." },
+        { name:"JÄGER BOMB", nameRu:"Егерь бомба", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", story:"Немецкий травяной ликёр для охотников.", ing:["Jägermeister 50 мл","Энергетик 150 мл"], sensation:"Травяной взрыв, а затем эйфория.", mix:"Апельсиновый сок", pairing:"Острые наггетсы", tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], addons:["Лайм","Мята"], ritual:"Охладите Jägermeister в морозилке. Налейте в стакан энергетик. Сбросьте стопку с Jäger в стакан и выпейте залпом." },
+        { name:"ESPRESSO MARTINI", nameRu:"Эспрессо мартини", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", story:"Коктейль, который будит и пьянит.", ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"], sensation:"Плотная кофейная пенка, бодрость и нежность.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], addons:["Белый шоколад","Чили с корицей"], ritual:"В шейкер со льдом налейте водку, свежий эспрессо и кофейный ликёр. Встряхивайте 10-12 секунд. Процедите. Украсьте тремя зёрнами кофе." },
+        { name:"MOJITO ROYALE", nameRu:"Мохито рояль", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", story:"Гаванская магия встречается с венецианским игристым.", ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"], sensation:"Взрыв свежей мяты сменяется пузырьками.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], addons:["Виноград","Грушевый нектар"], ritual:"Разомните мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем долейте просекко." },
+        { name:"GIN BASIL SMASH", nameRu:"Джин базилик смаш", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", story:"Берлинский травяной хит 2008 года.", ing:["Джин 60 мл","Базилик 10 л","Лимонный сок 30 мл","Сироп 20 мл"], sensation:"Перечный хруст базилика и хвойная свежесть джина.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], addons:["Огурец","Клубника"], ritual:"Разомните базилик с лимонным соком и сиропом. Добавьте джин и лёд. Встряхивайте 12 секунд." },
+        { name:"MARGARITA", nameRu:"Маргарита", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", story:"Создан в Мексике в честь танцовщицы Маргариты.", ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"], sensation:"Солёный край, огонь агавы и взрыв лайма.", mix:"Маракуйя", pairing:"Тако, гуакамоле", tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], addons:["Халапеньо","Кумкват"], ritual:"Край бокала окуните в соль. В шейкере со льдом смешайте текилу, апельсиновый ликёр и сок лайма. Встряхивайте 10 секунд." },
+        { name:"LEMON DROP", nameRu:"Лемон дроп", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", story:"Сладкий лимонный соблазн для дерзких.", ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"], sensation:"Кисло-сладкий взрыв, от которого перехватывает дыхание.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Имбирный сироп","Лаванда"], ritual:"Бокал смажьте лимоном и окуните в сахар. В шейкере со льдом смешайте водку, апельсиновый ликёр и лимонный сок. Процедите. Пейте залпом." },
+        { name:"FRENCH 75", nameRu:"Френч 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", story:"Назван в честь французской пушки калибра 75 мм.", ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"], sensation:"Нежный джин и лимон, усиленные шампанским.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], addons:["Бузина","Розмарин"], ritual:"В шейкере со льдом смешайте джин, лимонный сок и сироп. Перелейте в бокал. Сверху долейте шампанское." },
+        { name:"COSMOPOLITAN", nameRu:"Космополитен", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", story:"Взлетел в 1990-х благодаря сериалу «Секс в большом городе».", ing:["Водка 40 мл","Клюква 30 мл","Лайм 15 мл","Куантро 15 мл"], sensation:"Терпкая клюква и апельсин.", mix:"Малина", pairing:"Чизкейк, сорбет", tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], addons:["Роза","Белый шоколад"], ritual:"В шейкере со льдом смешайте водку, клюквенный сок, сок лайма и апельсиновый ликёр. Встряхивайте 10 секунд. Процедите. Украсьте цедрой." },
+        { name:"BELLINI", nameRu:"Беллини", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", story:"Рождён в баре Harry’s в Венеции в 1948.", ing:["Персиковое пюре 50 мл","Просекко 100 мл"], sensation:"Нежный, как утренний туман над каналом.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], addons:["Клубника","Базилик"], ritual:"Налейте на дно бокала персиковое пюре. Аккуратно долейте просекко." },
+        { name:"IRISH COFFEE", nameRu:"Айриш кофе", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", story:"Спасённые пассажиры лайнера получили виски с кофе.", ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"], sensation:"Горячий кофе, согревающий виски и нежные сливки.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], addons:["Корица","Мускат"], ritual:"В горячий кофе добавьте виски и сахар по вкусу. Сверху выложите ложкой взбитые сливки." },
+        { name:"TEQUILA SUNRISE", nameRu:"Текила санрайз", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", story:"Рассвет в бокале, рождённый в Калифорнии.", ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"], sensation:"Сладкий апельсин и красивый закат из гренадина.", mix:"Манго", pairing:"Свинина аднадо", tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], addons:["Халапеньо","Ананас"], ritual:"В стакан со льдом налейте текилу и апельсиновый сок. Аккуратно по стенке влейте красный сироп — он опустится на дно. Не перемешивайте." },
+        { name:"APEROL SPRITZ", nameRu:"Апероль шприц", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", story:"Венецианский ритуал, покоривший мир.", ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"], sensation:"Лёгкая горчинка и игристое веселье.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], addons:["Розмарин","Ежевика"], ritual:"Наполните большой бокал льдом. Влейте Апероль, просекко и содовую. Украсьте долькой апельсина." },
+        { name:"BLOODY MARY", nameRu:"Кровавая мэри", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", story:"Назван в честь королевы Марии Тюдор.", ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"], sensation:"Пряная, солёная, пикантная.", mix:"Хрен", pairing:"Бекон, солёные огурцы", tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], addons:["Хрен","Чили"], ritual:"В шейкере с несколькими кубиками льда аккуратно смешайте водку, томатный сок, по капле вустерского соуса и табаско. Перелейте в стакан. Украсьте сельдереем." },
+        { name:"DAIQUIRI", nameRu:"Дайкири", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", story:"Кубинский коктейль, любимый напиток Хемингуэя.", ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"], sensation:"Кисло-сладкая честность рома и лайма.", mix:"Клубника", pairing:"Морепродукты", tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], addons:["Ваниль","Манго"], ritual:"В шейкере со льдом смешайте ром, сок лайма и сахарный сироп. Встряхивайте 8-10 секунд. Процедите." },
+        { name:"JÄGER SOUR", nameRu:"Егерь сауэр", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", story:"Лимон балансирует травяную горечь Jägermeister.", ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"], sensation:"Мягкий и бархатистый, с травяным сердцем.", mix:"Имбирный эль", pairing:"Утиная грудка", tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], addons:["Имбирь","Розмарин"], ritual:"В шейкере со льдом смешайте Jägermeister, лимонный сок и сироп. Встряхивайте 10 секунд. Процедите." },
+        { name:"JÄGER GINGER", nameRu:"Егерь джинджер", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", story:"Пряный имбирь и 56 трав.", ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"], sensation:"Пряный имбирь танцует с травами.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], addons:["Халапеньо","Корица"], ritual:"В стакан со льдом налейте Jägermeister и сок лайма. Долейте имбирное пиво. Украсьте долькой лайма." },
+        { name:"JÄGER ESPRESSO", nameRu:"Егерь эспрессо", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", story:"Союз кофе и 56 трав — ночной страж Баварии.", ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"], sensation:"Эспрессо и 56 трав в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], addons:["Солёная карамель","Амаретто"], ritual:"В шейкере со льдом смешайте Jägermeister, свежий эспрессо и сироп. Процедите. Украсьте зёрнами кофе." },
+        { name:"SIDECAR", nameRu:"Сайдкар", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", story:"Изобретён в Париже после войны. Назван в честь мотоциклетной коляски.", ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"], sensation:"Согревающий, элегантный, с ароматом коньяка.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], addons:["Медовый сироп","Апельсиновая цедра"], ritual:"Сделайте сахарный ободок на бокале (смажьте лимоном и окуните в сахар). В шейкере со льдом смешайте коньяк, апельсиновый ликёр и лимонный сок. Процедите." },
+        { name:"STINGER JÄGER", nameRu:"Стингер егерь", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", story:"Мятный шлейф встречается с травами Jägermeister.", ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"], sensation:"Мятно-травяной мороз, который окутывает.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], addons:["Шоколад","Свежая мята","Ваниль"], ritual:"В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 10 секунд. Процедите." },
+        { name:"CAIPIRINHA", nameRu:"Кайпиринья", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", story:"Национальный бразильский коктейль, символ радости.", ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 ч.л","Лёд"], sensation:"Лайм, сахар и кашаса. Простой, гениальный.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], addons:["Мята","Имбирь","Кокосовый сироп"], ritual:"Нарежьте лайм дольками, положите в стакан с сахаром и разомните. Заполните стакан льдом, залейте кашасой. Энергично перемешайте." },
         // --- МНОГОСОСТАВНЫЕ (>=5 ингредиентов) ---
-        { name:"LONG ISLAND", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", story:"Изобретён в 1970-х в Лонг-Айленде.", ing:["Водка 20 мл","Джин 20 мл","Ром 20 мл","Текила 20 мл","Трипл сек 20 мл","Кола 50 мл","Лимон 30 мл"], sensation:"Обманчивая мягкость колы скрывает шторм.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], addons:["Клюква","Имбирь"], ritual:"В высокий стакан со льдом влейте по 20 мл водки, джина, рома, текилы и ликёра. Добавьте сок лимона и долейте колой." },
-        { name:"MOJITO CLASICO", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", story:"Легенда Гаваны, любимый напиток Хемингуэя.", ing:["Ром 50 мл","Мята 10 листьев","Лайм 1/2 шт","Содовая 50 мл","Сахар 2 ч.л"], sensation:"Мятный ветер с Кубы. Освежает и пьянит.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], addons:["Маракуйя","Имбирь"], ritual:"Разомните мяту, лайм и сахар. Наполните стакан льдом, влейте ром и содовую. Аккуратно перемешайте снизу вверх." },
-        { name:"MAI TAI", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", story:"Создан в 1944 году. Mai Tai означает «всё хорошо».", ing:["Ром 50 мл","Амаретто 15 мл","Апельсиновый ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"], sensation:"Ореховое богатство и мощный ром.", mix:"Маракуйя", pairing:"Курица по-полинезийски", tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], addons:["Маракуйя","Гренадин"], ritual:"В шейкере со льдом смешайте ром, амаретто, апельсиновый ликёр, сок лайма и сироп. Перелейте в стакан, добавьте ещё льда. Украсьте мятой." },
-        { name:"CLOVER CLUB", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", story:"Филадельфия, 1880-е. Изысканный клубничный коктейль.", ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"], sensation:"Малиновый шёлк, нежный джин и лимон.", mix:"Розовая вода", pairing:"Ягодный тарт, козий сыр", tracks:["Ella Fitzgerald — Summertime","Billie Holiday — Lover Man","Nina Simone — I Put a Spell on You"], addons:["Свежая малина","Гренадин","Ваниль"], ritual:"В шейкере разомните малину. Добавьте джин, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Дважды процедите." }
+        { name:"LONG ISLAND", nameRu:"Лонг айленд", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", story:"Изобретён в 1970-х в Лонг-Айленде.", ing:["Водка 20 мл","Джин 20 мл","Ром 20 мл","Текила 20 мл","Трипл сек 20 мл","Кола 50 мл","Лимон 30 мл"], sensation:"Обманчивая мягкость колы скрывает шторм.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], addons:["Клюква","Имбирь"], ritual:"В высокий стакан со льдом влейте по 20 мл водки, джина, рома, текилы и ликёра. Добавьте сок лимона и долейте колой." },
+        { name:"MOJITO CLASICO", nameRu:"Мохито классический", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", story:"Легенда Гаваны, любимый напиток Хемингуэя.", ing:["Ром 50 мл","Мята 10 листьев","Лайм 1/2 шт","Содовая 50 мл","Сахар 2 ч.л"], sensation:"Мятный ветер с Кубы. Освежает и пьянит.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], addons:["Маракуйя","Имбирь"], ritual:"Разомните мяту, лайм и сахар. Наполните стакан льдом, влейте ром и содовую. Аккуратно перемешайте снизу вверх." },
+        { name:"MAI TAI", nameRu:"Май тай", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", story:"Создан в 1944 году. Mai Tai означает «всё хорошо».", ing:["Ром 50 мл","Амаретто 15 мл","Апельсиновый ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"], sensation:"Ореховое богатство и мощный ром.", mix:"Маракуйя", pairing:"Курица по-полинезийски", tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], addons:["Маракуйя","Гренадин"], ritual:"В шейкере со льдом смешайте ром, амаретто, апельсиновый ликёр, сок лайма и сироп. Перелейте в стакан, добавьте ещё льда. Украсьте мятой." },
+        { name:"CLOVER CLUB", nameRu:"Кловер клаб", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", story:"Филадельфия, 1880-е. Изысканный клубничный коктейль.", ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"], sensation:"Малиновый шёлк, нежный джин и лимон.", mix:"Розовая вода", pairing:"Ягодный тарт, козий сыр", tracks:["Ella Fitzgerald — Summertime","Billie Holiday — Lover Man","Nina Simone — I Put a Spell on You"], addons:["Свежая малина","Гренадин","Ваниль"], ritual:"В шейкере разомните малину. Добавьте джин, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Дважды процедите." }
     ];
 
-    // Состояние фильтров
+    // --- Состояние фильтров и поиска ---
     let currentSpirit = 'all';
     let currentTime = 'all';
     let currentPage = 'all';
+    let currentSearch = '';
 
     // Функция для отправки целей в Яндекс.Метрику
     function sendMetricGoal(targetName) {
@@ -398,7 +426,16 @@
         });
     }
 
-    // Фильтрация коктейлей
+    // Функция для проверки соответствия поисковому запросу (русский/английский)
+    function matchesSearch(cocktail, searchText) {
+        if (!searchText) return true;
+        const searchLower = searchText.toLowerCase();
+        // Проверяем по английскому названию, русскому названию
+        return cocktail.name.toLowerCase().includes(searchLower) || 
+               (cocktail.nameRu && cocktail.nameRu.toLowerCase().includes(searchLower));
+    }
+
+    // Фильтрация коктейлей (с учетом поиска)
     function getFilteredCocktails() {
         let filtered = [...allCocktails];
         
@@ -417,6 +454,11 @@
             filtered = filtered.filter(c => c.ingCount <= 4);
         } else if (currentPage === 'complex') {
             filtered = filtered.filter(c => c.ingCount >= 5);
+        }
+
+        // НОВЫЙ ПОИСК: по русскому или английскому названию
+        if (currentSearch.trim() !== '') {
+            filtered = filtered.filter(c => matchesSearch(c, currentSearch));
         }
         
         return filtered;
@@ -447,10 +489,12 @@
             else if (c.prepTime === 'medium') timeIcon = '🕒 2–4 мин';
             else timeIcon = '🔥 5+ мин';
             
+            const displayName = c.name;
+            
             html += `<div class="drink-card" style="--accent: ${accent};">
                 <div class="title-mural" style="border-bottom-color: ${accent};">
                     <div class="time-badge">${timeIcon}</div>
-                    <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(c.name)}</h2>
+                    <h2 style="background: linear-gradient(135deg, #fff3e2, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(displayName)}</h2>
                     <div class="main-spirit" style="background: ${accent};">✦ ${escapeHtml(c.baseSpirit)}</div>
                 </div>
                 <div class="drink-content">
@@ -489,7 +533,16 @@
     
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     
-    // Обработчики фильтров
+    // Обработчик поиска
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            render();
+        });
+    }
+
+    // Обработчики фильтров по алкоголю
     document.querySelectorAll('#spiritFilters .filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
@@ -499,6 +552,7 @@
         });
     });
     
+    // Обработчики фильтров по времени
     document.querySelectorAll('#timeFilters .filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
@@ -508,9 +562,13 @@
         });
     });
     
+    // Сброс всех фильтров (включая поиск)
     document.getElementById('resetFilters').addEventListener('click', () => {
         currentSpirit = 'all';
         currentTime = 'all';
+        currentSearch = '';
+        if (searchInput) searchInput.value = '';
+        
         document.querySelectorAll('#spiritFilters .filter-btn').forEach(b => b.classList.remove('active'));
         document.querySelector('#spiritFilters .filter-btn[data-spirit="all"]').classList.add('active');
         document.querySelectorAll('#timeFilters .filter-btn').forEach(b => b.classList.remove('active'));
@@ -518,6 +576,7 @@
         render();
     });
     
+    // Обработчики страниц (лаконичные / многосоставные)
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             currentPage = btn.getAttribute('data-page');
