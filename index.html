@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* все стили остаются без изменений */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -503,6 +504,7 @@
     let currentSearch = '';
     let favorites = JSON.parse(localStorage.getItem('favorites')) || {};
     let shoppingList = JSON.parse(localStorage.getItem('shoppingList')) || [];
+    let checkedState = JSON.parse(localStorage.getItem('checkedState')) || {};
 
     function updateFavoritesCount() { 
         const count = Object.keys(favorites).length;
@@ -650,6 +652,15 @@
         attachModalEvents();
     }
 
+    // Функция сохранения состояния чекбоксов
+    function saveCheckedState() {
+        document.querySelectorAll('#checklistBody .ingredient-item input[type="checkbox"]').forEach((cb, idx) => {
+            const itemText = cb.closest('.ingredient-item')?.querySelector('label')?.innerText;
+            if (itemText) checkedState[itemText] = cb.checked;
+        });
+        localStorage.setItem('checkedState', JSON.stringify(checkedState));
+    }
+
     function renderChecklist() {
         const container = document.getElementById('checklistBody');
         if (!container) return;
@@ -659,10 +670,11 @@
         }
         let html = '';
         shoppingList.forEach((item, index) => {
-            html += `<div class="ingredient-item" data-index="${index}">
-                        <input type="checkbox" id="item-${index}">
+            const isChecked = checkedState[item] || false;
+            html += `<div class="ingredient-item" data-index="${index}" data-item="${escapeHtml(item)}">
+                        <input type="checkbox" id="item-${index}" ${isChecked ? 'checked' : ''}>
                         <label for="item-${index}">${escapeHtml(item)}</label>
-                        <button class="delete-ingredient" data-index="${index}">🗑️</button>
+                        <button class="delete-ingredient" data-index="${index}" data-item="${escapeHtml(item)}">🗑️</button>
                     </div>`;
         });
         container.innerHTML = html;
@@ -670,15 +682,23 @@
         document.querySelectorAll('.ingredient-item input').forEach(cb => {
             cb.addEventListener('change', (e) => {
                 const itemDiv = e.target.closest('.ingredient-item');
+                const itemText = itemDiv?.getAttribute('data-item');
                 if (e.target.checked) itemDiv.classList.add('checked');
                 else itemDiv.classList.remove('checked');
+                if (itemText) {
+                    checkedState[itemText] = e.target.checked;
+                    localStorage.setItem('checkedState', JSON.stringify(checkedState));
+                }
             });
         });
         document.querySelectorAll('.delete-ingredient').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const index = parseInt(btn.getAttribute('data-index'));
+                const itemText = btn.getAttribute('data-item');
+                if (itemText && checkedState[itemText]) delete checkedState[itemText];
                 shoppingList.splice(index, 1);
                 localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+                localStorage.setItem('checkedState', JSON.stringify(checkedState));
                 renderChecklist();
                 updateChecklistCount();
             });
@@ -821,7 +841,9 @@
         document.getElementById('closeChecklistBtn')?.addEventListener('click', () => document.getElementById('modalChecklist').style.display = 'none');
         document.getElementById('clearChecklistBtn')?.addEventListener('click', () => {
             shoppingList = [];
+            checkedState = {};
             localStorage.setItem('shoppingList', JSON.stringify(shoppingList));
+            localStorage.setItem('checkedState', JSON.stringify(checkedState));
             renderChecklist();
             updateChecklistCount();
         });
