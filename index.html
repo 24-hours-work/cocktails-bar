@@ -147,6 +147,27 @@
             margin-left: 0.5rem;
         }
         .reset-filters:hover { background: #a57a6022; border-color: #ffbe82; color: #ffbe82; }
+        .sort-group {
+            margin: 0.5rem 0 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .sort-label {
+            font-size: 0.85rem;
+            color: #ffbe82;
+        }
+        .sort-select {
+            background: #2e170ecc;
+            border: 1px solid #bc4f2a;
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            color: #ffdeb6;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
         .page-nav {
             display: flex;
             justify-content: center;
@@ -390,6 +411,7 @@
             .drinks-grid { grid-template-columns: 1fr; }
             .button-group { flex-direction: column; }
             .recipe-btn, .checklist-btn, .video-btn, .share-btn, .mocktail-btn { padding: 0.5rem; font-size: 0.75rem; }
+            .sort-group { justify-content: flex-start; }
         }
     </style>
     <!-- Yandex.Metrika counter -->
@@ -445,11 +467,20 @@
                 <button class="filter-btn" data-time="long">🔥 Долгий (5+ мин)</button>
             </div>
         </div>
-        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
             <button class="filter-btn reset-filters" id="resetFilters">Сбросить все фильтры</button>
             <button class="filter-btn" id="randomCocktailBtn">🍀 Случайный коктейль</button>
             <button class="filter-btn" id="showFavoritesBtn">❤️ Избранное (<span id="favoritesCount">0</span>)</button>
             <button class="filter-btn" id="showChecklistBtn">🛒 Список покупок (<span id="checklistCount">0</span>)</button>
+        </div>
+        <div class="sort-group">
+            <span class="sort-label">📋 Сортировать:</span>
+            <select id="sortSelect" class="sort-select">
+                <option value="default">По умолчанию</option>
+                <option value="alphabet">По алфавиту (А-Я)</option>
+                <option value="fastFirst">Сначала быстрые</option>
+                <option value="longFirst">Сначала долгие</option>
+            </select>
         </div>
     </div>
 
@@ -480,7 +511,7 @@
 <div id="modalChecklist" class="modal checklist-modal"><div class="modal-content" id="modalChecklistContent"><span class="close-modal" id="closeChecklistModal">&times;</span><h3>🛒 Список покупок</h3><div id="checklistBody" class="ingredient-list"></div><div class="modal-buttons"><button id="clearChecklistBtn" class="modal-btn danger">Очистить список</button><button id="closeChecklistBtn" class="modal-btn">Закрыть</button></div></div></div>
 
 <script>
-    // ======================= ВСЕ КОКТЕЙЛИ (ПОЛНЫЙ СПИСОК) =======================
+    // ======================= ВСЕ КОКТЕЙЛИ (28 ШТУК) =======================
     const allCocktails = [
         { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=nh_3suGRbN8", 
           ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"],
@@ -750,6 +781,7 @@
         { name: "«Красное & Белое»", address: "п. Шишкин Лес, 21, корп. 1, 108833", hours: "9:00–22:05" }
     ];
 
+    // --- Состояние ---
     let currentSpirit = 'all';
     let currentTime = 'all';
     let currentPage = 'all';
@@ -758,7 +790,9 @@
     let shoppingList = JSON.parse(localStorage.getItem('shoppingList')) || [];
     let checkedState = JSON.parse(localStorage.getItem('checkedState')) || {};
     let mocktailMode = JSON.parse(localStorage.getItem('mocktailMode')) || {};
+    let currentSort = 'default';
 
+    // --- Функции ---
     function updateFavoritesCount() { 
         const count = Object.keys(favorites).length;
         const span = document.getElementById('favoritesCount');
@@ -799,7 +833,6 @@
         updateChecklistCount();
     }
 
-    // Функция для отправки цели в Яндекс.Метрику при клике на маршрут
     function sendRouteGoal() {
         if (typeof ym !== 'undefined') {
             ym(109000696, 'reachGoal', 'route_click');
@@ -849,6 +882,32 @@
         return filtered;
     }
 
+    function sortCocktails(cocktails, sortType) {
+        const sorted = [...cocktails];
+        switch(sortType) {
+            case 'alphabet':
+                sorted.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'fastFirst':
+                sorted.sort((a, b) => {
+                    if (a.prepTime === 'fast' && b.prepTime !== 'fast') return -1;
+                    if (a.prepTime !== 'fast' && b.prepTime === 'fast') return 1;
+                    return 0;
+                });
+                break;
+            case 'longFirst':
+                sorted.sort((a, b) => {
+                    if (a.prepTime === 'long' && b.prepTime !== 'long') return -1;
+                    if (a.prepTime !== 'long' && b.prepTime === 'long') return 1;
+                    return 0;
+                });
+                break;
+            default:
+                break;
+        }
+        return sorted;
+    }
+
     function attachModalEvents() {
         const modal = document.getElementById('modalRecipe');
         const close = document.getElementById('closeModal');
@@ -878,6 +937,8 @@
         } else {
             navigator.clipboard.writeText(url).then(() => {
                 alert(`Ссылка на ${cocktailName} скопирована! Отправь её другу.`);
+            }).catch(() => {
+                alert('Не удалось копировать ссылку');
             });
         }
     }
@@ -894,16 +955,17 @@
 
     function render() {
         const container = document.getElementById('drinksContainer');
-        const data = getFilteredCocktails();
+        let filtered = getFilteredCocktails();
+        filtered = sortCocktails(filtered, currentSort);
         const counterSpan = document.getElementById('cocktailCounter');
         let pageName = '';
         if (currentPage === 'simple') pageName = 'Лаконичные коктейли (до 4 ингредиентов)';
         else if (currentPage === 'complex') pageName = 'Многосоставные рецепты (5+ ингредиентов)';
         else pageName = 'Все коктейли';
-        counterSpan.innerHTML = `${pageName} — всего рецептов: ${data.length}`;
+        counterSpan.innerHTML = `${pageName} — всего рецептов: ${filtered.length}`;
         
         let html = '';
-        data.forEach(c => {
+        filtered.forEach(c => {
             const currentIngredients = getCurrentIngredients(c);
             const currentRitual = getCurrentRitual(c);
             const ingHtml = currentIngredients.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
@@ -1074,8 +1136,19 @@
         updateChecklistCount();
         document.querySelector('.nav-btn[data-page="all"]').classList.add('active');
         
+        // Сортировка
+        const sortSelect = document.getElementById('sortSelect');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                render();
+            });
+        }
+        
         document.getElementById('resetFilters')?.addEventListener('click', () => {
             currentSpirit = 'all'; currentTime = 'all'; currentSearch = '';
+            currentSort = 'default';
+            if (sortSelect) sortSelect.value = 'default';
             if (searchInput) searchInput.value = '';
             suggestionsContainer.innerHTML = '';
             suggestionsContainer.style.display = 'none';
@@ -1088,6 +1161,8 @@
         
         document.getElementById('randomCocktailBtn')?.addEventListener('click', () => {
             currentSpirit = 'all'; currentTime = 'all'; currentPage = 'all'; currentSearch = '';
+            currentSort = 'default';
+            if (sortSelect) sortSelect.value = 'default';
             if (searchInput) searchInput.value = '';
             suggestionsContainer.innerHTML = '';
             suggestionsContainer.style.display = 'none';
