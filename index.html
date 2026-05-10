@@ -994,18 +994,27 @@
                             <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
                             <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>`;
             
-            // ПАРТНЁРСКАЯ ССЫЛКА ТОЛЬКО ДЛЯ MOSCOW MULE
+                       // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ MOSCOW MULE
             if (c.name === "MOSCOW MULE") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍸 Что купить для Moscow Mule?</p>
-                                    <p style="margin: 0;">👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-moscow-mule-mednaya-kruzhka-dzhigger-i-press-dlya-layma-5556421" target="_blank" rel="nofollow" style="color: #e28248;">Медная кружка, джиггер и пресс для лайма — моя подборка на Wildberries</a></p>
+                                    <p style="margin: 0;">👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-moscow-mule-mednaya-kruzhka-dzhigger-i-press-dlya-layma-5556421" target="_blank" rel="nofollow" style="color: #e28248;">Медная кружка, джиггер и пресс для лайма — моя партнёрская подборка на Wildberries</a></p>
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-                        if (c.name === "NEGRONI") {
+            // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ NEGRONI
+            if (c.name === "NEGRONI") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍸 Что купить для Negroni?</p>
-                                    <p style="margin: 0;">👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-negroni-pravilniy-bokal-formy-dlya-lda-i-tochnye-proportsii-5559549" target="_blank" rel="nofollow" style="color: #e28248;">Правильный бокал, формы для льда и джиггер — моя подборка на Wildberries</a></p>
+                                    <p style="margin: 0;">👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-negroni-pravilniy-bokal-formy-dlya-lda-i-tochnye-proportsii-5559549" target="_blank" rel="nofollow" style="color: #e28248;">Правильный бокал, формы для льда и джиггер — моя партнёрская подборка на Wildberries</a></p>
+                                    <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
+                                </div>`;
+            }
+            // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ OLD FASHIONED
+            if (c.name === "OLD FASHIONED") {
+                html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
+                                    <p style="margin: 0 0 0.4rem; font-weight: bold;">🍊 Что купить для Old Fashioned?</p>
+                                    <p style="margin: 0;">👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-old-fashioned-pravilniy-bokal-bolshoy-kub-lda-i-tochnye-proportsii-5559936" target="_blank" rel="nofollow" style="color: #e28248;">Правильный бокал, большой куб льда и джиггер — моя партнёрская подборка на Wildberries</a></p>
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
