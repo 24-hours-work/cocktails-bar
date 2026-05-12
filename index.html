@@ -1063,55 +1063,53 @@
 
     // --- Функции для карточки шаринга ---
     function generateShareCard(cocktail) {
-        const isMocktail = mocktailMode[cocktail.name] || false;
-        const ingredients = isMocktail ? (cocktail.mocktailIng || cocktail.ing) : cocktail.ing;
-        const typeLabel = isMocktail ? 'Безалкогольная версия' : 'Классический рецепт';
-        const accent = cocktail.theme || '#e28248';
-        // Для безалкогольной версии не показываем алкоголь и время
-        const spiritAndTimeHtml = isMocktail ? '' : `
-            <div style="text-align: center; margin-bottom: 1rem;">
-                <span style="background: ${accent}; color: #1a0a05; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem;">✦ ${escapeHtml(cocktail.baseSpirit)}</span>
-                <span style="margin-left: 0.5rem; color: #ffbe82;">${cocktail.prepTime === 'fast' ? '⚡ 2 мин' : (cocktail.prepTime === 'medium' ? '🕒 2-4 мин' : '🔥 5+ мин')}</span>
+    const isMocktail = mocktailMode[cocktail.name] || false;
+    const ingredients = isMocktail ? (cocktail.mocktailIng || cocktail.ing) : cocktail.ing;
+    const typeLabel = isMocktail ? '🍃 Безалкогольная версия' : '🍸 Классический рецепт';
+    
+    // Для безалкогольной версии не показываем алкоголь и время
+    const spiritAndTimeHtml = isMocktail ? '' : `
+        <div style="text-align: center; margin-bottom: 1rem;">
+            <span style="background: ${cocktail.theme || '#d85f30'}; color: #1a0a05; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem;">✦ ${escapeHtml(cocktail.baseSpirit)}</span>
+            <span style="margin-left: 0.5rem; color: #ffbe82;">${cocktail.prepTime === 'fast' ? '⚡ 2 мин' : (cocktail.prepTime === 'medium' ? '🕒 2-4 мин' : '🔥 5+ мин')}</span>
+        </div>
+    `;
+    
+    return `
+        <div class="share-card-content" id="shareCardToDownload">
+            <div class="share-card-header">
+                <h3>🍸 SIN & SPIRITS 👻</h3>
+                <p>Лаконичная миксология</p>
             </div>
-        `;
-        
-        return `
-            <div class="share-card-content" id="shareCardToDownload" style="--share-accent: ${accent};">
-                <div class="share-card-header">
-                    <h3>🍸 SIN & SPIRITS 👻</h3>
-                    <p>Лаконичная миксология</p>
+            <div class="share-card-body">
+                <div style="background: #1a0e0acc; border-radius: 1rem; padding: 0.5rem; margin-bottom: 1rem;">
+                    <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; margin: 0; background: linear-gradient(135deg, #f7d99e, #e28248); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(cocktail.name)}</h2>
                 </div>
-                <div class="share-card-body">
-                    <h2 style="font-family: 'Playfair Display'; font-size: 1.8rem; text-align: center; margin: 0 0 0.5rem; background: linear-gradient(135deg, #f7d99e, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(cocktail.name)}</h2>
-                    ${spiritAndTimeHtml}
-                    <div style="margin: 0.8rem 0;">
-                        <strong style="color: #ffbe82;">📋 Ингредиенты:</strong>
-                        <div class="ingredient-list">
-                            ${ingredients.map(i => `<span class="ingredient-item" style="border-left: 2px solid ${accent};">${escapeHtml(i)}</span>`).join('')}
-                        </div>
-                    </div>
-                    <div class="info-block" style="border-left-color: ${accent};">
-                        <strong style="color: #ffbe82;">📖 История:</strong>
-                        <p style="font-size: 0.75rem; margin-top: 0.3rem;">${escapeHtml(cocktail.story)}</p>
-                    </div>
-                    <div class="info-block" style="border-left-color: ${accent};">
-                        <strong style="color: #ffbe82;">🌍 Страна происхождения:</strong>
-                        <p style="font-size: 0.75rem; margin-top: 0.3rem;">${escapeHtml(cocktail.country || 'Неизвестно')}</p>
-                    </div>
-                    <div class="playlist-block" style="border-top-color: ${accent};">
-                        <strong style="color: #ffbe82;">🎵 Плейлист:</strong>
-                        <p style="font-size: 0.7rem; margin-top: 0.3rem;">${escapeHtml(cocktail.tracks[0])}</p>
-                    </div>
-                    <div style="margin-top: 1rem; text-align: center;">
-                        <span style="background: ${accent}; color: #1a0a05; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: bold;">${typeLabel}</span>
+                ${spiritAndTimeHtml}
+                <div style="margin: 0.8rem 0;">
+                    <strong style="color: #ffbe82;">📋 Ингредиенты:</strong>
+                    <div class="ingredient-list">
+                        ${ingredients.map(i => `<span class="ingredient-item">${escapeHtml(i)}</span>`).join('')}
                     </div>
                 </div>
-                <div class="share-card-footer">
-                    SIN & SPIRITS — рецепты для домашнего бара
+                <div style="margin: 0.8rem 0;">
+                    <strong style="color: #ffbe82;">📖 История:</strong>
+                    <p style="font-size: 0.75rem; margin-top: 0.3rem;">${escapeHtml(cocktail.story.substring(0, 100))}${cocktail.story.length > 100 ? '…' : ''}</p>
+                </div>
+                <div style="margin: 0.8rem 0;">
+                    <strong style="color: #ffbe82;">🎵 Плейлист:</strong>
+                    <p style="font-size: 0.7rem; margin-top: 0.3rem;">${escapeHtml(cocktail.tracks[0])}</p>
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                    <span style="background: #2a6740aa; border: 1px solid #6fbf8e; color: #b8f0cb; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: bold;">${typeLabel}</span>
                 </div>
             </div>
-        `;
-    }
+            <div class="share-card-footer">
+                SIN & SPIRITS — рецепты для домашнего бара
+            </div>
+        </div>
+    `;
+}
 
     function showShareCard(cocktail) {
         const modal = document.getElementById('shareCardModal');
