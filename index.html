@@ -7,6 +7,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23e28248' stroke='%23ffbb77' stroke-width='1.5' d='M35,20 L65,20 L70,38 L30,38 Z M50,38 L50,60 M40,60 L60,60 L65,78 L35,78 Z M45,78 L45,90 L55,90 L55,78' /%3E%3Ccircle fill='%23fff2d0' cx='50' cy='50' r='12' /%3E%3Cpath fill='%23442418' d='M47,47 L53,47 L53,53 L47,53 Z' /%3E%3C/svg%3E">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -320,13 +321,23 @@
         .addons-section { background: #130906aa; border-radius: 1rem; padding: 0.7rem; margin-top: 0.6rem; border: 0.5px solid var(--accent, #bb532e); }
         .addons-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .addon-item { background: #26140e; border-radius: 40px; padding: 0.2rem 0.7rem; font-size: 0.7rem; color: #ffdebc; }
+        .country-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #1f0e08aa;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            margin: 0.3rem 0;
+        }
         .button-group {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.8rem;
             flex-wrap: wrap;
         }
-        .recipe-btn, .checklist-btn, .video-btn, .share-btn, .mocktail-btn {
+        .recipe-btn, .checklist-btn, .video-btn, .share-btn, .mocktail-btn, .share-card-btn {
             border: none;
             border-radius: 2rem;
             padding: 0.7rem 0.5rem;
@@ -344,7 +355,8 @@
         .share-btn { background: #1a4830aa; border: 1px solid #4cae6f; color: #8cdb9b; }
         .mocktail-btn { background: #2a6740aa; border: 1px solid #6fbf8e; color: #b8f0cb; }
         .mocktail-btn.active { background: #6fbf8e; color: #1a0a05; border-color: #6fbf8e; }
-        .recipe-btn:hover, .checklist-btn:hover, .video-btn:hover, .share-btn:hover, .mocktail-btn:hover { filter: brightness(1.05); transform: translateY(-2px); }
+        .share-card-btn { background: #2a1a10aa; border: 1px solid #e28248; }
+        .recipe-btn:hover, .checklist-btn:hover, .video-btn:hover, .share-btn:hover, .mocktail-btn:hover, .share-card-btn:hover { filter: brightness(1.05); transform: translateY(-2px); }
         .modal {
             display: none;
             position: fixed;
@@ -405,12 +417,96 @@
         }
         .modal-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
         .fas, .far { background: transparent; }
+        /* Стили для карточки шаринга */
+        .share-card-preview {
+            background: linear-gradient(145deg, #1a0e0a, #0a0604);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid #e28248;
+            text-align: center;
+            cursor: pointer;
+        }
+        .share-card-content {
+            background: linear-gradient(145deg, #1a0e0a, #0a0604);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+        .share-card-header {
+            background: linear-gradient(135deg, #bd522d, #8d3516);
+            padding: 1rem;
+            text-align: center;
+        }
+        .share-card-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: white;
+            margin: 0;
+        }
+        .share-card-header p {
+            font-size: 0.7rem;
+            color: #ffbe82;
+            margin-top: 0.3rem;
+        }
+        .share-card-body {
+            padding: 1.5rem;
+        }
+        .share-card-body .ingredient-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.8rem 0;
+        }
+        .share-card-body .ingredient-item {
+            background: #21100b;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            color: #fcdbb8;
+            border-left: 2px solid var(--share-accent, #e28248);
+        }
+        .share-card-body .info-block {
+            background: #140906bb;
+            border-left: 3px solid var(--share-accent, #e55a2a);
+            padding: 0.5rem;
+            border-radius: 0.8rem;
+            margin: 0.6rem 0;
+            font-size: 0.75rem;
+        }
+        .share-card-body .playlist-block {
+            background: #0c0604aa;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-top: 1px solid var(--share-accent, #bc542e);
+        }
+        .share-card-footer {
+            background: #1f0e08;
+            padding: 0.7rem;
+            text-align: center;
+            font-size: 0.6rem;
+            color: #a57a60;
+        }
+        .download-share-btn {
+            background: linear-gradient(95deg, #bd522d, #8d3516);
+            border: none;
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
         @media (max-width: 760px) { 
             .title-mural h2 { font-size: 1.6rem; } 
             .nav-btn { padding: 0.4rem 1rem; font-size: 0.8rem;}
             .drinks-grid { grid-template-columns: 1fr; }
             .button-group { flex-direction: column; }
-            .recipe-btn, .checklist-btn, .video-btn, .share-btn, .mocktail-btn { padding: 0.5rem; font-size: 0.75rem; }
+            .recipe-btn, .checklist-btn, .video-btn, .share-btn, .mocktail-btn, .share-card-btn { padding: 0.5rem; font-size: 0.75rem; }
             .sort-group { justify-content: flex-start; }
         }
     </style>
@@ -511,10 +607,21 @@
 
 <div id="modalChecklist" class="modal checklist-modal"><div class="modal-content" id="modalChecklistContent"><span class="close-modal" id="closeChecklistModal">&times;</span><h3>🛒 Список покупок</h3><div id="checklistBody" class="ingredient-list"></div><div class="modal-buttons"><button id="clearChecklistBtn" class="modal-btn danger">Очистить список</button><button id="closeChecklistBtn" class="modal-btn">Закрыть</button></div></div></div>
 
+<!-- Модальное окно для карточки шаринга -->
+<div id="shareCardModal" class="modal share-card-modal" style="display: none;">
+    <div class="modal-content" id="shareModalContent" style="max-width: 500px;">
+        <span class="close-modal" id="closeShareModal">&times;</span>
+        <h3 style="font-family:'Playfair Display';">📸 Поделиться рецептом</h3>
+        <div id="shareCardPreview" class="share-card-preview"></div>
+        <button id="downloadShareBtn" class="download-share-btn">💾 Скачать как изображение</button>
+        <p style="font-size: 0.7rem; color: #a57a60; text-align: center; margin-top: 0.5rem;">Нажмите на карточку, чтобы скопировать или отправить другу</p>
+    </div>
+</div>
+
 <script>
     // ======================= ВСЕ КОКТЕЙЛИ (28 ШТУК) =======================
     const allCocktails = [
-        { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=nh_3suGRbN8", 
+        { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=nh_3suGRbN8", country:"🇮🇹 Италия",
           ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"],
           mocktailIng:["Тоник 100 мл","Клюквенный сок 30 мл","Содовая 20 мл","Апельсин для украшения"],
           ritual:"Наполните стакан большим кубиком льда. Влейте равные части джина, Кампари и красного вермута. Размешайте ложкой 20-30 секунд. Выжмите над бокалом апельсиновую корку.",
@@ -523,7 +630,7 @@
           sensation:"Горькое томление, как первый укус тёмного шоколада.", mix:"Тоник или игристое", pairing:"Пармезан, оливки, прошутто", 
           tracks:["Frank Sinatra — I've Got You Under My Skin","Dean Martin — Ain't That a Kick in the Head","Chet Baker — My Funny Valentine"], 
           addons:["Апельсиновый биттер","Какао-ликер","Розмарин"] },
-        { name:"MOSCOW MULE", nameRu:"Московский мул", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=avcD5WVLCYs", 
+        { name:"MOSCOW MULE", nameRu:"Московский мул", baseSpirit:"Водка", theme:"#c4a245", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=avcD5WVLCYs", country:"🇺🇸 США",
           ing:["Водка 50 мл","Имбирное пиво 120 мл","Лайм 15 мл"],
           mocktailIng:["Имбирное пиво 150 мл","Сок лайма 20 мл","Лёд","Мята для украшения"],
           ritual:"В медную кружку насыпьте колотый лёд. Влейте водку и сок лайма, долейте имбирное пиво. Украсьте мятой и долькой лайма.",
@@ -532,7 +639,7 @@
           sensation:"Хрустящий имбирный удар, который пробегает по языку.", mix:"Мятный ликёр", pairing:"Острые куриные крылышки", 
           tracks:["Arctic Monkeys — Do I Wanna Know?","The Black Keys — Gold on the Ceiling","Jack White — Sixteen Saltines"], 
           addons:["Клубника с базиликом","Халапеньо"] },
-        { name:"OLD FASHIONED", nameRu:"Олд фешен", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=pdcrJ5V7YKM", 
+        { name:"OLD FASHIONED", nameRu:"Олд фешен", baseSpirit:"Бурбон", theme:"#b86b2f", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=pdcrJ5V7YKM", country:"🇺🇸 США",
           ing:["Бурбон 60 мл","Сахар 1 кусочек","Ангостура 2 капли"],
           mocktailIng:["Чай каркаде 60 мл","Сахар 1 кусочек","Ангостура 1 капля","Апельсин"],
           ritual:"Положите в стакан кусочек сахара, капните Ангостуру и немного воды. Разомните. Добавьте большой куб льда, залейте бурбон. Мешайте 30 секунд.",
@@ -541,7 +648,7 @@
           sensation:"Тёплые ноты карамели и дуба.", mix:"Кленовый сироп", pairing:"Говяжьи рёбрышки, тёмный шоколад", 
           tracks:["Ray Charles — Georgia On My Mind","Billie Holiday — Gloomy Sunday","Tom Waits — The Heart of Saturday Night"], 
           addons:["Вишня в бренди","Ореховый ликёр"] },
-        { name:"PIÑA COLADA", nameRu:"Пина колада", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=-wea2usJIAA", 
+        { name:"PIÑA COLADA", nameRu:"Пина колада", baseSpirit:"Ром", theme:"#e5c687", ingCount:3, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=-wea2usJIAA", country:"🇵🇷 Пуэрто-Рико",
           ing:["Белый ром 50 мл","Кокосовое молоко 60 мл","Ананасовый сок 90 мл"],
           mocktailIng:["Кокосовое молоко 60 мл","Ананасовый сок 100 мл","Сливки 20 мл","Лёд"],
           ritual:"В блендер положите ром, кокосовое молоко, ананасовый сок и стакан льда. Взбивайте 20 секунд. Украсьте ананасом.",
@@ -550,7 +657,7 @@
           sensation:"Кокосовые облака и ананасовая нежность.", mix:"Тёмный ром", pairing:"Креветки в кляре, ананас на гриле", 
           tracks:["Bob Marley — Three Little Birds","Harry Belafonte — Jump in the Line","Shaggy — Angel"], 
           addons:["Маракуйя","Кокосовая стружка"] },
-        { name:"WHISKEY SOUR", nameRu:"Виски сауэр", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=a2_h8um0tWQ", 
+        { name:"WHISKEY SOUR", nameRu:"Виски сауэр", baseSpirit:"Бурбон", theme:"#cf9f6e", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=a2_h8um0tWQ", country:"🇺🇸 США",
           ing:["Бурбон 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"],
           mocktailIng:["Чай эрл грей 60 мл","Лимонный сок 30 мл","Сахарный сироп 20 мл","Яичный белок"],
           ritual:"В шейкере смешайте бурбон, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Процедите.",
@@ -559,7 +666,7 @@
           sensation:"Шёлковая пенная шапка и яркая кислинка.", mix:"Красное вино", pairing:"Бекон, карпаччо", 
           tracks:["Nina Simone — Feeling Good","Etta James — I'd Rather Go Blind","Amy Winehouse — Back to Black"], 
           addons:["Красное вино","Солёная карамель"] },
-        { name:"JÄGER BOMB", nameRu:"Егерь бомба", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=eKyEknX7iLE", 
+        { name:"JÄGER BOMB", nameRu:"Егерь бомба", baseSpirit:"Jägermeister", theme:"#3d6b3a", ingCount:2, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=eKyEknX7iLE", country:"🇩🇪 Германия",
           ing:["Jägermeister 50 мл","Энергетик 150 мл"],
           mocktailIng:["Сок бузины 50 мл","Энергетик 150 мл","Лёд"],
           ritual:"Охладите Jägermeister в морозилке. Налейте в стакан энергетик. Сбросьте стопку с Jäger в стакан и выпейте залпом.",
@@ -568,7 +675,7 @@
           sensation:"Травяной взрыв, а затем эйфория.", mix:"Апельсиновый сок", pairing:"Острые наггетсы", 
           tracks:["Rammstein — Du Hast","Eisbrecher — Verrückt","Kraftwerk — The Model"], 
           addons:["Лайм","Мята"] },
-        { name:"ESPRESSO MARTINI", nameRu:"Эспрессо мартини", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=U4WJ7Ljy4K0", 
+        { name:"ESPRESSO MARTINI", nameRu:"Эспрессо мартини", baseSpirit:"Водка", theme:"#4a2a1f", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=U4WJ7Ljy4K0", country:"🇬🇧 Великобритания",
           ing:["Водка 50 мл","Эспрессо 35 мл","Кофейный ликёр 20 мл"],
           mocktailIng:["Эспрессо 60 мл","Молоко 40 мл","Ванильный сироп 15 мл","Лёд"],
           ritual:"В шейкер со льдом налейте водку, свежий эспрессо и кофейный ликёр. Встряхивайте 10-12 секунд. Процедите. Украсьте тремя зёрнами кофе.",
@@ -577,7 +684,7 @@
           sensation:"Плотная кофейная пенка, бодрость и нежность.", mix:"Солёная карамель", pairing:"Тирамису, трюфели", 
           tracks:["The Weeknd — Blinding Lights","Lana Del Rey — Summertime Sadness","St. Germain — Sure Thing"], 
           addons:["Белый шоколад","Чили с корицей"] },
-        { name:"MOJITO ROYALE", nameRu:"Мохито рояль", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=H3NOCbiUatk", 
+        { name:"MOJITO ROYALE", nameRu:"Мохито рояль", baseSpirit:"Ром", theme:"#b8aa7a", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=H3NOCbiUatk", country:"🇨🇺 Куба",
           ing:["Ром 40 мл","Мята","Лайм","Просекко 70 мл"],
           mocktailIng:["Мята","Лайм","Содовая 100 мл","Сахар 1 чайная ложка"],
           ritual:"Разомните мяту с лаймом и сиропом. Наполните бокал льдом, влейте ром, затем долейте просекко.",
@@ -586,7 +693,7 @@
           sensation:"Взрыв свежей мяты сменяется пузырьками.", mix:"Клубничное пюре", pairing:"Устрицы, креветки", 
           tracks:["Nat King Cole — L-O-V-E","Ella Fitzgerald — Cheek to Cheek","Michael Bublé — Sway"], 
           addons:["Виноград","Грушевый нектар"] },
-        { name:"GIN BASIL SMASH", nameRu:"Джин базилик смаш", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=fHp2Ee-_QvY", 
+        { name:"GIN BASIL SMASH", nameRu:"Джин базилик смаш", baseSpirit:"Джин", theme:"#6f8f4a", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=fHp2Ee-_QvY", country:"🇩🇪 Германия",
           ing:["Джин 60 мл","Базилик 10 листьев","Лимонный сок 30 мл","Сироп 20 мл"],
           mocktailIng:["Тоник 60 мл","Базилик 10 листьев","Лимонный сок 30 мл","Сироп 20 мл"],
           ritual:"Разомните базилик с лимонным соком и сиропом. Добавьте джин и лёд. Встряхивайте 12 секунд.",
@@ -595,7 +702,7 @@
           sensation:"Перечный хруст базилика и хвойная свежесть джина.", mix:"Огуречный тоник", pairing:"Паста с песто, капрезе", 
           tracks:["Glass Animals — Gooey","Tash Sultana — Jungle","FKJ — Tadow"], 
           addons:["Огурец","Клубника"] },
-        { name:"MARGARITA", nameRu:"Маргарита", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=q-gYcvipozY", 
+        { name:"MARGARITA", nameRu:"Маргарита", baseSpirit:"Текила", theme:"#a8b85c", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=q-gYcvipozY", country:"🇲🇽 Мексика",
           ing:["Текила 50 мл","Трипл сек 30 мл","Сок лайма 25 мл"],
           mocktailIng:["Сок лайма 30 мл","Апельсиновый сок 50 мл","Сироп агавы 15 мл","Соль для ободка"],
           ritual:"Край бокала окуните в соль. В шейкере со льдом смешайте текилу, апельсиновый ликёр и сок лайма. Встряхивайте 10 секунд.",
@@ -604,7 +711,7 @@
           sensation:"Солёный край, огонь агавы и взрыв лайма.", mix:"Маракуйя", pairing:"Тако, гуакамоле", 
           tracks:["Santana — Smooth","Enrique Iglesias — Bailando","Shakira — Waka Waka"], 
           addons:["Халапеньо","Кумкват"] },
-        { name:"LEMON DROP", nameRu:"Лемон дроп", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=IUFQN54mAfw", 
+        { name:"LEMON DROP", nameRu:"Лемон дроп", baseSpirit:"Водка", theme:"#eac85c", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=IUFQN54mAfw", country:"🇺🇸 США",
           ing:["Водка 50 мл","Трипл сек 20 мл","Лимонный сок 30 мл","Сахар"],
           mocktailIng:["Лимонад 60 мл","Сок лимона 20 мл","Сахар","Лёд"],
           ritual:"Бокал смажьте лимоном и окуните в сахар. В шейкере со льдом смешайте водку, апельсиновый ликёр и лимонный сок. Процедите.",
@@ -613,7 +720,7 @@
           sensation:"Кисло-сладкий взрыв, от которого перехватывает дыхание.", mix:"Малиновый сироп", pairing:"Лимонный тарт, сыр бри", 
           tracks:["Dua Lipa — Levitating","Bruno Mars — 24K Magic","Kylie Minogue — Can't Get You Out Of My Head"], 
           addons:["Имбирный сироп","Лаванда"] },
-        { name:"FRENCH 75", nameRu:"Френч 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=HfYbUHnfGcg", 
+        { name:"FRENCH 75", nameRu:"Френч 75", baseSpirit:"Джин", theme:"#d4a55a", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=HfYbUHnfGcg", country:"🇫🇷 Франция",
           ing:["Джин 40 мл","Лимон 20 мл","Сироп 15 мл","Шампанское 80 мл"],
           mocktailIng:["Тоник 40 мл","Лимон 20 мл","Сироп 15 мл","Содовая 80 мл"],
           ritual:"В шейкере со льдом смешайте джин, лимонный сок и сироп. Перелейте в бокал. Сверху долейте шампанское.",
@@ -622,7 +729,7 @@
           sensation:"Нежный джин и лимон, усиленные шампанским.", mix:"Ликёр из фиалок", pairing:"Устрицы, икра", 
           tracks:["Édith Piaf — La Vie en Rose","Charles Trenet — La Mer","Zaz — Je veux"], 
           addons:["Бузина","Розмарин"] },
-        { name:"COSMOPOLITAN", nameRu:"Космополитен", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=y23sJPG5McA", 
+        { name:"COSMOPOLITAN", nameRu:"Космополитен", baseSpirit:"Водка", theme:"#d67a7a", ingCount:4, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=y23sJPG5McA", country:"🇺🇸 США",
           ing:["Водка 40 мл","Клюквенный сок 30 мл","Лайм 15 мл","Куантро 15 мл"],
           mocktailIng:["Клюквенный сок 60 мл","Сок лайма 20 мл","Апельсиновый сок 20 мл","Лёд"],
           ritual:"В шейкере со льдом смешайте водку, клюквенный сок, сок лайма и апельсиновый ликёр. Встряхивайте 10 секунд. Украсьте цедрой.",
@@ -631,7 +738,7 @@
           sensation:"Терпкая клюква и апельсин.", mix:"Малина", pairing:"Чизкейк, сорбет", 
           tracks:["Beyoncé — Crazy In Love","Madonna — Vogue","Kylie Minogue — Can't Get You Out Of My Head"], 
           addons:["Роза","Белый шоколад"] },
-        { name:"BELLINI", nameRu:"Беллини", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=yfpz9TgKNls", 
+        { name:"BELLINI", nameRu:"Беллини", baseSpirit:"Просекко", theme:"#eba35f", ingCount:2, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=yfpz9TgKNls", country:"🇮🇹 Италия",
           ing:["Персиковое пюре 50 мл","Просекко 100 мл"],
           mocktailIng:["Персиковое пюре 60 мл","Содовая 100 мл","Сахар 5 г"],
           ritual:"Налейте на дно бокала персиковое пюре. Аккуратно долейте просекко.",
@@ -640,7 +747,7 @@
           sensation:"Нежный, как утренний туман над каналом.", mix:"Манго", pairing:"Персиковый пирог, моцарелла", 
           tracks:["Mika — Grace Kelly","Robbie Williams — Candy","Pharrell Williams — Happy"], 
           addons:["Клубника","Базилик"] },
-        { name:"IRISH COFFEE", nameRu:"Айриш кофе", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=9xwtCHELxMA", 
+        { name:"IRISH COFFEE", nameRu:"Айриш кофе", baseSpirit:"Бурбон", theme:"#6f4629", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=9xwtCHELxMA", country:"🇮🇪 Ирландия",
           ing:["Виски 40 мл","Кофе 120 мл","Сливки 30 мл"],
           mocktailIng:["Кофе 120 мл","Сливки 40 мл","Ванильный сироп 10 мл"],
           ritual:"В горячий кофе добавьте виски и сахар по вкусу. Сверху выложите ложкой взбитые сливки.",
@@ -649,7 +756,7 @@
           sensation:"Горячий кофе, согревающий виски и нежные сливки.", mix:"Ореховый ликёр", pairing:"Ирландский пирог", 
           tracks:["The Pogues — Dirty Old Town","Van Morrison — Brown Eyed Girl","U2 — With Or Without You"], 
           addons:["Корица","Мускат"] },
-        { name:"TEQUILA SUNRISE", nameRu:"Текила санрайз", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=QmBkd_Zxv8k", 
+        { name:"TEQUILA SUNRISE", nameRu:"Текила санрайз", baseSpirit:"Текила", theme:"#f09e5c", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=QmBkd_Zxv8k", country:"🇲🇽 Мексика",
           ing:["Текила 50 мл","Апельсиновый сок 100 мл","Гренадин 15 мл"],
           mocktailIng:["Апельсиновый сок 120 мл","Гренадин 15 мл","Сок лайма 10 мл","Лёд"],
           ritual:"В стакан со льдом налейте текилу и апельсиновый сок. Аккуратно по стенке влейте красный сироп — он опустится на дно. Не перемешивайте.",
@@ -658,7 +765,7 @@
           sensation:"Сладкий апельсин и красивый закат из гренадина.", mix:"Манго", pairing:"Свинина аднадо", 
           tracks:["Eagles — Hotel California","The Rolling Stones — Paint It Black","Lynyrd Skynyrd — Sweet Home Alabama"], 
           addons:["Халапеньо","Ананас"] },
-        { name:"APEROL SPRITZ", nameRu:"Апероль шприц", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=pF-13rXxGLc", 
+        { name:"APEROL SPRITZ", nameRu:"Апероль шприц", baseSpirit:"Апероль", theme:"#dd8855", ingCount:4, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=pF-13rXxGLc", country:"🇮🇹 Италия",
           ing:["Апероль 60 мл","Просекко 90 мл","Содовая 30 мл","Апельсин"],
           mocktailIng:["Сок апельсина 60 мл","Содовая 90 мл","Сок лимона 10 мл","Апельсин"],
           ritual:"Наполните большой бокал льдом. Влейте Апероль, просекко и содовую. Украсьте долькой апельсина.",
@@ -667,7 +774,7 @@
           sensation:"Лёгкая горчинка и игристое веселье.", mix:"Клубника", pairing:"Брускетта, пармская ветчина", 
           tracks:["Luis Fonsi — Despacito","Camila Cabello — Havana","Rosalía — Despechá"], 
           addons:["Розмарин","Ежевика"] },
-        { name:"BLOODY MARY", nameRu:"Кровавая мэри", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=rpEzoWNbgSk", 
+        { name:"BLOODY MARY", nameRu:"Кровавая мэри", baseSpirit:"Водка", theme:"#cc4433", ingCount:4, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=rpEzoWNbgSk", country:"🇺🇸 США",
           ing:["Водка 50 мл","Томатный сок 100 мл","Вустер","Табаско"],
           mocktailIng:["Томатный сок 120 мл","Сок лимона 10 мл","Вустер","Табаско","Сельдерей"],
           ritual:"В шейкере с несколькими кубиками льда аккуратно смешайте водку, томатный сок, по капле вустерского соуса и табаско. Перелейте в стакан. Украсьте сельдереем.",
@@ -676,7 +783,7 @@
           sensation:"Пряная, солёная, пикантная.", mix:"Хрен", pairing:"Бекон, солёные огурцы", 
           tracks:["Johnny Cash — Ring of Fire","ZZ Top — Gimme All Your Lovin'","The Doors — Roadhouse Blues"], 
           addons:["Хрен","Чили"] },
-        { name:"DAIQUIRI", nameRu:"Дайкири", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=H2QD90xrJRU", 
+        { name:"DAIQUIRI", nameRu:"Дайкири", baseSpirit:"Ром", theme:"#c9b14f", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=H2QD90xrJRU", country:"🇨🇺 Куба",
           ing:["Ром 60 мл","Лайм 30 мл","Сироп 15 мл"],
           mocktailIng:["Сок лайма 40 мл","Сироп 20 мл","Содовая 40 мл","Лёд"],
           ritual:"В шейкере со льдом смешайте ром, сок лайма и сахарный сироп. Встряхивайте 8-10 секунд. Процедите.",
@@ -685,7 +792,7 @@
           sensation:"Кисло-сладкая честность рома и лайма.", mix:"Клубника", pairing:"Морепродукты", 
           tracks:["Buena Vista Social Club — Chan Chan","Pink Martini — Sympathique","Sergio Mendes — Mas Que Nada"], 
           addons:["Ваниль","Манго"] },
-        { name:"JÄGER SOUR", nameRu:"Егерь сауэр", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=g3nXyO5FRRU", 
+        { name:"JÄGER SOUR", nameRu:"Егерь сауэр", baseSpirit:"Jägermeister", theme:"#8a9352", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=g3nXyO5FRRU", country:"🇩🇪 Германия",
           ing:["Jägermeister 60 мл","Лимон 30 мл","Сироп 20 мл"],
           mocktailIng:["Чай ройбуш 60 мл","Лимон 30 мл","Сироп 20 мл","Яичный белок"],
           ritual:"В шейкере со льдом смешайте Jägermeister, лимонный сок и сироп. Встряхивайте 10 секунд. Процедите.",
@@ -694,7 +801,7 @@
           sensation:"Мягкий и бархатистый, с травяным сердцем.", mix:"Имбирный эль", pairing:"Утиная грудка", 
           tracks:["Die Ärzte — Junge","AnnenMayKantereit — Oft gefragt","Seeed — Ding"], 
           addons:["Имбирь","Розмарин"] },
-        { name:"JÄGER GINGER", nameRu:"Егерь джинджер", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=xr7TsCzMbxg", 
+        { name:"JÄGER GINGER", nameRu:"Егерь джинджер", baseSpirit:"Jägermeister", theme:"#be8a4a", ingCount:3, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=xr7TsCzMbxg", country:"🇩🇪 Германия",
           ing:["Jägermeister 50 мл","Имбирное пиво 100 мл","Лайм 15 мл"],
           mocktailIng:["Имбирное пиво 100 мл","Сок лайма 20 мл","Имбирь 10 г","Лёд"],
           ritual:"В стакан со льдом налейте Jägermeister и сок лайма. Долейте имбирное пиво. Украсьте долькой лайма.",
@@ -703,7 +810,7 @@
           sensation:"Пряный имбирь танцует с травами.", mix:"Мёд, халапеньо", pairing:"Свиные рёбрышки", 
           tracks:["Fettes Brot — Jein","Marteria — Kids (2 Finger)","Deichkind — Remmi Demmi"], 
           addons:["Халапеньо","Корица"] },
-        { name:"JÄGER ESPRESSO", nameRu:"Егерь эспрессо", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", videoUrl: null, 
+        { name:"JÄGER ESPRESSO", nameRu:"Егерь эспрессо", baseSpirit:"Jägermeister", theme:"#5c3f2e", ingCount:3, prepTime:"medium", videoUrl: null, country:"🇩🇪 Германия",
           ing:["Jägermeister 40 мл","Эспрессо 40 мл","Сироп 10 мл"],
           mocktailIng:["Эспрессо 60 мл","Молоко 40 мл","Сироп 10 мл"],
           ritual:"В шейкере со льдом смешайте Jägermeister, свежий эспрессо и сироп. Процедите. Украсьте зёрнами кофе.",
@@ -712,7 +819,7 @@
           sensation:"Эспрессо и 56 трав в бодрящем танце.", mix:"Сливки", pairing:"Тёмный шоколад", 
           tracks:["Mark Forster — Au revoir","Andreas Bourani — Auf uns","Wincent Weiss — An Wunder"], 
           addons:["Солёная карамель","Амаретто"] },
-        { name:"SIDECAR", nameRu:"Сайдкар", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=KftPwi-VtOI", 
+        { name:"SIDECAR", nameRu:"Сайдкар", baseSpirit:"Коньяк", theme:"#bd784a", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=KftPwi-VtOI", country:"🇫🇷 Франция",
           ing:["Коньяк 50 мл","Трипл сек 30 мл","Лимонный сок 20 мл"],
           mocktailIng:["Чай каркаде 50 мл","Апельсиновый сок 30 мл","Лимонный сок 20 мл","Сахар для ободка"],
           ritual:"Сделайте сахарный ободок на бокале (смажьте лимоном и окуните в сахар). В шейкере со льдом смешайте коньяк, апельсиновый ликёр и лимонный сок. Процедите.",
@@ -721,7 +828,7 @@
           sensation:"Согревающий, элегантный, с ароматом коньяка.", mix:"Апельсиновый биттер", pairing:"Голубой сыр, орехи", 
           tracks:["Frank Sinatra — The Way You Look Tonight","Robbie Williams — Swing Supreme","Diana Krall — The Look of Love"], 
           addons:["Медовый сироп","Апельсиновая цедра"] },
-        { name:"STINGER JÄGER", nameRu:"Стингер егерь", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", videoUrl: null, 
+        { name:"STINGER JÄGER", nameRu:"Стингер егерь", baseSpirit:"Jägermeister", theme:"#70964a", ingCount:2, prepTime:"fast", videoUrl: null, country:"🇩🇪 Германия",
           ing:["Jägermeister 50 мл","Белый мятный ликёр 25 мл"],
           mocktailIng:["Мятный сироп 50 мл","Содовая 80 мл","Лёд","Мята"],
           ritual:"В шейкере со льдом смешайте Jägermeister и мятный ликёр. Встряхивайте 10 секунд. Процедите.",
@@ -730,7 +837,7 @@
           sensation:"Мятно-травяной мороз, который окутывает.", mix:"Шоколадный биттер", pairing:"Лимонный пирог, белый шоколад", 
           tracks:["Cro — Traum","Udo Lindenberg — Cello","Namika — Lieblingsmensch"], 
           addons:["Шоколад","Свежая мята","Ваниль"] },
-        { name:"CAIPIRINHA", nameRu:"Кайпиринья", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=alEN21hwRYI", 
+        { name:"CAIPIRINHA", nameRu:"Кайпиринья", baseSpirit:"Кашаса", theme:"#8aa855", ingCount:4, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=alEN21hwRYI", country:"🇧🇷 Бразилия",
           ing:["Кашаса 50 мл","Лайм 1 шт","Сахар 2 чайные ложки","Лёд"],
           mocktailIng:["Лайм 1 шт","Сахар 2 чайные ложки","Содовая 50 мл","Лёд"],
           ritual:"Нарежьте лайм дольками, положите в стакан с сахаром и разомните. Заполните стакан льдом, залейте кашасой. Энергично перемешайте.",
@@ -739,7 +846,7 @@
           sensation:"Лайм, сахар и кашаса. Простой, гениальный.", mix:"Маракуйя", pairing:"Жареное мясо, фейжоада", 
           tracks:["Gilberto Gil — Aquele Abraço","Caetano Veloso — Tropicalia","Seu Jorge — Life on Mars"], 
           addons:["Мята","Имбирь","Кокосовый сироп"] },
-        { name:"LONG ISLAND", nameRu:"Лонг айленд", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=Kq9uYfJvtG4", 
+        { name:"LONG ISLAND", nameRu:"Лонг айленд", baseSpirit:"Смесь пяти", theme:"#9e653f", ingCount:7, prepTime:"fast", videoUrl: "https://www.youtube.com/watch?v=Kq9uYfJvtG4", country:"🇺🇸 США",
           ing:["Водка 20 мл","Джин 20 мл","Ром 20 мл","Текила 20 мл","Трипл сек 20 мл","Кола 50 мл","Лимон 30 мл"],
           mocktailIng:["Чай каркаде 20 мл","Апельсиновый сок 20 мл","Клюквенный сок 20 мл","Содовая 20 мл","Кола 50 мл","Лимон 30 мл"],
           ritual:"В высокий стакан со льдом влейте по 20 мл водки, джина, рома, текилы и ликёра. Добавьте сок лимона и долейте колой.",
@@ -748,7 +855,7 @@
           sensation:"Обманчивая мягкость колы скрывает шторм.", mix:"Грейпфрут", pairing:"Пряные сосиски, луковые кольца", 
           tracks:["AC/DC — Thunderstruck","Guns N' Roses — Paradise City","Metallica — Enter Sandman"], 
           addons:["Клюква","Имбирь"] },
-        { name:"MOJITO CLASICO", nameRu:"Мохито классический", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=fBRKF0npNUU", 
+        { name:"MOJITO CLASICO", nameRu:"Мохито классический", baseSpirit:"Ром", theme:"#8cb87a", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=fBRKF0npNUU", country:"🇨🇺 Куба",
           ing:["Ром 50 мл","Мята","Лайм","Содовая","Сахар"],
           mocktailIng:["Мята","Лайм","Содовая","Сахар","Лёд"],
           ritual:"Разомните мяту, лайм и сахар. Наполните стакан льдом, влейте ром и содовую. Аккуратно перемешайте снизу вверх.",
@@ -757,7 +864,7 @@
           sensation:"Мятный ветер с Кубы. Освежает и пьянит.", mix:"Клубничный сироп", pairing:"Севиче, тостоне", 
           tracks:["The Cure — Friday I'm in Love","Jason Mraz — I'm Yours","No Doubt — Underneath It All"], 
           addons:["Маракуйя","Имбирь"] },
-        { name:"MAI TAI", nameRu:"Май тай", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=gYJsPE1demY", 
+        { name:"MAI TAI", nameRu:"Май тай", baseSpirit:"Ром", theme:"#d9a35e", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=gYJsPE1demY", country:"🇺🇸 США",
           ing:["Ром 50 мл","Амаретто 15 мл","Апельсиновый ликёр 15 мл","Лайм 20 мл","Сироп 15 мл"],
           mocktailIng:["Сок апельсина 50 мл","Миндальный сироп 15 мл","Сок лайма 20 мл","Сироп 15 мл","Содовая 30 мл"],
           ritual:"В шейкере со льдом смешайте ром, амаретто, апельсиновый ликёр, сок лайма и сироп. Перелейте в стакан, добавьте ещё льда. Украсьте мятой.",
@@ -766,7 +873,7 @@
           sensation:"Ореховое богатство и мощный ром.", mix:"Маракуйя", pairing:"Курица по-полинезийски", 
           tracks:["Beach Boys — Kokomo","Willie Nelson — On The Road Again","Jack Johnson — Banana Pancakes"], 
           addons:["Маракуйя","Гренадин"] },
-        { name:"CLOVER CLUB", nameRu:"Кловер клаб", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=e36Z5uajLNo", 
+        { name:"CLOVER CLUB", nameRu:"Кловер клаб", baseSpirit:"Джин", theme:"#d9876c", ingCount:5, prepTime:"long", videoUrl: "https://www.youtube.com/watch?v=e36Z5uajLNo", country:"🇺🇸 США",
           ing:["Джин 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"],
           mocktailIng:["Чай каркаде 50 мл","Малиновый сироп 20 мл","Лимонный сок 20 мл","Яичный белок","Свежая малина 5-6 шт"],
           ritual:"В шейкере разомните малину. Добавьте джин, лимонный сок, сироп и белок. Сначала взбейте без льда (15 секунд), затем со льдом (10 секунд). Дважды процедите.",
@@ -954,6 +1061,118 @@
         render();
     }
 
+    // --- Функции для карточки шаринга ---
+    function generateShareCard(cocktail) {
+        const isMocktail = mocktailMode[cocktail.name] || false;
+        const ingredients = isMocktail ? (cocktail.mocktailIng || cocktail.ing) : cocktail.ing;
+        const typeLabel = isMocktail ? 'Безалкогольная версия' : 'Классический рецепт';
+        const accent = cocktail.theme || '#e28248';
+        // Для безалкогольной версии не показываем алкоголь и время
+        const spiritAndTimeHtml = isMocktail ? '' : `
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <span style="background: ${accent}; color: #1a0a05; padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem;">✦ ${escapeHtml(cocktail.baseSpirit)}</span>
+                <span style="margin-left: 0.5rem; color: #ffbe82;">${cocktail.prepTime === 'fast' ? '⚡ 2 мин' : (cocktail.prepTime === 'medium' ? '🕒 2-4 мин' : '🔥 5+ мин')}</span>
+            </div>
+        `;
+        
+        return `
+            <div class="share-card-content" id="shareCardToDownload" style="--share-accent: ${accent};">
+                <div class="share-card-header">
+                    <h3>🍸 SIN & SPIRITS 👻</h3>
+                    <p>Лаконичная миксология</p>
+                </div>
+                <div class="share-card-body">
+                    <h2 style="font-family: 'Playfair Display'; font-size: 1.8rem; text-align: center; margin: 0 0 0.5rem; background: linear-gradient(135deg, #f7d99e, ${accent}); background-clip: text; -webkit-background-clip: text; color: transparent;">${escapeHtml(cocktail.name)}</h2>
+                    ${spiritAndTimeHtml}
+                    <div style="margin: 0.8rem 0;">
+                        <strong style="color: #ffbe82;">📋 Ингредиенты:</strong>
+                        <div class="ingredient-list">
+                            ${ingredients.map(i => `<span class="ingredient-item" style="border-left: 2px solid ${accent};">${escapeHtml(i)}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="info-block" style="border-left-color: ${accent};">
+                        <strong style="color: #ffbe82;">📖 История:</strong>
+                        <p style="font-size: 0.75rem; margin-top: 0.3rem;">${escapeHtml(cocktail.story)}</p>
+                    </div>
+                    <div class="info-block" style="border-left-color: ${accent};">
+                        <strong style="color: #ffbe82;">🌍 Страна происхождения:</strong>
+                        <p style="font-size: 0.75rem; margin-top: 0.3rem;">${escapeHtml(cocktail.country || 'Неизвестно')}</p>
+                    </div>
+                    <div class="playlist-block" style="border-top-color: ${accent};">
+                        <strong style="color: #ffbe82;">🎵 Плейлист:</strong>
+                        <p style="font-size: 0.7rem; margin-top: 0.3rem;">${escapeHtml(cocktail.tracks[0])}</p>
+                    </div>
+                    <div style="margin-top: 1rem; text-align: center;">
+                        <span style="background: ${accent}; color: #1a0a05; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: bold;">${typeLabel}</span>
+                    </div>
+                </div>
+                <div class="share-card-footer">
+                    SIN & SPIRITS — рецепты для домашнего бара
+                </div>
+            </div>
+        `;
+    }
+
+    function showShareCard(cocktail) {
+        const modal = document.getElementById('shareCardModal');
+        const modalContent = document.getElementById('shareModalContent');
+        const preview = document.getElementById('shareCardPreview');
+        const accent = cocktail.theme || '#e28248';
+        // Устанавливаем цвет рамки модального окна
+        modalContent.style.borderLeftColor = accent;
+        preview.innerHTML = generateShareCard(cocktail);
+        modal.style.display = 'flex';
+        
+        const downloadBtn = document.getElementById('downloadShareBtn');
+        downloadBtn.onclick = async () => {
+            const element = document.getElementById('shareCardToDownload');
+            if (!element) return;
+            try {
+                downloadBtn.innerText = '⏳ Генерируем...';
+                downloadBtn.disabled = true;
+                const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#0f0603' });
+                const link = document.createElement('a');
+                link.download = `${cocktail.name.replace(/\s/g, '_')}_recept.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                downloadBtn.innerText = '💾 Скачать как изображение';
+                downloadBtn.disabled = false;
+            } catch(err) {
+                alert('Не удалось создать изображение');
+                downloadBtn.innerText = '💾 Скачать как изображение';
+                downloadBtn.disabled = false;
+            }
+        };
+    }
+
+    function addShareButtonsToCards() {
+        document.querySelectorAll('.drink-card').forEach(card => {
+            if (card.querySelector('.share-card-btn')) return;
+            const favBtn = card.querySelector('.favorite-btn');
+            if (!favBtn) return;
+            const name = favBtn.getAttribute('data-name');
+            if (!name) return;
+            const cocktail = allCocktails.find(c => c.name === name);
+            if (!cocktail) return;
+            const buttonGroup = card.querySelector('.button-group');
+            const accent = cocktail.theme || '#e28248';
+            if (buttonGroup) {
+                const btn = document.createElement('button');
+                btn.className = 'share-card-btn';
+                btn.innerHTML = '<i class="fas fa-camera"></i> Поделиться карточкой';
+                btn.style.background = `${accent}22`;
+                btn.style.border = `1px solid ${accent}`;
+                btn.style.color = '#ffefdf';
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    showShareCard(cocktail);
+                };
+                buttonGroup.appendChild(btn);
+            }
+        });
+    }
+
+    // --- Рендер ---
     function render() {
         const container = document.getElementById('drinksContainer');
         let filtered = getFilteredCocktails();
@@ -969,7 +1188,7 @@
         filtered.forEach(c => {
             const currentIngredients = getCurrentIngredients(c);
             const currentRitual = getCurrentRitual(c);
-            const ingHtml = currentIngredients.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
+            const ingHtml = currentIngredients.map(i=>`<span class="ingredient-badge" style="border-left-color: ${c.theme};">${escapeHtml(i)}</span>`).join('');
             const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
             const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
             const accent = c.theme || '#d85f30';
@@ -987,14 +1206,15 @@
                         </div>
                         <div class="drink-content">
                             <div class="ingredients">${ingHtml}</div>
-                            <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
-                            <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
-                            <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
-                            <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
+                            <div class="legend-block" style="border-left-color: ${accent};">📖 ${escapeHtml(c.story)}</div>
+                            <div class="country-badge"><i class="fas fa-globe"></i> ${escapeHtml(c.country)}</div>
+                            <div class="sensation" style="border-left-color: ${accent};"><i class="fas fa-fire"></i> ${escapeHtml(c.sensation)}</div>
+                            <div class="mixology" style="border-left-color: ${accent};"><i class="fas fa-blender"></i> ${escapeHtml(c.mix)}</div>
+                            <div class="food-pairing" style="border-left-color: ${accent};"><i class="fas fa-utensils"></i> ${escapeHtml(c.pairing)}</div>
                             <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
                             <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>`;
             
-                       // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ MOSCOW MULE
+            // Партнёрские ссылки
             if (c.name === "MOSCOW MULE") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍸 Что купить для Moscow Mule?</p>
@@ -1002,7 +1222,6 @@
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-            // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ NEGRONI
             if (c.name === "NEGRONI") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍸 Что купить для Negroni?</p>
@@ -1010,7 +1229,6 @@
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-            // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ OLD FASHIONED
             if (c.name === "OLD FASHIONED") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍊 Что купить для Old Fashioned?</p>
@@ -1018,7 +1236,6 @@
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-           // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ MARGARITA
             if (c.name === "MARGARITA") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🍹 Что купить для Маргариты?</p>
@@ -1026,7 +1243,6 @@
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-                        // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ ESPRESSO MARTINI
             if (c.name === "ESPRESSO MARTINI") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">☕ Что купить для Espresso Martini?</p>
@@ -1034,7 +1250,6 @@
                                     <p style="font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">✨ Переходя по ссылке, вы поддерживаете сайт (комиссия не увеличивает вашу цену). Спасибо!</p>
                                 </div>`;
             }
-                       // ПАРТНЁРСКАЯ ССЫЛКА ДЛЯ PIÑA COLADA
             if (c.name === "PIÑA COLADA") {
                 html += `<div class="affiliate-shop" style="margin: 1rem 0 0.5rem; padding: 0.7rem; background: #2a1a10; border-radius: 1rem; border-left: 4px solid #e28248;">
                                     <p style="margin: 0 0 0.4rem; font-weight: bold;">🥥 Что купить для Piña Colada?</p>
@@ -1095,6 +1310,7 @@
         });
         
         attachModalEvents();
+        addShareButtonsToCards();
         
         const hash = window.location.hash;
         if (hash && hash.startsWith('#cocktail=')) {
@@ -1179,6 +1395,11 @@
         searchInput.addEventListener('focus', updateSuggestions);
     }
 
+    // --- Обработчики модалки шаринга ---
+    document.getElementById('closeShareModal')?.addEventListener('click', () => {
+        document.getElementById('shareCardModal').style.display = 'none';
+    });
+
     window.onload = () => {
         renderShopList();
         render();
@@ -1186,7 +1407,6 @@
         updateChecklistCount();
         document.querySelector('.nav-btn[data-page="all"]').classList.add('active');
         
-        // Сортировка
         const sortSelect = document.getElementById('sortSelect');
         if (sortSelect) {
             sortSelect.addEventListener('change', (e) => {
@@ -1291,7 +1511,7 @@
                 favoriteCocktails.forEach(c => {
                     const currentIngredients = getCurrentIngredients(c);
                     const currentRitual = getCurrentRitual(c);
-                    const ingHtml = currentIngredients.map(i=>`<span class="ingredient-badge">${escapeHtml(i)}</span>`).join('');
+                    const ingHtml = currentIngredients.map(i=>`<span class="ingredient-badge" style="border-left-color: ${c.theme};">${escapeHtml(i)}</span>`).join('');
                     const tracksHtml = c.tracks.map(tr=>`<li><i class="fas fa-music"></i> ${escapeHtml(tr)}</li>`).join('');
                     const addHtml = c.addons.map(a=>`<span class="addon-item">${escapeHtml(a)}</span>`).join('');
                     const accent = c.theme || '#d85f30';
@@ -1307,10 +1527,11 @@
                                 </div>
                                 <div class="drink-content">
                                     <div class="ingredients">${ingHtml}</div>
-                                    <div class="legend-block">📖 ${escapeHtml(c.story)}</div>
-                                    <div class="sensation"><i class="fas fa-fire"></i> Ощущения: ${escapeHtml(c.sensation)}</div>
-                                    <div class="mixology"><i class="fas fa-blender"></i> Микс: ${escapeHtml(c.mix)}</div>
-                                    <div class="food-pairing"><i class="fas fa-utensils"></i> Закуска: ${escapeHtml(c.pairing)}</div>
+                                    <div class="legend-block" style="border-left-color: ${accent};">📖 ${escapeHtml(c.story)}</div>
+                                    <div class="country-badge"><i class="fas fa-globe"></i> ${escapeHtml(c.country)}</div>
+                                    <div class="sensation" style="border-left-color: ${accent};"><i class="fas fa-fire"></i> ${escapeHtml(c.sensation)}</div>
+                                    <div class="mixology" style="border-left-color: ${accent};"><i class="fas fa-blender"></i> ${escapeHtml(c.mix)}</div>
+                                    <div class="food-pairing" style="border-left-color: ${accent};"><i class="fas fa-utensils"></i> ${escapeHtml(c.pairing)}</div>
                                     <div class="music-playlist" style="border-top-color: ${accent};"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
                                     <div class="addons-section" style="border-color: ${accent}70;"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
                                     <div class="button-group">
@@ -1360,6 +1581,7 @@
                         toggleMocktail(name, btn);
                     });
                 });
+                addShareButtonsToCards();
             });
         }
     };
