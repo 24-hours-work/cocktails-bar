@@ -586,7 +586,7 @@
 <div id="modalChecklist" class="modal"><div class="modal-content"><span class="close-modal" id="closeChecklistModal">&times;</span><h3>🛒 Список покупок</h3><div id="checklistBody" class="ingredient-list"></div><div class="modal-buttons"><button id="clearChecklistBtn" class="modal-btn danger">Очистить список</button><button id="closeChecklistBtn" class="modal-btn">Закрыть</button></div></div></div>
 
 <script>
-    // ======================= ВСЕ КОКТЕЙЛИ =======================
+    // ======================= ВСЕ КОКТЕЙЛИ (28 ШТУК) =======================
     const allCocktails = [
         { name:"NEGRONI", nameRu:"Негрони", baseSpirit:"Джин", theme:"#cc5533", ingCount:3, prepTime:"medium", videoUrl: "https://www.youtube.com/watch?v=nh_3suGRbN8", 
           ing:["Джин 30 мл","Кампари 30 мл","Сладкий вермут 30 мл"],
@@ -1022,14 +1022,18 @@
                             <div class="music-playlist"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
                             <div class="addons-section"><div class="addons-list">${addHtml}</div></div>`;
             
+            // ПАРТНЁРСКИЕ ССЫЛКИ
             if (c.name === "MOSCOW MULE") html += `<div class="affiliate-shop"><p><strong>🍸 Что купить для Moscow Mule?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-moscow-mule-mednaya-kruzhka-dzhigger-i-press-dlya-layma-5556421" target="_blank">Медная кружка, джиггер и пресс для лайма — моя партнёрская подборка на Wildberries</a></p></div>`;
             if (c.name === "NEGRONI") html += `<div class="affiliate-shop"><p><strong>🍸 Что купить для Negroni?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-negroni-pravilniy-bokal-formy-dlya-lda-i-tochnye-proportsii-5559549" target="_blank">Правильный бокал, формы для льда и джиггер — моя партнёрская подборка на Wildberries</a></p></div>`;
             if (c.name === "OLD FASHIONED") html += `<div class="affiliate-shop"><p><strong>🍊 Что купить для Old Fashioned?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-old-fashioned-pravilniy-bokal-bolshoy-kub-lda-i-tochnye-proportsii-5559936" target="_blank">Правильный бокал, большой куб льда и джиггер — моя партнёрская подборка на Wildberries</a></p></div>`;
             if (c.name === "MARGARITA") html += `<div class="affiliate-shop"><p><strong>🍹 Что купить для Маргариты?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnoy-margarity-pravilniy-bokal-sheyker-i-svezhiy-sok-5561329" target="_blank">Правильный бокал, шейкер и пресс для цитрусовых — моя партнёрская подборка на Wildberries</a></p></div>`;
             if (c.name === "ESPRESSO MARTINI") html += `<div class="affiliate-shop"><p><strong>☕ Что купить для Espresso Martini?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-espresso-martini-doma-bokal-sheyker-i-kofeyniy-sirop-5561591" target="_blank">Коктейльный бокал, шейкер и кофейный сироп — моя партнёрская подборка на Wildberries</a></p></div>`;
             if (c.name === "PIÑA COLADA") html += `<div class="affiliate-shop"><p><strong>🥥 Что купить для Piña Colada?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnoy-pina-colada-doma-bokal-sheyker-i-kokosoviy-miks-5567544" target="_blank">Бокалы «Харрикейн», шейкер, пресс, кокосовое молоко и ананас — моя партнёрская подборка на Wildberries</a></p></div>`;
-                       
-                <button class="recipe-btn" data-ritual="${escapeHtml(currentRitual)}" data-name="${c.name}"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
+            if (c.name === "MOJITO ROYALE") html += `<div class="affiliate-shop"><p><strong>🥂 Что купить для Mojito Royale?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-mojito-royale-pravilniy-bokal-madler-i-krupniy-led-5640702" target="_blank">Правильный бокал, мадлер, формы для льда, сок лайма и трубочки — моя партнёрская подборка на Wildberries</a></p></div>`;
+            if (c.name === "MOJITO CLASICO") html += `<div class="affiliate-shop"><p><strong>🍹 Что купить для Mojito Clasico?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-mojito-clasico-pravilniy-bokal-madler-i-krupniy-led-5641273" target="_blank">Правильный бокал, мадлер, формы для льда, сок лайма и трубочки — моя партнёрская подборка на Wildberries</a></p></div>`;
+            
+            html += `<div class="button-group">
+                                <button class="recipe-btn" data-ritual="${escapeHtml(currentRitual)}" data-name="${c.name}"><i class="fas fa-mortar-pestle"></i> Полный ритуал</button>
                                 <button class="checklist-btn" data-ingredients='${JSON.stringify(currentIngredients)}'><i class="fas fa-list"></i> 📋 Добавить</button>
                                 <button class="mocktail-btn ${isMocktailActive ? 'active' : ''}" data-name="${c.name}"><i class="fas fa-leaf"></i> 0% Безалкогольная</button>
                                 <button class="share-btn" data-name="${c.name}"><i class="fas fa-share-alt"></i> 📤 Поделиться</button>
