@@ -1020,7 +1020,7 @@
                             <div class="mixology">🥤 Микс: ${c.mix}</div>
                             <div class="food-pairing">🍽️ Закуска: ${c.pairing}</div>
                             <div class="music-playlist"><div class="playlist-title"><i class="fas fa-headphones"></i> Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
-                            <div class="addons-section"><div class="addons-list">${addHtml}</div></div>`;
+                            <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>`;
             
             // ПАРТНЁРСКИЕ ССЫЛКИ
             if (c.name === "MOSCOW MULE") html += `<div class="affiliate-shop"><p><strong>🍸 Что купить для Moscow Mule?</strong><br>👉 <a href="https://wibes.ru/article/vse-dlya-idealnogo-moscow-mule-mednaya-kruzhka-dzhigger-i-press-dlya-layma-5556421" target="_blank">Медная кружка, джиггер и пресс для лайма — моя партнёрская подборка на Wildberries</a></p></div>`;
@@ -1239,7 +1239,7 @@
                                 <div class="mixology">🥤 ${c.mix}</div>
                                 <div class="food-pairing">🍽️ ${c.pairing}</div>
                                 <div class="music-playlist"><div class="playlist-title">🎵 Плейлист</div><ul class="track-list">${tracksHtml}</ul></div>
-                                <div class="addons-section"><div class="addons-list">${addHtml}</div></div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list">${addHtml}</div></div>
                                 <div class="button-group">
                                     <button class="recipe-btn" data-ritual="${escapeHtml(currentRitual)}" data-name="${c.name}">Полный ритуал</button>
                                     <button class="checklist-btn" data-ingredients='${JSON.stringify(currentIngredients)}'>📋 Добавить</button>
