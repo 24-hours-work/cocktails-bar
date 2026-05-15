@@ -1014,6 +1014,16 @@
                             <div class="main-spirit" style="background: ${accent};">✦ ${c.baseSpirit}</div>
                         </div>
                         <div class="drink-content">
+                        <!-- НАЧАЛО БЛОКА С ФОТОГРАФИЯМИ -->
+                            ${c.name === "MOSCOW MULE" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/7dhbJvCV/Moscow-Mule.png" alt="Moscow Mule" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "NEGRONI" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/0ymNYPJB/Negroni.png" alt="Negroni" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "OLD FASHIONED" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/DPh89Mmd/Old-Fashioned.png" alt="Old Fashioned" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "MARGARITA" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/ds8mnMFW/Margarita.png" alt="Margarita" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "ESPRESSO MARTINI" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/Kxx7WnVv/Espresso-Martini.png" alt="Espresso Martini" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "PIÑA COLADA" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/j95Ng74f/Pina-Colada.png" alt="Piña Colada" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "MOJITO ROYALE" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/5WVd6ffT/Mojito-Royale.png" alt="Mojito Royale" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            ${c.name === "MOJITO CLASICO" ? '<div style="text-align: center; margin-bottom: 1rem;"><img src="https://i.ibb.co/84MwQY5n/Mojito-Clasico.png" alt="Mojito Clasico" style="max-width: 100%; border-radius: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);"></div>' : ''}
+                            <!-- КОНЕЦ БЛОКА С ФОТОГРАФИЯМИ -->
                             <div class="ingredients">${ingHtml}</div>
                             <div class="legend-block">📖 ${c.story}</div>
                             <div class="sensation">🔥 ${c.sensation}</div>
