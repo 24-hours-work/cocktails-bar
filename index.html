@@ -975,11 +975,40 @@
         window.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
     }
 
-    function shareCocktail(cocktailName) {
-        const url = `${window.location.origin}${window.location.pathname}#cocktail=${encodeURIComponent(cocktailName)}`;
-        if (navigator.share) navigator.share({ title: `${cocktailName} — рецепт коктейля`, url });
-        else navigator.clipboard.writeText(url).then(() => alert(`Ссылка на ${cocktailName} скопирована!`));
+   function shareCocktail(cocktailName) {
+    const url = `${window.location.origin}${window.location.pathname}#cocktail=${encodeURIComponent(cocktailName)}`;
+    const text = `🍸 Приготовь ${cocktailName} по рецепту с SIN & SPIRITS! Рецепт здесь: ${url}`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: `${cocktailName} — рецепт коктейля`,
+            text: `Приготовь ${cocktailName} по рецепту с SIN & SPIRITS!`,
+            url: url
+        }).catch((err) => {
+            if (err.name !== 'AbortError') {
+                fallbackShare(cocktailName, url, text);
+            }
+        });
+    } else {
+        fallbackShare(cocktailName, url, text);
     }
+}
+
+function fallbackShare(cocktailName, url, text) {
+    // ... весь код из моего предыдущего сообщения (не обрезайте)
+}
+
+function toggleMocktail(cocktailName, btnElement) {
+    mocktailMode[cocktailName] = !mocktailMode[cocktailName];
+    localStorage.setItem('mocktailMode', JSON.stringify(mocktailMode));
+    render();
+}
+
+function render() {
+    let filtered = getFilteredCocktails();
+    filtered = sortCocktails(filtered, currentSort);
+    // ...
+}
 
     function toggleMocktail(cocktailName, btnElement) {
         mocktailMode[cocktailName] = !mocktailMode[cocktailName];
