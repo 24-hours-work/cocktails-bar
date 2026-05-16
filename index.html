@@ -1432,6 +1432,20 @@ function render() {
             if (!isLarge) btn.style.background = '#2e170ecc';
         });
     })();
+    
+        // ===== НОВЫЙ КОД: АВТОМАТИЧЕСКАЯ ПРОКРУТКА К КАРТОЧКЕ =====
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#cocktail=')) {
+            const cocktailName = decodeURIComponent(hash.substring(10));
+            setTimeout(() => {
+                const element = document.getElementById(`card-${cocktailName.replace(/\s/g, '')}`);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        }
+        // ===== КОНЕЦ НОВОГО КОДА =====
+        
 </script>
 </body>
 </html>
