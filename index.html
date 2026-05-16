@@ -1292,5 +1292,69 @@
         });
     };
 </script>
+    <!-- Кнопка "Для слабовидящих" -->
+<div style="position: fixed; bottom: 20px; left: 20px; z-index: 1000;">
+    <button id="accessibilityBtn" style="background: #2e170ecc; border: 1px solid #bc4f2a; border-radius: 40px; padding: 0.5rem 1rem; color: #ffdeb6; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; backdrop-filter: blur(4px); display: flex; align-items: center; gap: 0.5rem;">
+        🔍 Режим для слабовидящих
+    </button>
+</div>
+
+<script>
+    // Режим крупного шрифта для слабовидящих
+    (function() {
+        const btn = document.getElementById('accessibilityBtn');
+        let isLarge = localStorage.getItem('sin-spirits-large-font') === 'true';
+        
+        function toggleLargeFont(enable) {
+            if (enable) {
+                // Увеличиваем базовый шрифт
+                document.body.style.fontSize = '18px';
+                document.body.style.lineHeight = '1.5';
+                
+                // Увеличиваем шрифт для всех основных элементов
+                const elements = document.querySelectorAll('h1, h2, h3, .recipe-btn, .checklist-btn, .share-btn, .mocktail-btn, .filter-btn, .nav-btn, .shop-item, .ingredient-badge, .time-badge, .main-spirit, .legend-block, .sensation, .mixology, .food-pairing, .track-list li, .addon-item, .search-input, .filter-select, .sort-select');
+                elements.forEach(el => {
+                    el.style.fontSize = '1.1em';
+                });
+                
+                btn.style.background = '#e28248';
+                btn.style.color = 'white';
+                localStorage.setItem('sin-spirits-large-font', 'true');
+            } else {
+                // Возвращаем всё обратно
+                document.body.style.fontSize = '';
+                document.body.style.lineHeight = '';
+                
+                const elements = document.querySelectorAll('h1, h2, h3, .recipe-btn, .checklist-btn, .share-btn, .mocktail-btn, .filter-btn, .nav-btn, .shop-item, .ingredient-badge, .time-badge, .main-spirit, .legend-block, .sensation, .mixology, .food-pairing, .track-list li, .addon-item, .search-input, .filter-select, .sort-select');
+                elements.forEach(el => {
+                    el.style.fontSize = '';
+                });
+                
+                btn.style.background = '#2e170ecc';
+                btn.style.color = '#ffdeb6';
+                localStorage.setItem('sin-spirits-large-font', 'false');
+            }
+            isLarge = enable;
+        }
+        
+        // Восстанавливаем состояние при загрузке страницы
+        if (isLarge) {
+            toggleLargeFont(true);
+        }
+        
+        // Обработчик клика по кнопке
+        btn.addEventListener('click', () => {
+            toggleLargeFont(!isLarge);
+        });
+        
+        // Эффект при наведении
+        btn.addEventListener('mouseenter', () => {
+            if (!isLarge) btn.style.background = '#4f2a1aaa';
+        });
+        btn.addEventListener('mouseleave', () => {
+            if (!isLarge) btn.style.background = '#2e170ecc';
+        });
+    })();
+</script>
 </body>
 </html>
