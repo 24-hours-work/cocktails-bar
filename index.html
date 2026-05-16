@@ -995,7 +995,49 @@
 }
 
 function fallbackShare(cocktailName, url, text) {
-    // ... весь код из моего предыдущего сообщения (не обрезайте)
+    const encodedText = encodeURIComponent(text);
+    const encodedUrl = encodeURIComponent(url);
+    
+    const modal = document.createElement('div');
+    modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 10000; display: flex; align-items: center; justify-content: center;';
+    
+    const content = document.createElement('div');
+    content.style.cssText = 'background: var(--bg-primary); border-radius: 2rem; padding: 1.5rem; max-width: 320px; width: 90%; text-align: center; border: 1px solid var(--border-color);';
+    content.innerHTML = `
+        <h3 style="margin-bottom: 1rem; font-family: 'Playfair Display';">📤 Поделиться рецептом</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button id="share-wa" style="background: #25D366; border: none; border-radius: 3rem; padding: 0.75rem; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">📱 WhatsApp</button>
+            <button id="share-tg" style="background: #0088cc; border: none; border-radius: 3rem; padding: 0.75rem; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">✈️ Telegram</button>
+            <button id="share-vb" style="background: #7360f2; border: none; border-radius: 3rem; padding: 0.75rem; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">💬 Viber</button>
+            <button id="share-copy" style="background: #2e170ecc; border: 1px solid #bc4f2a; border-radius: 3rem; padding: 0.75rem; color: #ffdeb6; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">🔗 Копировать ссылку</button>
+        </div>
+        <button id="share-close" style="background: none; border: none; margin-top: 1rem; color: var(--text-muted); cursor: pointer;">Закрыть</button>
+    `;
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    
+    document.getElementById('share-wa').onclick = () => {
+        window.open(`https://wa.me/?text=${encodedText}`, '_blank');
+        modal.remove();
+    };
+    document.getElementById('share-tg').onclick = () => {
+        window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(`🍸 Приготовь ${cocktailName}!`)}`, '_blank');
+        modal.remove();
+    };
+    document.getElementById('share-vb').onclick = () => {
+        window.open(`viber://forward?text=${encodedText}`, '_blank');
+        modal.remove();
+    };
+    document.getElementById('share-copy').onclick = () => {
+        navigator.clipboard.writeText(url).then(() => {
+            alert(`Ссылка на ${cocktailName} скопирована!`);
+            modal.remove();
+        }).catch(() => {
+            alert('Не удалось копировать ссылку');
+        });
+    };
+    document.getElementById('share-close').onclick = () => modal.remove();
+    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
 }
 
 function toggleMocktail(cocktailName, btnElement) {
