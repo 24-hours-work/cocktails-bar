@@ -572,10 +572,10 @@
     <div id="drinksContainer" class="drinks-grid"></div>
     <div class="counter-note" id="cocktailCounter"></div>
     
-   <!-- МИКРО-ТЕКСТ ДЛЯ ПОИСКОВИКОВ -->
-<div style="font-size: 0.6rem; color: #a57a60; text-align: center; margin: 0.5rem 0; opacity: 0.6;">
-    🍸 Коктейли для домашнего бара: Moscow Mule, Negroni, Old Fashioned, Margarita, Mojito, Piña Colada, Espresso Martini, Whiskey Sour, Daiquiri — рецепты с артикулами на Wildberries.
-</div>
+    <!-- МИКРО-ТЕКСТ ДЛЯ ПОИСКОВИКОВ -->
+    <div style="font-size: 0.6rem; color: #a57a60; text-align: center; margin: 0.5rem 0; opacity: 0.6;">
+        🍸 Коктейли для домашнего бара: Moscow Mule, Negroni, Old Fashioned, Margarita, Mojito, Piña Colada, Espresso Martini, Whiskey Sour, Daiquiri — рецепты с артикулами на Wildberries.
+    </div>
     
     <div class="footer">
         <div class="footer-links">
@@ -585,6 +585,14 @@
             <a href="shop.html">🛒 Что купить</a>
         </div>
         <div>⚡ Ритуал приготовления — по клику. Температура, техника, тайминг.</div>
+        
+        <!-- ===== ПОЛЕ ДЛЯ КОДОВОГО СЛОВА ===== -->
+        <div style="margin-top: 1rem; padding: 0.5rem; text-align: center;">
+            <div style="background: var(--bg-primary); border-radius: 1rem; padding: 0.5rem 1rem; border-left: 3px solid #ff6b9d; max-width: 280px; margin: 0 auto;">
+                <div style="font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; color: var(--text-secondary); margin-bottom: 0.3rem; text-transform: uppercase;">кодовое слово</div>
+                <input type="text" id="secretCodeInput" placeholder="..." style="width: 100%; padding: 0.4rem 0.8rem; border-radius: 40px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-primary); font-size: 0.8rem; text-align: center;">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1451,7 +1459,241 @@ function render() {
             }, 500);
         }
         // ===== КОНЕЦ НОВОГО КОДА =====
+
+    // ===== КОД ДЛЯ ОТКРЫТИЯ КАРТОЧЕК ДОРЫ ПО КОДОВОМУ СЛОВУ (с кнопкой закрытия) =====
+    (function() {
+        const SECRET_CODE = "ksuwa";
+        const input = document.getElementById('secretCodeInput');
         
+        // Функция, которая показывает карточки Доры
+        function showDoraCocktails() {
+            // Проверяем, не добавлены ли уже карточки
+            if (document.getElementById('doraSection')) return;
+            
+            // Создаём секцию с коктейлями Доры
+            const doraSection = document.createElement('div');
+            doraSection.id = 'doraSection';
+            
+            doraSection.innerHTML = `
+                <div style="margin-top: 3rem; position: relative;">
+                    <!-- Кнопка закрыть -->
+                    <button id="closeDoraSection" style="position: absolute; top: 0.5rem; right: 0.5rem; background: var(--button-bg); border: 1px solid var(--border-color); border-radius: 50px; padding: 0.3rem 0.8rem; color: var(--text-primary); cursor: pointer; font-size: 0.7rem; z-index: 10;">
+                        ✖ Закрыть
+                    </button>
+                    
+                    <div class="hero" style="margin-bottom: 1.5rem;">
+                        <h1 style="font-size: 2rem;">🍸 Плейлист бар</h1>
+                        <p>Коктейли по мотивам песен Доры</p>
+                        <div class="badge-bar">🎀 музыкальное меню</div>
+                    </div>
+                    
+                    <div class="drinks-grid">
+                        
+                        <!-- 1. РОЗОВЫЕ ВОЛОСЫ -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 игристый</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>РОЗОВЫЕ ВОЛОСЫ</h2>
+                                <div class="main-spirit">✦ смелость быть собой</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🌸🎀✨</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Смелость быть собой — 30 мл</span>
+                                    <span class="ingredient-badge">Отказ от чужих ожиданий — 30 мл</span>
+                                    <span class="ingredient-badge">Капелька усталости от сравнений — 15 мл</span>
+                                    <span class="ingredient-badge">Содовая «Свобода» — доверху</span>
+                                </div>
+                                <div class="legend-block">«Розовые волосы» — о том, как перестать бояться быть заметной. О том, что твоя уникальность — это не баг, а фича. О том, что можно быть разной: яркой и тихой, смешной и грустной. И за это не надо извиняться.</div>
+                                <div class="sensation">🔥 Сначала сладко, как первая любовь. Потом — игриво, с лёгкой кислинкой. Послевкусие — как улыбка, которая остаётся на весь день.</div>
+                                <div class="mixology">🥤 Микс: Яркость и нежность</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Розовые волосы</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Розовая соль</span><span class="addon-item">Цветы бузины</span><span class="addon-item">Маршмеллоу</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Смешай всё, что делает тебя собой. Добавь глоток свежего воздуха перед новым днём. Укрась щербинкой между зубов. Подавать под первый трек из нового альбома, лёжа на полу, раскинув руки. Не бойся, если пена будет розовой — так и задумано." data-name="Розовые волосы">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 2. КОШКА НА СЕРДЦЕ -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 контрастный</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>КОШКА НА СЕРДЦЕ</h2>
+                                <div class="main-spirit">✦ две половинки души</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🐈⬛💔🌙</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Игривое «Люблю» — 30 мл</span>
+                                    <span class="ingredient-badge">Колкое «Молчу» — 30 мл</span>
+                                    <span class="ingredient-badge">Сироп «Одиночество вдвоём» — 15 мл</span>
+                                    <span class="ingredient-badge">Тишина в квартире — доверху</span>
+                                </div>
+                                <div class="legend-block">«Кошка на сердце» — о том, как внутри живут два зверя. Один хочет любви, ластится и мурлычет. Второй царапается, сворачивается клубком и уходит в себя. Они никогда не договорятся. Но оба — твои. И оба заслуживают места у огня.</div>
+                                <div class="sensation">🔥 Сначала тепло и игриво. Потом — горьковато, с перчинкой. Послевкусие долгое, как разговор с самой собой в три часа ночи.</div>
+                                <div class="mixology">🥤 Микс: Одиночество и надежда</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Кошка</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Тёплый плед</span><span class="addon-item">Закладка в любимой книге</span><span class="addon-item">Лёгкое «я рядом»</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Смешивай осторожно, чтобы не расплескать. Первый глоток — игривый, тёплый. Второй — горький, как рассвет в пять утра, когда ты ещё не спишь. Не спеши. Дай «кошкам» привыкнуть. Подавать в тишине, без музыки. Лучшая закуска — право молчать." data-name="Кошка на сердце">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 3. МЛАДШАЯ СЕСТРА -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 безалкогольный</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>МЛАДШАЯ СЕСТРА</h2>
+                                <div class="main-spirit">✦ твоя забота</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">👧💫☕</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Твоя забота, которую не заметили — 30 мл</span>
+                                    <span class="ingredient-badge">Плед, в который можно укутаться с головой — 30 мл</span>
+                                    <span class="ingredient-badge">Право на тишину — 15 мл</span>
+                                    <span class="ingredient-badge">Закладка в любимой книге — доверху</span>
+                                </div>
+                                <div class="legend-block">«Младшая сестра» — о тех, кто всегда был в тени старших. О тех, чьи чувства иногда забывали заметить. О том, что быть «младшей» — не значит быть менее важной. Это песня-объятие для всех, кто устал быть «удобной».</div>
+                                <div class="sensation">🔥 Тёплый, уютный, обволакивающий. Как объятие со спины, когда ты не просила, но оно случилось.</div>
+                                <div class="mixology">🥤 Микс: Нежность и принятие</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Младшая сестра</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Ваниль</span><span class="addon-item">Тёплое молоко</span><span class="addon-item">Слово «я тебя вижу»</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Ничего не взбалтывать. Просто согреть. Как объятие со спины, когда ты не просила, но оно случилось. Подавать в большой кружке, с правом не говорить ни слова и смотреть в окно. Ты заслужила эту минуту тепла." data-name="Младшая сестра">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 4. ЗАВИСИМА -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 терпкий</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>ЗАВИСИМА</h2>
+                                <div class="main-spirit">✦ долгое послевкусие</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🌀🕸️💔</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Боязнь пустоты — 30 мл</span>
+                                    <span class="ingredient-badge">Привычка оглядываться — 30 мл</span>
+                                    <span class="ingredient-badge">Лёд «Последний шанс» — 15 мл</span>
+                                </div>
+                                <div class="legend-block">«Зависима» — о том, как трудно разорвать круг. О привычке быть привязанной к тому, кто не ценит. О том, что первый шаг к свободе — самый страшный. И о том, что надежда на «начать сначала» — это уже победа.</div>
+                                <div class="sensation">🔥 Терпкий, глубокий, с долгим послевкусием. Первый глоток обжигает знакомым. Второй заставляет задуматься. Третий дарит надежду.</div>
+                                <div class="mixology">🥤 Микс: Боль и освобождение</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Зависима</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Грейпфрут</span><span class="addon-item">Розмарин</span><span class="addon-item">Обещание себе</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Первый глоток обжигает знакомым. Второй заставляет задуматься. Третий — дарит надежду, что всё можно начать сначала. Пить, когда чувствуешь, что ниточка слишком тонкая, но оборвать её нет сил. Закусывать обещанием самому себе." data-name="Зависима">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 5. Я БОЮСЬ ЛЮДЕЙ -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 шот (50 мл)</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>Я БОЮСЬ ЛЮДЕЙ</h2>
+                                <div class="main-spirit">✦ тишина в квартире</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">🏠🪟🌙</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Тишина в квартире — 30 мл</span>
+                                    <span class="ingredient-badge">Стеклянная стена между тобой и миром — 30 мл</span>
+                                    <span class="ingredient-badge">Слёзы, которые никто не видит — 15 мл</span>
+                                    <span class="ingredient-badge">Тёплый свитер с чужого плеча — доверху</span>
+                                </div>
+                                <div class="legend-block">«Я боюсь людей» — о социальной тревоге, которую многие скрывают за улыбкой. О том, как тяжело выходить из дома, когда внутри всё сжимается. О том, что иногда самый безопасный человек — это ты сам. И это нормально.</div>
+                                <div class="sensation">🔥 Резкий, короткий, честный. Как выдох после долгого дня. Как момент, когда дверь закрылась и можно наконец выдохнуть.</div>
+                                <div class="mixology">🥤 Микс: Страх и облегчение</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Я боюсь людей</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Лаванда</span><span class="addon-item">Мята</span><span class="addon-item">Право сказать «нет»</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Выпить залпом. Желательно в одиночестве, в темноте, под любимый сериал. Если всё правильно — мир не рухнет. Можно повторить, но только с тем, кто останется сидеть рядом в тишине и не спросит «почему ты плачешь»." data-name="Я боюсь людей">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 6. ЛУЧШЕ ТЕБЯ -->
+                        <div class="drink-card">
+                            <div class="title-mural">
+                                <div class="time-badge">🍸 крепкий</div>
+                                <div class="favorite-btn">☆</div>
+                                <h2>ЛУЧШЕ ТЕБЯ</h2>
+                                <div class="main-spirit">✦ осознание своей цены</div>
+                            </div>
+                            <div class="drink-content">
+                                <div style="text-align: center; font-size: 3rem; margin-bottom: 1rem;">⭐🪞💪</div>
+                                <div class="ingredients">
+                                    <span class="ingredient-badge">Осознание своей цены — 30 мл</span>
+                                    <span class="ingredient-badge">Умение отпускать — 30 мл</span>
+                                    <span class="ingredient-badge">Благодарность за то, что не оценили — доверху</span>
+                                </div>
+                                <div class="legend-block">«Лучше тебя» — о том, как вырасти над прошлым. О моменте, когда ты понимаешь: «Моя любовь сделала тебя лучше, но я буду с тем, кто лучше тебя». О силе уйти и не оглядываться.</div>
+                                <div class="sensation">🔥 Сначала горько. Потом сухо. А после — долгое, тёплое послевкусие свободы.</div>
+                                <div class="mixology">🥤 Микс: Освобождение и любовь к себе</div>
+                                <div class="food-pairing">🎵 Подавать под: Дора — Лучше тебя</div>
+                                <div class="addons-section"><div class="addons-title">✨ Чем дополнить</div><div class="addons-list"><span class="addon-item">Грейпфрут</span><span class="addon-item">Мёд</span><span class="addon-item">Улыбка в зеркале</span></div></div>
+                                <div class="button-group">
+                                    <button class="recipe-btn" data-ritual="Сначала горько. Потом сухо. А после — долгое, тёплое послевкусие свободы. Украшать зеркальной глазурью — чтобы видеть своё отражение и улыбнуться. Подавать тем, кто наконец понял: «Моя любовь сделала тебя лучше, но я буду с тем, кто лучше тебя»." data-name="Лучше тебя">📜 Полный ритуал</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            `;
+            
+            // Вставляем перед футером
+            const footer = document.querySelector('.footer');
+            if (footer) {
+                footer.parentNode.insertBefore(doraSection, footer);
+            }
+            
+            // Назначаем обработчики для кнопок ритуала в новой секции
+            const modal = document.getElementById('modalRecipe');
+            doraSection.querySelectorAll('.recipe-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('modalName').innerText = btn.getAttribute('data-name');
+                    document.getElementById('modalBody').innerHTML = `<strong>РИТУАЛ ПРИГОТОВЛЕНИЯ:</strong><br>${btn.getAttribute('data-ritual')}`;
+                    modal.style.display = 'flex';
+                });
+            });
+            
+            // Кнопка закрытия секции
+            const closeBtn = document.getElementById('closeDoraSection');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    doraSection.remove();
+                });
+            }
+            
+            // Прокручиваем к новому блоку
+            doraSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Обработчик ввода кодового слова
+        if (input) {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const userCode = this.value.trim().toLowerCase();
+                    if (userCode === SECRET_CODE) {
+                        showDoraCocktails();
+                        this.value = '';
+                    }
+                }
+            });
+        }
+    })();
 </script>
 </body>
 </html>
